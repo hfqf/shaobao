@@ -2861,4 +2861,29 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:nil paragram:@{@"DATA":[self encodeToPercentEscapeString:[dic JSONString]]} successedBlock:success failedBolck:failed];
 }
 
+#pragma mark - 少保
+- (void)startRegister:(NSString *)loginName
+            loginPass:(NSString *)loginPass
+             userName:(NSString *)userName
+                phone:(NSString *)phone
+                email:(NSString *)email
+               weixin:(NSString *)weixin
+                   qq:(NSString *)qq
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"loginName":loginName,
+                              @"loginPass":loginPass,
+                              @"userName" :userName,
+                              @"phone":phone,
+                              @"email":email,
+                              @"weixin":weixin,
+                              @"qq":qq
+                              };
+
+    [self startNormalPostWith:@"reg" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 @end

@@ -9,7 +9,7 @@
 #ifndef  XXT_xinjiang_PublicDefine_h
 #define  XXT_xinjiang_PublicDefine_h
 
-#define  BJ_SERVER           [NSString stringWithFormat:@"http://%@/server/ios-server",[[NSUserDefaults standardUserDefaults]objectForKey:KEY_SERVER_PRE]]
+#define  BJ_SERVER          @"http://121.196.222.155:8800/api"
 
 #define FILE_SERVER     [NSString stringWithFormat:@"http://%@/server/file-server",[[NSUserDefaults standardUserDefaults]objectForKey:KEY_SERVER_PRE]]
 

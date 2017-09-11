@@ -670,4 +670,17 @@ successedBlock:(SuccessedBlock)success
 
 - (void)getTodoPhraseServerList:(SuccessedBlock)success
                     failedBolck:(FailedBlock)failed;
+
+
+
+#pragma mark - 少保
+- (void)startRegister:(NSString *)loginName
+            loginPass:(NSString *)loginPass
+             userName:(NSString *)userName
+                phone:(NSString *)phone
+                email:(NSString *)email
+               weixin:(NSString *)weixin
+                   qq:(NSString *)qq
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
 @end
