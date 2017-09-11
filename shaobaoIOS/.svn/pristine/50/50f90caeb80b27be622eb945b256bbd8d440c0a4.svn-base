@@ -1,0 +1,393 @@
+//
+//  ContactViewController.m
+//  officeMobile
+//
+//  Created by Points on 15-3-5.
+//  Copyright (c) 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "ContactViewController.h"
+#import "ContactTableViewCell.h"
+
+#import "ContactDetailViewController.h"
+#import "ADTGropuInfo.h"
+#import "SendEmailViewController.h"
+@interface ContactViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property(nonatomic,strong)NSString *m_depId;
+@property(nonatomic,assign)BOOL m_isSeleted;
+@property(nonatomic,assign)BOOL m_isSelectedSingle;
+@property(nonatomic,strong)ADTGropuInfo *m_currentGroup;
+
+@property(nonatomic,strong)NSMutableArray *arr;
+@end
+
+@implementation ContactViewController
+
+- (id)initForSelectContact
+{
+    self.arr = [NSMutableArray array];
+    self.m_isSeleted = YES;
+    self.m_isSelectedSingle = NO;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.m_selectedContactDic = [NSMutableDictionary dictionary];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        m_searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, HEIGHT_NAVIGATION)];
+        [m_searchBar setDelegate:self];
+        [m_searchBar setPlaceholder:@"请输入查询关键字"];
+        m_searchBar.showsCancelButton = YES;
+        self.tableView.tableHeaderView = m_searchBar;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    return self;
+}
+
+- (id)initForSelectSingleContact
+{
+    self.m_isSeleted = YES;
+    self.m_isSelectedSingle = YES;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.m_selectedContactDic = [NSMutableDictionary dictionary];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        m_searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, HEIGHT_NAVIGATION)];
+        [m_searchBar setDelegate:self];
+        [m_searchBar setPlaceholder:@"请输入查询关键字"];
+        m_searchBar.showsCancelButton = YES;
+        self.tableView.tableHeaderView = m_searchBar;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    return self;
+}
+
+-(id)init
+{
+    self.m_isSeleted = NO;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        m_searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, HEIGHT_NAVIGATION)];
+        [m_searchBar setDelegate:self];
+        [m_searchBar setPlaceholder:@"请输入查询关键字"];
+        m_searchBar.showsCancelButton = YES;
+        self.tableView.tableHeaderView = m_searchBar;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"通讯录"];
+    self.m_depId = [LoginUserUtil deptId];
+
+  
+    if(self.m_isSeleted)
+    {
+        
+        UIButton *clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [clearBtn setTitle:@"清除" forState:UIControlStateNormal];
+        [clearBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [clearBtn addTarget:self action:@selector(clearBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [clearBtn setFrame:CGRectMake(MAIN_WIDTH-100,DISTANCE_TOP,40, HEIGHT_NAVIGATION)];
+        [navigationBG addSubview:clearBtn];
+        
+        UIButton *confrimBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [confrimBtn setTitle:@"确认" forState:UIControlStateNormal];
+        [confrimBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [confrimBtn addTarget:self action:@selector(confrimBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [confrimBtn setFrame:CGRectMake(MAIN_WIDTH-50,DISTANCE_TOP,40, HEIGHT_NAVIGATION)];
+        [navigationBG addSubview:confrimBtn];
+    }
+    else
+    {
+        [self removeBackBtn];
+
+        UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+        [slideBtn setBackgroundImage:[UIImage imageNamed:@"leftStart"] forState:UIControlStateNormal];
+        [navigationBG addSubview:slideBtn];
+    }
+}
+
+- (void)clearBtnClicked
+{
+    [self.m_selectedContactDic removeAllObjects];
+    [self reloadDeals];
+}
+
+- (void)confrimBtnClicked
+{
+    NSArray *arr = [self.m_selectedContactDic allValues];
+    if(arr == nil || arr.count == 0)
+    {
+        [PubllicMaskViewHelper showTipViewWith:@"还未选择联系人" inSuperView:self.view withDuration:1];
+        return;
+    }
+    
+    if(self.m_selectDelegate && [self.m_selectDelegate respondsToSelector:@selector(onSelected:)])
+    {
+        [self backBtnClicked];
+        [self.m_selectDelegate onSelected:arr];
+    }
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma MARK -
+
+- (void)requestData:(BOOL)isRefresh
+{
+    self.m_arrData = nil;
+    [self showWaitingView];
+  __block  NSMutableArray *arr = [NSMutableArray array];
+    [HTTP_MANAGER getDepatment:self.m_depId
+                      deptName:m_searchBar.text == nil ? @"" : m_searchBar.text
+                successedBlock:^(NSDictionary *retDic){
+        
+            
+                    
+        NSDictionary *ret = [retDic[@"DATA"] mutableObjectFromJSONString];
+        NSArray *arrGroup = ret[@"result"];
+                    
+                    [HTTP_MANAGER getDepInfo:self.m_depId
+                              successedBlock:^(NSDictionary *succeedResult) {
+                             
+                                  NSDictionary *ret = [succeedResult[@"DATA"] mutableObjectFromJSONString];
+
+                                  
+
+                                      ADTGropuInfo *groupData  = [[ADTGropuInfo alloc]init];
+                                      groupData.m_strParentId = groupData.m_strParentId = ret[@"result"][@"parentId"];
+                                      groupData.m_strDepId = self.m_currentGroup ? self.m_currentGroup.m_strDepId : [LoginUserUtil deptId];
+                                      groupData.m_strDeptName = @"..返回上级";
+                                      [arr addObject:groupData];
+                                  
+                                  
+                                  
+                                  for(NSDictionary *group in arrGroup)
+                                  {
+                                      ADTGropuInfo *groupData  = [[ADTGropuInfo alloc]init];
+//                                      groupData.m_strParentId = [self.m_depId isEqualToString:@"1"] ? [LoginUserUtil] : [group stringWithFilted:@"parentId"];
+                                      groupData.m_strParentId = ret[@"result"][@"parentId"];
+                                      groupData.m_strDepId = [group stringWithFilted:@"deptId"];
+                                      groupData.m_strDeptKind = [group stringWithFilted:@"deptKind"];
+                                      groupData.m_strDeptName = [group stringWithFilted:@"deptName"];
+                                      [arr addObject:groupData];
+                                  }
+                                  
+                                  
+                                  [HTTP_MANAGER getContact:m_searchBar.text
+                                                     depId:self.m_depId
+                                            successedBlock:^(NSDictionary *retDic){
+                                                
+                                                NSDictionary *ret = [retDic[@"DATA"] mutableObjectFromJSONString];
+                                                NSArray *arrContact = ret[@"result"];
+                                                for(NSDictionary *contact in arrContact)
+                                                {
+                                                    ADTContacterInfo *groupData  = [[ADTContacterInfo alloc]init];
+                                                    groupData.m_strDepId = self.m_depId;
+                                                    groupData.m_strLoginName = [contact stringWithFilted:@"loginName"];
+                                                    groupData.m_strUserID = [contact stringWithFilted:@"userId"];
+                                                    groupData.m_strUserName = [contact stringWithFilted:@"userName"];
+                                                    groupData.m_strMobile = [contact stringWithFilted:@"mobile"];
+                                                    groupData.m_strTel = [contact stringWithFilted:@"telno"];
+                                                    groupData.m_strJob = [contact stringWithFilted:@"job"];
+                                                    groupData.m_strEmail = [contact stringWithFilted:@"email"];
+                                                    [arr addObject:groupData];
+                                                }
+                                                
+                                                self.m_arrData = arr;
+                                                [self reloadDeals];
+                                                
+                                            } failedBolck:FAILED_BLOCK{
+                                                [self reloadDeals];
+                                            }];
+                        
+                    } failedBolck:FAILED_BLOCK{
+                    
+                    }];
+                    
+   
+        
+    } failedBolck:FAILED_BLOCK{
+         [self reloadDeals];
+    }];
+    
+
+    
+    
+    
+}
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id data = [self.m_arrData objectAtIndex:indexPath.row];
+    if([data isKindOfClass:[ADTContacterInfo class]])
+    {
+        ADTContacterInfo *info = (ADTContacterInfo *)data;
+        CGSize size = [FontSizeUtil sizeOfString:info.m_strUserName withFont:[UIFont boldSystemFontOfSize:16] withWidth:MAIN_WIDTH-60];
+        return size.height+20;
+    }
+    else
+    {
+        ADTGropuInfo *info = (ADTGropuInfo *)data;
+        CGSize size = [FontSizeUtil sizeOfString:info.m_strDeptName withFont:[UIFont boldSystemFontOfSize:16] withWidth:MAIN_WIDTH-60];
+        return size.height+20;
+    }
+    return 40;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.m_arrData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    ContactTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    if(cell == nil)
+    {
+        cell = [[ContactTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    }
+    
+    id data = [self.m_arrData objectAtIndex:indexPath.row];
+    if([data isKindOfClass:[ADTContacterInfo class]])
+    {
+        ADTContacterInfo *info = (ADTContacterInfo *)data;
+        info.isSelected = [self.m_selectedContactDic objectForKey:info.m_strUserID] == nil ? NO : YES;
+        cell.currentData = info;
+    }
+    else
+    {
+        cell.currentData = data;
+    }
+
+    return  cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id data = [self.m_arrData objectAtIndex:indexPath.row];
+    if([data isKindOfClass:[ADTContacterInfo class]])
+    {
+        ADTContacterInfo *info = (ADTContacterInfo *)data;
+
+        if(self.m_isSeleted)
+        {
+            info.isSelected= !info.isSelected;
+            if(info.isSelected)
+            {
+                [self.m_selectedContactDic setObject:info forKey:info.m_strUserID];
+
+            }
+            else
+            {
+                [self.m_selectedContactDic removeObjectForKey:info.m_strUserID];
+            }
+            
+            if([info.m_strUserID isEqualToString:[LoginUserUtil userId]] && ![self.m_selectDelegate isKindOfClass:[SendEmailViewController class]])
+            {
+                [self.m_selectedContactDic removeObjectForKey:info.m_strUserID];
+                [self reloadDeals];
+                [PubllicMaskViewHelper showTipViewWith:@"不能选择自己" inSuperView:self.view withDuration:1];
+                return;
+            }
+            
+            if(self.m_isSelectedSingle && self.m_selectedContactDic.allKeys.count > 1)
+            {
+                [self.m_selectedContactDic removeObjectForKey:info.m_strUserID];
+                [self reloadDeals];
+                [PubllicMaskViewHelper showTipViewWith:@"只能选择一个联系人" inSuperView:self.view withDuration:1];
+                return;
+            }
+            
+            
+            
+            [self reloadDeals];
+        }
+        else
+        {
+            ContactDetailViewController *infoVc = [[ContactDetailViewController alloc]initWith:info];
+            [self.navigationController pushViewController:infoVc animated:YES];
+
+        }
+    }
+    else
+    {
+        ADTGropuInfo *info = (ADTGropuInfo *)data;
+
+        if([info.m_strDeptName isEqualToString:@"..返回上级"])
+        {
+            NSString *parentId = [info.m_strParentId stringByReplacingOccurrencesOfString:@" " withString:@""];
+            if(parentId.length == 0)
+            {
+                return;
+            }
+            self.m_depId = info.m_strParentId;
+            [self.arr removeLastObject];
+            self.m_currentGroup = [self.arr lastObject];
+        }
+        else
+        {
+            self.m_currentGroup = info;
+            self.m_depId = info.m_strDepId;
+            [self.arr addObject:info];
+
+        }
+        [self requestData:YES];
+    }
+
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    if(self.m_isSeleted)
+    {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
+    else
+    {
+        [self.m_delegate onShowSliderView];
+    }
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [self requestData:self.m_isRefresh];
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar setText:nil];
+    [searchBar resignFirstResponder];
+    [self requestData:self.m_isRefresh];
+}
+
+@end

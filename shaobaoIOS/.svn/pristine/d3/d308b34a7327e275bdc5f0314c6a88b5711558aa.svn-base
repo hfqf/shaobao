@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2BB542A1-52D6-4D73-ADA3-807541C49272</string>
+	<key>IDESourceControlProjectName</key>
+	<string>officeMobile</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>343d5ed7-1a20-c541-ba98-fd038516f15a++6519</key>
+		<string>svn://218.94.19.242/ios/trunk/officeMobile</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>officeMobile.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>343d5ed7-1a20-c541-ba98-fd038516f15a++6519</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>343d5ed7-1a20-c541-ba98-fd038516f15a++6519</key>
+		<string>svn://218.94.19.242</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>svn://218.94.19.242/ios/trunk/officeMobile/officeMobile.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>343d5ed7-1a20-c541-ba98-fd038516f15a++6519</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>343d5ed7-1a20-c541-ba98-fd038516f15a++6519</string>
+			<key>IDESourceControlWCCName</key>
+			<string>officeMobile</string>
+		</dict>
+	</array>
+</dict>
+</plist>

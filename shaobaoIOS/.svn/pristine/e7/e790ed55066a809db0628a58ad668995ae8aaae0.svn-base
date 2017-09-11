@@ -1,0 +1,55 @@
+//
+//  iAppPDFHelpViewController.m
+//  iAppPDF
+//
+//  Created by apple on 14-7-9.
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+#import "iAppPDFHelpViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "iAppPDFContentViewController.h"
+@interface iAppPDFHelpViewController ()
+
+@end
+
+@implementation iAppPDFHelpViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    app = (TodoViewController *)[self.navigationController.viewControllers lastObject];
+    softInformationView.layer.borderWidth = 1;
+    softInformationView.layer.borderColor = [[UIColor blackColor] CGColor];
+    licenseInformationView.layer.borderWidth = 1;
+    licenseInformationView.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.effectLabel.text = app.effectDayStr;
+
+    // Do any additional setup after loading the view from its nib.
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    softInformationView = nil;
+    licenseInformationView = nil;
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)backToPDF:(id)sender {
+     [self dismissViewControllerAnimated:YES completion:nil];
+}
+@end

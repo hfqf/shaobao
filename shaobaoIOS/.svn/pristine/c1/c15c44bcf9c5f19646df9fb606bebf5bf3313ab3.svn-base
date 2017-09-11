@@ -1,0 +1,67 @@
+//
+//  SPPageView.h
+//  iStylePDF
+//
+//  Created by liuhuahua on 14-3-20.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+@class NYSliderPopover;
+
+typedef enum {
+    SPageScroll,
+    SPageAngle,
+    SPageRoll,
+    SPageSingle,          //单页
+    SPageContinue         //连续页面
+} SPageMode;
+@protocol  pageDelegate;
+
+@interface SPageView : UIView
+{
+    SPDocumentRef _document;
+    SPageMode   _pageMode;
+    CGRect      _viewframe;
+    id          _delegate;
+    BOOL        _pageExchange;
+    NYSliderPopover *_sliderView;
+}
+
+@property (nonatomic, assign) id delegate;
+@property (nonatomic, readwrite) NSInteger currentPage;
+
+// 初始化视图和得到PDF对象
+- (id)initWithFrameAndDocument:(CGRect)frame andDocument:(SPDocumentRef)document;
+
+// 显示PDF 视图（可设置显示当前页的页数）
+- (void)firstShowPage:(SPageMode) mode currentPage:(int)index;
+
+// 对当前页面进行操作之后需要进行刷新，这样界面就会显示你出修改的效果（index ： 当前页面）
+- (void)refreshPageView:(int)index;
+
+// 获得PDF文件页数
+- (CGRect)getImageRect;
+
+// 获得PDF 文件的大小和左上角点的位置
+- (CGPoint)getImageOrigin;
+
+- (float)getZoomScale;
+
+// 设置是否需要翻页的手势（YES： 需要）
+- (void)setPageTap:(BOOL)Tap;
+
+//- (void)setViewInterface:(BOOL)exchange;
+
+@end
+
+@protocol pageDelegate <NSObject>
+@optional
+
+// 返回当前页数。
+- (void)pageViewDelegate:(SPageView *)pageView  currentPage:(int)index;
+
+@end
+
+
+

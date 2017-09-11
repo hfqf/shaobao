@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "343d5ed7-1a20-c541-ba98-fd038516f15a++6519",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++6519" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++6519" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2BB542A1-52D6-4D73-ADA3-807541C49272",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++6519" : "officeMobile\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "officeMobile",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "officeMobile.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/218.94.19.242",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "343d5ed7-1a20-c541-ba98-fd038516f15a++6519"
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+//
+//  HttpConnctionManager.h
+//  JZH_Test
+//  httpæ°æ®è¯·æ±ç®¡çç±»
+//  Created by Points on 13-9-29.
+//  Copyright (c) 2013å¹´ Points. All rights reserved.
+
+
+@protocol HttpConnctionManagerDelegate <NSObject>
+
+@optional
+//ä¸ä¼ å¾ç
+- (void)uploadPicSucceed:(NSString *)filePath returnedDic:(NSDictionary *)dic;
+- (void)uploadPicFailed:(NSString *)filePath error: (NSError *)error;
+
+//ä¸ä¼ é³é¢
+- (void)uploadAudioSucceed:(NSString *)filePath returnedDic:(NSDictionary *)dic;
+- (void)uploadAudioFailed:(NSString *)filePath error: (NSError *)error;
+
+//ä¸è½½é³é¢æä»¶æå
+- (void)downloadAudioFileSucceed:(NSString *)path withReturnDic:(NSDictionary *)dic;
+- (void)downloadAudioFileFailed;
+
+//ä¸è½½å¾ç
+- (void)downloadPictureFileSucceed:(NSString *)path;
+- (void)downloadPictureFileFailed;
+
+
+ 
+
+@end
+
+#import <Foundation/Foundation.h>
+#import "AFHTTPRequestOperation.h"
+#import"AFHTTPRequestOperationManager.h"
+
+#import "JSONKit.h"
+#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
+#import "LocalImageHelper.h"
+#import "LoginUserUtil.h"
+#import "AFURLRequestSerialization.h"
+#import "ADTGovermentFileInfo.h"
+
+
+
+@interface HttpConnctionManager : AFHTTPRequestOperationManager<NSURLConnectionDelegate,NSStreamDelegate>
+{
+    NSMutableData *returnInfoData;
+}
+
+@property(nonatomic,assign)id<HttpConnctionManagerDelegate>delegate;
+
+@property (nonatomic,strong)NSInputStream *m_input;
+
+SINGLETON_FOR_HEADER(HttpConnctionManager);
+
+typedef void (^SuccessedBlock)(NSDictionary *succeedResult);
+
+typedef void (^downFileSuccessedBlock)(NSString *lcoalPath);
+
+typedef void (^FailedBlock)(AFHTTPRequestOperation *response, NSError *error);
+
+typedef void (^FailBlock)(NSError *error);
+
+#pragma mark - Public
+
+- (void)startGetWith:( NSString *)url
+            paragram:(NSDictionary *)para
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+//普通的post请求
+- (void)startNormalPostWith:( NSString *)url
+                   paragram:(NSDictionary *)para
+             successedBlock:(SuccessedBlock)success
+                failedBolck:(FailedBlock)failed;
+
+//上传file类型的post请求
+- (void)startMulitDataPost:( NSString *)url
+                  postFile:(NSData *)uploadFileData
+                  paragram:(NSDictionary *)para
+            successedBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+- (void)startMulitDataPost:( NSString *)url
+                  fileName:(NSString *)fileName
+                  postFile:(NSData *)uploadFileData
+                  paragram:(NSDictionary *)para
+            successedBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+//检查当前应用版本
+- (void)checkVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
+
+//登录
+- (void)startLogin:(NSString *)name pwd:(NSString *)pwd successedBlock:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
+
+//获取待办文件
+- (void)getTodoFile:(NSString *)appType
+                key:(NSString *)key
+         actorClass:(NSString *)actorClass
+         startIndex:(NSString *)start
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+//获取待办文件详情
+- (void)getTodoFileInfoWith:(NSString *)msgId
+             successedBlock:(SuccessedBlock)success
+                failedBolck:(FailedBlock)failed;
+
+//获取已办文件
+- (void)getDoneFile:(NSString *)actor
+                key:(NSString *)key
+         actorClass:(NSString *)actorClass
+         startIndex:(NSString *)start
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+//获取邮件列表
+- (void)getEmailWithType:(NSInteger)type
+                     key:(NSString *)key
+                  sender:(NSString *)senderId
+              startIndex:(NSString *)start
+          successedBlock:(SuccessedBlock)success
+             failedBolck:(FailedBlock)failed;
+
+//获取联系人
+- (void)getContact:(NSString *)key
+             depId:(NSString *)depId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+
+//获取联系人
+- (void)getDeptUsers:(NSString *)depId
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+- (void)getDepInfo:(NSString *)deptId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getDepatment:(NSString *)depId
+            deptName:(NSString *)deptName
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getContactInfo:(NSString *)userId
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+/**
+ ["获取消息列表"] *	@brief	获取消息列表
+ ["电话号码"] *	@param 	tel 	电话号码
+ ["搜索关键字"] *	@param 	key 	搜索关键字
+ ["索引值"] *	@param 	index 	索引值
+ ["成功回调"] *	@param 	success 	成功回调
+ [""] *	@param 	failed 	失败回调
+ [""] *
+ [""] *	@return	void
+ [""] */
+- (void)getMessageWithTel:(NSString *)tel
+                  WithKey:(NSString *)key
+               startIndex:(NSNumber *)index
+           successedBlock:(SuccessedBlock)success
+              failedBolck:(FailedBlock)failed;
+
+/**
+[""] *	@brief	发送短信
+[""] *
+[""] *	@param 	tel 	电话号码
+[""] *	@param 	content 	内容
+[""] *	@param 	success 	成功回调
+[""] *	@param 	failed 	失败回调
+[""] *
+[""] *	@return	void
+[""] */
+- (void)sendMessageWithTel:(NSString *)tel
+               WithContent:(NSString *)content
+                  WithTime:(NSString *)sendTime
+            successedBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+
+- (void)getNoticeList:(NSString *)key
+                index:(NSNumber *)index
+               isRead:(BOOL)isRead
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
+
+- (void)getAbsenceList:(NSString *)key
+                 index:(NSNumber *)index
+                 statu:(BOOL)statu
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+- (void)disagree:(NSDictionary *)info
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed;
+
+- (void)agreeAbsence:(NSDictionary *)info
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed;
+
+- (void)saveAbsence:(NSDictionary *)info
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)postAbsence:(NSDictionary *)info
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)GetEmialInfo:(NSString *)mailId
+           isSaveBox:(BOOL)isSaveBox
+               msgId:(NSString *)msgId
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+- (void)GetRepostEmialInfo:(NSString *)mailId
+            successedBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+- (void)uploadPDFFileWithPath:(NSString *)filePath
+              withFileData:(NSData *)data
+                    params:(NSDictionary *)params
+              successBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+- (void)uploadFileWithPath:(NSData *)fileData
+                    params:(NSDictionary *)params
+              successBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed;
+
+- (void)downloadFileWithUrl:(NSString *)url
+                     params:(NSDictionary *)params
+               successBlock:(SuccessedBlock)success
+                failedBolck:(FailedBlock)failed;
+
+- (void)downloadFileWithUrl:(NSString *)url
+                   fileName:(NSString *)fileName
+                     params:(NSDictionary *)params
+               successBlock:(SuccessedBlock)success
+                failedBolck:(FailedBlock)failed;
+
+- (void)dealwithEmail:(int)type
+             withInfo:(NSDictionary *)info
+         withReceiver:(NSArray *)arrReceive
+      withReceiverBTW:(NSArray *)arrReceiveBTW
+   withReceiverSecret:(NSArray *)arrReceiveSecret
+             withUUid:(NSString *)uuid
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
+
+- (void)deleteEmail:(NSDictionary *)reqDic
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)deleteFile:(NSString *)fileId
+           docType:(int)docType
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getTodoInfo:(NSString *)msgId
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)saveTodoFile:(NSString *)option
+            WithInfo:(ADTGovermentFileInfo *)info
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+- (void)getTodoContact:(NSDictionary *)reqDic
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+- (void)giveUpTodo:(NSDictionary *)reqDic
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)commitTodo:(NSDictionary *)reqDic
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getGovermentFileInfo:(NSString *)documentId
+              successedBlock:(SuccessedBlock)success
+                 failedBolck:(FailedBlock)failed;
+
+- (void)updateNotice:(NSString *)noticeId
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+- (void)deleAbense:(NSString *)abenseId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)updateEmailStateToReaded:(NSString *)msgId
+                  successedBlock:(SuccessedBlock)success
+                     failedBolck:(FailedBlock)failed;
+
+//检查更新
+- (void)gettheLastestVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
+
+- (void)getTipNum:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
+
+
+#pragma mark -  日程
+
+- (void)getScheduleList:(NSInteger)startIndex
+              startTime:(NSString *)startTime
+                endTime:(NSString *)endTime
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed;
+
+- (void)saveSchdule:(NSDictionary *)info
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)modifySchdule:(NSDictionary *)info
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
+
+- (void)deleteSchdule:(NSDictionary *)info
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
+
+- (void)getNum:(NSInteger)type
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed;
+
+- (void)getGroupList:(NSString *)depId
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
+
+#pragma mark - 通知
+- (void)updateMessageToReaded:(NSString *)msgId
+               successedBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed;
+
+
+#pragma mark - 建邺oa新增接口
+
+
+#pragma mark - 会议管理
+- (void)getMeetingManagerList:(NSInteger)index
+               successedBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed;
+
+- (void)getMeetingInfo:(NSString *)meetingId
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+///会议审核
+- (void)dealMeeting:(NSString *)roomId
+            address:(NSString *)address
+         relationId:(NSString *)relationId
+          auditType:(NSString *)auditType
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+///会议室申请
+- (void)askForMeetingRoom:(NSString *)roomId
+                  address:(NSString *)address
+               relationId:(NSString *)relationId
+                auditType:(NSString *)auditType
+           successedBlock:(SuccessedBlock)success
+              failedBolck:(FailedBlock)failed;
+
+
+
+#pragma mark - 督查督办
+
+- (void)getObserverList:(NSInteger)index
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed;
+
+#pragma mark - 获取电子期刊列表
+- (void)getEManagerList:(NSInteger)index
+                subject:(NSString *)subject
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed;
+
+#pragma mark - 资源中心
+
+- (void)getResourceCenterMenuList:(NSString *)parentId
+                   successedBlock:(SuccessedBlock)success
+                      failedBolck:(FailedBlock)failed;
+
+- (void)getResourceCenterList:(NSString *)parentId
+               successedBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed;
+
+- (void)getResourceCenterFileInfo:(NSString *)dataId
+                   successedBlock:(SuccessedBlock)success
+                      failedBolck:(FailedBlock)failed;
+@end

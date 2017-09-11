@@ -1,0 +1,132 @@
+//
+//  ResourceCentreViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/10.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "ResourceCentreViewController.h"
+
+@interface ResourceCentreViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic,strong)NSArray *m_arrCategory;
+@end
+
+@implementation ResourceCentreViewController
+
+- (id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource =  self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    return self;
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"资源中心"];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    [self.m_delegate onShowSliderView];
+}
+
+
+- (void)requestData:(BOOL)isRefresh
+{
+   
+}
+
+
+- (void)getMuneList
+{
+    [HTTP_MANAGER getResourceCenterMenuList:^(NSDictionary *succeedResult) {
+        
+        
+        
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+        
+        
+    }];
+}
+
+- (void)getNextMenuList:(NSString *)parentId
+{
+    [HTTP_MANAGER getResourceCenterMenuList:^(NSDictionary *succeedResult) {
+        
+        
+        
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+        
+        
+    }];
+}
+
+
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 75;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.m_arrData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell *  cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.tag = self.m_currentIndex;
+    
+    NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
+    
+    UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, MAIN_WIDTH/2, 18)];
+    [tip setTextAlignment:NSTextAlignmentLeft];
+    [tip setTextColor:UIColorFromRGB(0x323232)];
+    [tip setFont:[UIFont systemFontOfSize:16]];
+    [tip setBackgroundColor:[UIColor clearColor]];
+    [tip setText:[info stringWithFilted:@"meetingName"]];
+    [cell addSubview:tip];
+    
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, 74.5, MAIN_WIDTH, 0.5)];
+    [sep setBackgroundColor:UIColorFromRGB(0xDCDCDC)];
+    [cell addSubview:sep];
+    return  cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
+    
+}
+
+@end

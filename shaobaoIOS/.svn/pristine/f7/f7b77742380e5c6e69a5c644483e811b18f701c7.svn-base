@@ -1,0 +1,125 @@
+//
+//  SPCosObject.h
+//  iStylePDF
+//
+//  Created by xiong on 14-8-29.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewNull(SPDocumentRef doc);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewBool(SPDocumentRef doc, BOOL b, BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewInt(SPDocumentRef doc, int i,  BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewReal(SPDocumentRef doc, float f, BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewName(SPDocumentRef doc, NSString *name, BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewString(SPDocumentRef doc, NSString *s, int len, BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewArray(SPDocumentRef doc, NSInteger initcap,BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewDict(SPDocumentRef doc, NSInteger initDic, BOOL indirect);
+
+SP_EXTERN SPCosObjectRef SPCosObjectNewStream(SPDocumentRef doc, NSData *data, BOOL encoded, SPCosObjectRef dict, SPCosObjectRef params, BOOL indirect);
+
+
+SP_EXTERN SPCosObjectRef SPCosObjectKeep(SPCosObjectRef ref);
+
+SP_EXTERN void SPCosObjectDelete(SPCosObjectRef ref);
+
+SP_EXTERN NSInteger SPCosObjectNum(SPCosObjectRef ref);
+
+
+#pragma mark - Is
+
+SP_EXTERN BOOL SPCosObjectIsNull(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsBool(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsInt(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsReal(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsName(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsString(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsArray(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsDict(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsIndirect(SPCosObjectRef ref);
+
+SP_EXTERN BOOL SPCosObjectIsStream(SPCosObjectRef ref);
+
+
+#pragma mark - To
+
+SP_EXTERN BOOL SPCosObjectToBool(SPCosObjectRef ref);
+
+SP_EXTERN NSInteger SPCosObjectToInt(SPCosObjectRef ref);
+
+SP_EXTERN float SPCosObjectToReal(SPCosObjectRef ref);
+
+SP_EXTERN NSString * SPCosObjectToName(SPCosObjectRef ref);
+
+SP_EXTERN NSString * SPCosObjectToString(SPCosObjectRef ref);
+
+SP_EXTERN NSInteger SPCosObjectToStringLength(SPCosObjectRef ref);
+
+SP_EXTERN NSInteger SPCosObjectToId(SPCosObjectRef ref);
+
+SP_EXTERN NSInteger SPCosObjectToGen(SPCosObjectRef ref);
+
+
+#pragma mark - Array
+
+SP_EXTERN NSInteger SPCosObjectArrayLen(SPCosObjectRef ref);
+
+SP_EXTERN SPCosObjectRef SPCosObjectArrayGet(SPCosObjectRef ref, NSInteger count);
+
+SP_EXTERN void SPCosObjectArrayPut(SPCosObjectRef ref,NSInteger i,SPCosObjectRef item);
+
+SP_EXTERN void SPCosObjectArrayPush(SPCosObjectRef ref, SPCosObjectRef item);
+
+SP_EXTERN void SPCosObjectArrayInsert(SPCosObjectRef ref, SPCosObjectRef item);
+
+SP_EXTERN void SPCosObjectArrayDelete(SPCosObjectRef ref, NSInteger i);
+
+
+#pragma mark - Dic
+
+SP_EXTERN NSInteger SPCosObjectDictLen(SPCosObjectRef dic);
+
+SP_EXTERN SPCosObjectRef SPCosObjectDictGetKey(SPCosObjectRef dic, NSInteger index);
+
+SP_EXTERN SPCosObjectRef SPCosObjectDictGetVal(SPCosObjectRef dic, NSInteger index);
+
+SP_EXTERN SPCosObjectRef SPCosObjectDictGet(SPCosObjectRef dic, SPCosObjectRef key);
+
+SP_EXTERN SPCosObjectRef SPCosObjectDictGets(SPCosObjectRef dic, NSString *Key);
+
+SP_EXTERN void SPCosObjectDictPut(SPCosObjectRef dic, SPCosObjectRef key, SPCosObjectRef val);
+
+SP_EXTERN void SPCosObjectDictPuts(SPCosObjectRef dic, NSString *Key, SPCosObjectRef val);
+
+SP_EXTERN void SPCosObjectDictDelete(SPCosObjectRef dic, SPCosObjectRef key);
+
+SP_EXTERN void SPCosObjectDictDeletes(SPCosObjectRef dic, NSString *Key);
+
+
+#pragma mark - Other
+
+SP_EXTERN SPCosObjectRef SPCosObjectGetTrailer(SPDocumentRef doc);
+
+SP_EXTERN void  SPCosObjectSetModify(SPDocumentRef doc, SPCosObjectRef obj, BOOL b);
+
+SP_EXTERN NSData* SPCosObjectStreamToBuffer(SPCosObjectRef obj);
+

@@ -1,0 +1,6 @@
+framework module iStylePDF {
+  umbrella header "iStylePDF.h"
+
+  export *
+  module * { export * }
+}

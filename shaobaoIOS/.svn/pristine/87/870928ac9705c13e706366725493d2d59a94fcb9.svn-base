@@ -1,0 +1,93 @@
+//
+//  ObserveManagerViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/10.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "ObserveManagerViewController.h"
+
+@interface ObserveManagerViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@end
+
+@implementation ObserveManagerViewController
+
+- (id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource =  self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+    }
+    return self;
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"督查督办"];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    [self.m_delegate onShowSliderView];
+}
+
+
+- (void)requestData:(BOOL)isRefresh
+{
+    [HTTP_MANAGER getObserverList:0
+                   successedBlock:^(NSDictionary *succeedResult) {
+        
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+    }];
+}
+
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.m_arrData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    }
+    cell.tag = self.m_currentIndex;
+    return  cell;
+}
+
+@end

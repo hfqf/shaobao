@@ -1,0 +1,25 @@
+//
+//  SPImage.h
+//  iStylePDF
+//
+//  Created by xiong on 14-7-15.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+enum
+{
+	spimage_Image_JPEG
+};
+
+// 得到图片的对象
+SP_EXTERN SPImageRef SPImageRefCreateFromPath(SPDocumentRef ref, NSString* string);
+
+// 将图片转换成PDF
+SP_EXTERN NSInteger  SPImageRefAddImage(SPPageRef ref, CGRect r, BOOL size, SPImageRef img);
+
+// 释放内存
+SP_EXTERN NSInteger SPImageRefFree(SPImageRef ref);

@@ -1,0 +1,138 @@
+//
+//  SideslipView.m
+//  xxt_xj
+//
+//  Created by Yang on 14/11/4.
+//  Copyright (c) 2014年 Points. All rights reserved.
+//
+
+#import "SideslipView.h"
+#import "SliderTableViewCell.h"
+#import "EGOImageButton.h"
+#import "ClassIconImageView.h"
+
+@interface SideslipView()<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, strong) NSArray *cellName;
+@property (nonatomic, strong) NSArray *cellNameImage;
+@property (nonatomic, strong) UIView  *settingBackgroundView;
+@property (nonatomic, strong) UIButton *settingBtn;
+@property (nonatomic, strong) ClassIconImageView *avatarImageView;  ///< 头像
+@property (nonatomic, strong) NSArray *m_arrSliderType;
+@end
+
+@implementation SideslipView
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (id)init{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.userInteractionEnabled = YES;
+        [self setBackgroundColor:UIColorFromRGB(0x204565)];
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width,frame.size.height)];
+        [self.tableView setContentInset:UIEdgeInsetsMake(20, 0, 0, 0)];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.tableView.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.tableView];
+        self.m_arrSliderType =@[
+                                @{@"icon":@"home_home",
+                                  @"name":@"首页"},
+                                @{@"icon":@"home_1",
+                                  @"name":@"公文管理"},
+                                @{@"icon":@"home_2",
+                                  @"name":@"通知"},
+                                @{@"icon":@"home_3",
+                                  @"name":@"会议管理"},
+                                @{@"icon":@"home_4",
+                                  @"name":@"督查督办"},
+                                @{@"icon":@"home_5",
+                                  @"name":@"领导日程"},
+                                @{@"icon":@"home_6",
+                                  @"name":@"通讯录"},
+                                @{@"icon":@"home_7",
+                                  @"name":@"电子期刊"},
+                                @{@"icon":@"home_8",
+                                  @"name":@"资源中心"},
+                                @{@"icon":@"home_logout",
+                                  @"name":@"退出"},
+                            ];
+    }
+    return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+     return self.m_arrSliderType.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *sideslipCellIndentifier = @"sideslipCell";
+    SliderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sideslipCellIndentifier];
+    if (!cell) {
+        cell = [[SliderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:sideslipCellIndentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
+    NSMutableArray *sideArr = [NSMutableArray arrayWithArray:self.m_arrSliderType];
+    [cell setCellDic:[sideArr objectAtIndex:indexPath.row] with:_currentIndex == indexPath.row isHomeCell:YES];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row == self.m_arrSliderType.count)
+    {
+        return (MAIN_HEIGHT-DISTANCE_TOP-(self.m_arrSliderType.count)*50);
+    }
+    return 48;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] init];
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(indexPath.row == 0){
+        [self.delegate onPopToHomeView];
+    }
+    else if(self.m_arrSliderType.count-1 != indexPath.row)
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(sideslipViewTableView:didSelectRowAtIndexPath:)]) {
+            [self.delegate sideslipViewTableView:tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
+    else
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(onLogoutBtnClicked)]) {
+            [self.delegate onLogoutBtnClicked];
+        }
+    }
+   
+}
+
+- (void)setCurrentIndex:(NSInteger)currentIndex
+{
+
+    [self.delegate onShowMainView];
+    
+    _currentIndex = currentIndex;
+    [self.tableView reloadData];
+    [self.delegate onSelectIndex:currentIndex];
+}
+
+
+@end

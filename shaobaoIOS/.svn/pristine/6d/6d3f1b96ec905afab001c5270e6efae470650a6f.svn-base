@@ -1,0 +1,21 @@
+//
+//  SPOutLine.h
+//  iStylePDF
+//
+//  Created by xiong on 14-10-24.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import "iStylePDFBase.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+SP_EXTERN  SPOutLineRef SPOutLineRefGetOutLine(SPDocumentRef ref);
+
+SP_EXTERN  SPOutLineRef SPOutLineRefGetChild(SPOutLineRef lineRef);
+
+SP_EXTERN  SPOutLineRef SPOutLineRefGetNext(SPOutLineRef lineRef);
+
+SP_EXTERN  NSString *  SPOutLineRefGetSignName(SPOutLineRef ref);
+
+SP_EXTERN  NSInteger   SPOutLineRefGetLink(SPOutLineRef ref);

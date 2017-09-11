@@ -1,0 +1,212 @@
+//
+//  iAppPDFViewController.m
+//  iAppPDF
+//
+//  Created by apple on 14-7-8.
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+#import "iAppPDFViewController.h"
+#import "iAppPDFContentViewController.h"
+
+@interface iAppPDFViewController ()
+
+@end
+
+@implementation iAppPDFViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+     app = (iAppPDFAppDelegate *)[[UIApplication sharedApplication] delegate];
+    // Do any additional setup after loading the view from its nib.
+}
+
+/* 把工程里面的PDF文件写入document里面 */
+- (void)savePDFToDocument:(NSString *)fileName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSLog(@"app_home_doc: %@",documentsDirectory);
+    NSString *testDirectory = [documentsDirectory stringByAppendingPathComponent:fileName];
+    NSString *name;
+    NSString *ext;
+    if (fileName.length != 0)
+    {
+        name=[fileName substringToIndex:fileName.length-4];
+        ext = [fileName substringFromIndex:name.length+1];
+    }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:testDirectory])
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        [data writeToFile:testDirectory atomically:YES];
+        
+    }
+}
+
+- (void)saveImage
+{
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    
+    NSString *imagePath = [mainBundle pathForResource:@"1024副本" ofType:@"jpg"];
+    NSLog(@"%@", imagePath);
+    UIImage *image = [[UIImage alloc]initWithContentsOfFile:imagePath];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    paths = nil;
+    NSString* filename = [path stringByAppendingPathComponent:@"1024副本.jpg"];
+    NSData *data;
+    data = UIImageJPEGRepresentation(image, 1);
+    
+    [data writeToFile:filename atomically:YES];
+
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self reloadPDF];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    PDFArray = nil;
+    
+    self.view = nil;
+    
+}
+
+/* 刷新PDF */
+- (void)reloadPDF
+{
+    if (PDFArray != nil)
+    {
+        PDFArray = nil;
+    }
+	PDFArray = [[NSMutableArray alloc] initWithObjects:@"会议文件.pdf",@"电信模板.pdf",@"餐饮服务许可证申请书.pdf",@"工程监督执法模板.pdf",@"公文会签.pdf",@"电子保单.pdf",@"公安模板.PDF",@"再生育一个子女申请表.pdf",@"yd_fill.pdf",@"ga(1).pdf", nil];
+}
+
+- (int)readButtonTag
+{
+    //取得路径
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    NSString* filename = [path stringByAppendingPathComponent:@"button.plist"];
+    //读数据
+    NSMutableDictionary* dic =  [[NSMutableDictionary alloc] initWithContentsOfFile:filename];
+    return[[dic objectForKey:@"ButtonTag"] intValue];
+    
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)meettingButtonClick:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    iAppPDFContentViewController *iappContentCtroller = [[iAppPDFContentViewController alloc] init];
+    
+    app.signatureNameAp = @"Signature2";
+    app.authorNameAp = @"admin";
+    switch (button.tag)
+    {
+        case 101:
+            app.isMeettingFile = YES;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = NO;
+            app.fileNameStr = @"会议文件.pdf";
+            break;
+        case 102:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = YES;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = NO;
+            app.fileNameStr = @"yd_fill.pdf";
+            break;
+        case 103:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = YES;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = YES;
+            app.fileNameStr = @"工程监督执法模板.pdf";
+            break;
+        case 104:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = YES;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = YES;
+            app.fileNameStr = @"ga(1).pdf";
+            break;
+        case 105:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = NO;
+            app.isCanChangeAuthor = YES;
+            app.isCountersigned = YES;
+            app.isPushCamera = NO;
+            app.fileNameStr = @"公文会签.pdf";
+            int buttonTag = [self readButtonTag];
+            if (buttonTag == 189)
+            {
+                app.signatureNameAp = @"hg";
+            }
+            else if (buttonTag == 190)
+            {
+                app.signatureNameAp = @"qf";
+            }
+            else
+            {
+                app.signatureNameAp = @"sg";
+            }
+            break;
+        case 106:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = NO;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = NO;
+            
+            app.fileNameStr = @"餐饮服务许可证申请书.pdf";
+            break;
+        case 107:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = NO;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = NO;
+            
+            app.fileNameStr = @"再生育一个子女申请表.pdf";
+            break;
+        case 108:
+            app.isMeettingFile = NO;
+            app.isHaveCamera = NO;
+            app.isCanChangeAuthor = NO;
+            app.isCountersigned = NO;
+            app.isPushCamera = NO;
+            app.fileNameStr = @"电子保单.pdf";
+            break;
+        default:
+            break;
+    }
+   // [self saveImage];
+    [self savePDFToDocument:app.fileNameStr];
+    iappContentCtroller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:iappContentCtroller animated:YES completion:nil];
+}
+@end

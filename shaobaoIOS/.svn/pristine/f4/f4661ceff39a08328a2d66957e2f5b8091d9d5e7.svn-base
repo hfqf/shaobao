@@ -1,0 +1,52 @@
+//
+//  SPDocument.h
+//
+//  Created by liuhuahua on 14-3-20.
+//  Copyright (c) 2014年 iStylePDF. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "iStylePDFBase.h"
+
+// 打开PDF
+SP_EXTERN  SPDocumentRef  SPDocumentRefOpen(NSString* filePath);
+
+// 判断是否需要密码 (返回0是不需要密码的)
+SP_EXTERN  NSInteger SPDocumentRefSecurity(SPDocumentRef ref);
+
+// 创建PDF空白文档
+SP_EXTERN  NSInteger  SPDocumentRefCreate(SPDocumentRef ref);
+
+SP_EXTERN  SPDocumentRef SPDocumentRefDoc(SPDocumentRef ref);
+
+// 需要输入密码打开PDF(1 打开成功)
+SP_EXTERN  BOOL SPDocumentRefPassWord(SPDocumentRef ref, NSString *password);
+
+// 关闭PDF
+SP_EXTERN  void  SPDocumentRefClose(SPDocumentRef ref);
+
+// 保存PDF
+SP_EXTERN  NSInteger  SPDocumentRefSave(SPDocumentRef ref);
+
+// 保存PDF到文件
+SP_EXTERN  NSInteger  SPDocumentRefSaveAs(SPDocumentRef ref,NSString *filePath);
+
+// PDF页数
+SP_EXTERN  NSInteger  SPDocumentRefPageCount(SPDocumentRef ref);
+
+// PDF渲染
+SP_EXTERN  UIImage *  SPDocumentRefrenderPageViewSize(SPDocumentRef ref,NSInteger pageIndex,CGSize size);
+
+// PDF 渲染
+SP_EXTERN  UIImage *  SPDocumentRefrenderTilePageIndexRotateRect(SPDocumentRef ref,NSInteger pageIndex, NSInteger rotate, CGRect pageRect,CGRect Rect);
+
+// PDF 获得sppageRef
+SP_EXTERN  SPPageRef  SPDocumentGetPage(SPDocumentRef ref, NSInteger index);
+
+// PDF 插入更新底层document
+SP_EXTERN  void  SPDocumentRefupdatePageAndAll(SPDocumentRef ref, NSInteger pageIndex,NSInteger updateall);
+
+// PDF 获得ROOTField
+SP_EXTERN   SPFieldRef SPDocumentRefGetFristField(SPDocumentRef ref);
+
+

@@ -1,0 +1,27 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "343d5ed7-1a20-c541-ba98-fd038516f15a++9680",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++9680" : {
+      "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "ios\/branches",
+      "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "ios\/tags",
+      "DVTSourceControlWorkingCopyRepositoryPrimaryBranchLocationKey" : "ios\/trunk"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++9680" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1FA0BB2E-5406-4164-A50B-104294AE2215",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "343d5ed7-1a20-c541-ba98-fd038516f15a++9680" : "officeMobile-Jianye\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "jianye",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "jianye.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/www.jsddkj.com",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "343d5ed7-1a20-c541-ba98-fd038516f15a++9680"
+    }
+  ]
+}

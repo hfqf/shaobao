@@ -1,0 +1,92 @@
+//
+//  SPField.h
+//  iStylePDF
+//
+//  Created by liuhuahua on 14-4-17.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+enum 
+{
+	SPField_PUSH_BTN,
+	SPField_CHECK_BTN,
+	SPField_RADIO_BTN,
+	SPField_TEXT,
+	SPField_COMBOX,
+	SPField_LISTBOX,
+	SPField_SIGNATURE,
+	SPField_UNKNOWN
+};
+
+// 设置字符串
+SP_EXTERN void SPFieldSetValue(SPFieldRef fieldRef, NSString *val);
+
+// 获取设置字符串
+SP_EXTERN NSString* SPFieldGetValue(SPFieldRef ref);
+
+// 获得域类型
+SP_EXTERN NSInteger SPFieldGetType(SPFieldRef ref);
+
+// 获得域的frame值
+SP_EXTERN CGRect SPFieldGetFrame(SPFieldRef ref);
+
+// 获得下一个域
+SP_EXTERN SPFieldRef SPFieldGetNext(SPFieldRef ref);
+
+// 删除域
+SP_EXTERN void SPFieldDelete(SPFieldRef ref);
+
+// 得到域的名称
+SP_EXTERN  NSString * SPFieldGetName(SPFieldRef ref);
+
+// 得到域所在的页数
+SP_EXTERN NSInteger SPFieldGetPageNumber(SPFieldRef ref);
+
+// 获得备用名
+SP_EXTERN NSInteger SPFieldGetAlternateName(SPFieldRef ref);
+
+// 获取映射名
+SP_EXTERN NSInteger SPFieldGetMappingName(SPFieldRef ref);
+
+// 选择域长度
+SP_EXTERN NSInteger SPFieldGetOptLength(SPFieldRef ref);
+
+// 计算index选择域的长度
+SP_EXTERN NSInteger SPFieldGetOptIndexLength(SPFieldRef ref);
+
+// 获得选择域
+SP_EXTERN NSInteger SPFieldGetOptIndex(SPFieldRef ref, NSInteger index);
+
+SP_EXTERN NSString* SPFieldGetOptString(SPFieldRef ref, NSInteger index);
+
+// 设置域的名字
+SP_EXTERN NSInteger SPFieldSetName(SPFieldRef ref, NSString *name);
+
+// 设置域备用名
+SP_EXTERN NSInteger SPFieldSetAlternateName(SPFieldRef ref, NSString *name);
+
+// 设置域映射名
+SP_EXTERN NSInteger SPFieldSetMappingName(SPFieldRef ref, NSString *name);
+
+// 设置域标示
+SP_EXTERN NSInteger SPFieldSetFlags(SPFieldRef ref, NSInteger flags);
+
+SP_EXTERN NSInteger SPFieldReset(SPFieldRef ref);
+
+// 设置按钮状态
+SP_EXTERN NSInteger SPFieldSetButtonState(SPFieldRef ref);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+SP_EXTERN SPSignatureRef SPFieldCreateSignature(SPFieldRef ref);
+
+//
+SP_EXTERN NSInteger SPFieldGetContentType(SPFieldRef ref);
+
+SP_EXTERN NSString * SPFieldGetContectFormat(SPFieldRef ref);
+
+
+
+

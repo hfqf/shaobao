@@ -1,0 +1,42 @@
+//
+//  SPPage.h
+//  iStylePDF
+//
+//  Created by liuhuahua on 14-4-10.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+// PDF 插入图片（图片路径）
+SP_EXTERN  NSInteger  SPPageRefInSertImage(SPPageRef ref ,NSString *path, CGRect frame);
+
+SP_EXTERN  SPAnnotRef SPPageRefInSertImageReturnAnnot(SPPageRef ref,NSString *path ,CGRect frame);
+
+// PDF 插入图片（图片）
+SP_EXTERN  NSInteger  SPPageRefInSertUIImage(SPPageRef ref ,UIImage *image , CGRect frame);
+
+// PDF 页面大小
+SP_EXTERN  CGRect  SPPageRefPageSize(SPPageRef ref , NSInteger index);
+
+// PDF 旋转角度
+SP_EXTERN  NSInteger  SPPageRefPageRotation(SPPageRef ref ,NSInteger index);
+
+// PDF 获得节点（删除批注时要先拿到这个对象）
+SP_EXTERN  SPAnnotRef  SPPageRefGetFirstAnnot(SPPageRef ref);
+
+// PDF 创建批注对象
+SP_EXTERN  SPAnnotRef  SPPageRefCreateAnnot(SPPageRef ref, NSInteger type);
+
+// PDF 
+SP_EXTERN  SPPageRef   SPPageRefLoadPage(SPDocumentRef doc, NSInteger num);
+
+SP_EXTERN  NSInteger   SPPageRefFree(SPPageRef ref);
+
+// 插入空白PDF页面
+SP_EXTERN  SPPageRef   SPPageRefInSertBlankPage(SPDocumentRef ref, CGRect rect, NSInteger rotate, NSInteger afterIndex);
+
+// 删除PDF页面
+SP_EXTERN  NSInteger   SPPageRefDeletePage(SPDocumentRef ref, NSInteger index);
+

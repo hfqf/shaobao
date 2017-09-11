@@ -1,0 +1,54 @@
+//
+//  LeaderSchudeViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/10.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "LeaderSchudeViewController.h"
+
+@interface LeaderSchudeViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@end
+
+@implementation LeaderSchudeViewController
+
+
+- (id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource =  self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"领导日程"];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    [self.m_delegate onShowSliderView];
+}
+
+
+
+@end

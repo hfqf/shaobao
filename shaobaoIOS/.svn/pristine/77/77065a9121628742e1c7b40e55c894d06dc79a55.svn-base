@@ -1,0 +1,24 @@
+//
+//  SPPageText.h
+//  iStylePDF
+//
+//  Created by xiong on 14-9-19.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "iStylePDFBase.h"
+
+
+// 加载text页面
+SP_EXTERN SPPageTextRef SPPageRefLoadText(SPPageRef ref,BOOL insludeAnnots);
+
+// 页面关闭
+SP_EXTERN NSInteger SPPageTextRefClose(SPPageTextRef ref);
+
+// 获取页面字符长度
+SP_EXTERN NSInteger SPPageTextLength(SPPageTextRef ref);
+
+// 得到起点下标为index，数量为count的所有字的Unicode编码和位置。数组里边也是数组，每个小数组里边有5个值，分别为字符编码和四个位置值
+SP_EXTERN NSArray * SPPageTextChar(SPPageTextRef ref,NSInteger index, NSInteger count);

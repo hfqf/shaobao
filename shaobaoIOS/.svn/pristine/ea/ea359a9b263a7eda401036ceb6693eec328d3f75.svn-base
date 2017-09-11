@@ -1,0 +1,54 @@
+//
+//  AddNewMeetingViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/13.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "AddNewMeetingViewController.h"
+
+@interface AddNewMeetingViewController ()<UITableViewDataSource,UITableViewDelegate>
+
+@end
+
+@implementation AddNewMeetingViewController
+
+- (id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource =  self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"申请"];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

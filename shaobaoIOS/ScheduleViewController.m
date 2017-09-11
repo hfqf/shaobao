@@ -1,0 +1,325 @@
+//
+//  ScheduleViewController.m
+//  officeMobile
+//
+//  Created by Points on 15/10/31.
+//  Copyright © 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "ScheduleViewController.h"
+#import "NewScheduleViewController.h"
+@interface ScheduleViewController()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+{
+    UIView *m_bg;
+    UITextField *startInput;
+    UITextField *endInput;
+}
+
+@end
+
+@implementation ScheduleViewController
+
+-(id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES])
+    {
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        self.tableView.separatorStyle =  UITableViewCellSeparatorStyleNone;
+
+    }
+    return self;
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    [self.m_delegate onShowSliderView];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [title setText:@"日程"];
+    [self crateTimeZone];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+    [self createButtons];
+}
+
+- (void)crateTimeZone
+{
+    m_bg= [[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(navigationBG.frame), MAIN_WIDTH, 65)];
+    [m_bg setBackgroundColor:UIColorFromRGB(0x787878)];
+    
+    UIView *btnBg = [[UIView alloc]initWithFrame:CGRectMake(10, 10, MAIN_WIDTH-20, 44)];
+    [btnBg setBackgroundColor:[UIColor whiteColor]];
+    [m_bg addSubview:btnBg];
+    
+    
+    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(2, 10, 30, 20)];
+    [icon setImage:[UIImage imageNamed:@"tab_5_checked"]];
+    [btnBg addSubview:icon];
+    
+    
+
+    
+    startInput = [[UITextField alloc]initWithFrame:CGRectMake(40, 5, MAIN_WIDTH/2-60, 34)];
+    startInput.tag = 1;
+    startInput.delegate = self;
+    [startInput setText:[LocalTimeUtil getCurrentDay]];
+    [startInput setBackgroundColor:[UIColor clearColor]];
+    startInput.layer.borderColor = UIColorFromRGB(0xDEDEDE).CGColor;
+    startInput.layer.borderWidth =0.5;
+    [btnBg addSubview:startInput];
+
+    UIView *inputBg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 200)];
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setFrame:CGRectMake(10, 10, 40, 30)];
+    [cancelBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+    [inputBg addSubview:cancelBtn];
+    UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [confirmBtn addTarget:self action:@selector(confirmBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [confirmBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [confirmBtn setFrame:CGRectMake(MAIN_WIDTH-60, 10, 40, 30)];
+    [confirmBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+    [inputBg addSubview:confirmBtn];
+    UIDatePicker *picker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 50, MAIN_WIDTH-100, 140)];
+    picker.tag = 1;
+    picker.datePickerMode = UIDatePickerModeDateAndTime;
+    [inputBg addSubview:picker];
+    startInput.inputView = inputBg;
+
+    
+    
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-5, 22, 10, 1)];
+    [sep setBackgroundColor:[UIColor blackColor]];
+    [btnBg addSubview:sep];
+    
+    endInput = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2+15, 5, MAIN_WIDTH/2-80, 34)];
+    endInput.tag = 2;
+    endInput.delegate = self;
+    [endInput setText:[LocalTimeUtil getCurrentDay]];
+    [endInput setBackgroundColor:[UIColor clearColor]];
+    endInput.layer.borderColor = UIColorFromRGB(0xDEDEDE).CGColor;
+    endInput.layer.borderWidth =0.5;
+    [btnBg addSubview:endInput];
+    
+    UIView *inputBg1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 200)];
+    UIButton *cancelBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn1 addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn1 setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn1 setFrame:CGRectMake(10, 10, 40, 30)];
+    [cancelBtn1 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+    [inputBg1 addSubview:cancelBtn1];
+    UIButton *confirmBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [confirmBtn1 addTarget:self action:@selector(confirmBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [confirmBtn1 setTitle:@"完成" forState:UIControlStateNormal];
+    [confirmBtn1 setFrame:CGRectMake(MAIN_WIDTH-60, 10, 40, 30)];
+    [confirmBtn1 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+    [inputBg1 addSubview:confirmBtn1];
+    UIDatePicker *picker1 = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 50, MAIN_WIDTH-100, 140)];
+    picker1.tag = 2;
+    picker1.datePickerMode = UIDatePickerModeDateAndTime;
+    [inputBg1 addSubview:picker1];
+    endInput.inputView = inputBg1;
+    
+    UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-55, 10, 40, 45)];
+    [tip setText:@"搜索"];
+    [tip setTextColor:navigationBG.backgroundColor];
+    [tip setFont:[UIFont systemFontOfSize:20]];
+    [m_bg addSubview:tip];
+    [self.view addSubview:m_bg];
+    
+}
+
+- (void)createButtons
+{
+    self.m_arrCategory = @[@"个人日程",@"新日程"];
+
+    NSMutableArray *arr = [NSMutableArray array];
+    for(int i =0 ;i<self.m_arrCategory.count;i++)
+    {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = i;
+        [btn setFrame:CGRectMake(i*(MAIN_WIDTH/self.m_arrCategory.count), CGRectGetMaxY(m_bg.frame), MAIN_WIDTH/self.m_arrCategory.count, 40)];
+        [btn setTitle:[self.m_arrCategory objectAtIndex:i] forState:UIControlStateNormal];
+        [btn setTitleColor:i == 0 ? KEY_COMMON_CORLOR : [UIColor grayColor] forState:UIControlStateNormal];
+        [self.view addSubview:btn];
+        [arr addObject:btn];
+    }
+    self.m_arrBtn = arr;
+    m_tipView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(m_bg.frame)+36, MAIN_WIDTH/self.m_arrCategory.count, 4)];
+    [self.view addSubview:m_tipView];
+    [m_tipView setBackgroundColor:KEY_COMMON_CORLOR];
+    [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(m_tipView.frame), MAIN_WIDTH,MAIN_HEIGHT-CGRectGetMaxY(m_tipView.frame)-HEIGHT_MAIN_BOTTOM)];
+}
+
+- (void)onNeedRefreshTableView
+{
+    [self requestData:YES];
+}
+
+- (void)categoryBtnClicked:(UIButton *)btn
+{
+    self.m_currentIndex = btn.tag;
+    
+    if(self.m_currentIndex == 1)
+    {
+        NewScheduleViewController *new = [[NewScheduleViewController alloc]initWithInfo:nil];
+        new.m_delegate = self;
+        [self.navigationController pushViewController:new animated:YES];
+        return;
+    }
+
+    
+    [self requestData:YES];
+    
+    for(UIButton *button in self.m_arrBtn)
+    {
+        if(button.tag == btn.tag)
+        {
+            [button setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        }
+        else
+        {
+            [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        [m_tipView setFrame:CGRectMake([self.m_arrBtn indexOfObject:btn]*(MAIN_WIDTH/self.m_arrCategory.count), m_tipView.frame.origin.y, m_tipView.frame.size.width, m_tipView.frame.size.height)];
+    }];
+}
+
+- (void)requestData:(BOOL)isRefresh
+{
+ 
+    [self showWaitingView];
+    [HTTP_MANAGER getScheduleList:0
+                        startTime:nil
+                          endTime:nil
+                   successedBlock:^(NSDictionary *succeedResult) {
+                       
+                       [self removeWaitingView];
+                       NSDictionary *ret = [succeedResult[@"DATA"] mutableObjectFromJSONString];
+                       
+                       self.m_arrData = ret[@"result"];
+                       [self reloadDeals];
+
+                       
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+            [self removeWaitingView];
+        
+            [self reloadDeals];
+    }];
+}
+
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return    55;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.m_arrData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell * cell  = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
+    UILabel *_title = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, MAIN_WIDTH-10, 20)];
+    [_title setBackgroundColor:[UIColor clearColor]];
+    [_title setText:info[@"subject"]];
+    [_title setFont:[UIFont systemFontOfSize:20]];
+    [cell addSubview:_title];
+
+    UILabel *time = [[UILabel alloc]initWithFrame:CGRectMake(5, 30, MAIN_WIDTH-10, 20)];
+    [time setFont:[UIFont systemFontOfSize:14]];
+    [time setTextColor:UIColorFromRGB(0x787878)];
+    [time setBackgroundColor:[UIColor clearColor]];
+    [time setText:[NSString stringWithFormat:@"时间:%@-%@",info[@"startTime"],info[@"endTime"]]];
+    [cell addSubview:time];
+    return  cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
+    NewScheduleViewController *new = [[NewScheduleViewController alloc]initWithInfo:info];
+    new.m_delegate = self;
+    [self.navigationController pushViewController:new animated:YES];
+
+}
+
+
+- (void)cancelBtnClicked:(UITextField *)input
+{
+    [startInput resignFirstResponder];
+    [endInput resignFirstResponder];
+}
+
+- (void)confirmBtnClicked:(UITextField *)input
+{
+
+    [startInput resignFirstResponder];
+    [endInput resignFirstResponder];
+    UIView *bg = input.superview;
+    
+    for(UIView *vi in bg.subviews)
+    {
+        if([vi isKindOfClass:[UIDatePicker class]])
+        {
+            UIDatePicker *picker = (UIDatePicker *)vi;
+            NSString *time = [LocalTimeUtil getLocalTimeWith:[picker date]];
+            if(picker.tag == 1)
+            {
+                [startInput setText:time];
+            }
+            else
+            {
+                if(startInput.text.length > 0)
+                {
+                    if(![LocalTimeUtil isValid2:startInput.text endTime:time])
+                    {
+                        [PubllicMaskViewHelper showTipViewWith:@"结束时间不能早于开始时间" inSuperView:self.view withDuration:1];
+                    }
+                    else
+                    {
+                        [endInput setText:time];
+                    }
+                }
+                else
+                {
+                    [endInput setText:time];
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+@end

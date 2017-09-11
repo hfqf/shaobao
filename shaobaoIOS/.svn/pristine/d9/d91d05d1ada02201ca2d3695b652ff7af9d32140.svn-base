@@ -1,0 +1,319 @@
+//
+//  MeetingInfoViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/17.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "MeetingInfoViewController.h"
+
+@interface MeetingInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
+
+@end
+
+@implementation MeetingInfoViewController
+
+- (id)initWith:(NSDictionary *)info
+{
+    self.m_info = info;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.tableView.dataSource =  self;
+        self.tableView.delegate = self;
+        
+        
+        BOOL isUnApplyed =  [[info stringWithFilted:@"applyStatus"]integerValue] == 1;
+        if(isUnApplyed)
+        {
+            UIView *vi = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 60)];
+            self.tableView.tableFooterView = vi;
+            
+            UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [confirmBtn addTarget:self action:@selector(confirmBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+            [confirmBtn setFrame:CGRectMake(5, 5, MAIN_WIDTH/2-10, 50)];
+            [confirmBtn setBackgroundColor:PUBLIC_BACKGROUND_COLOR];
+            [confirmBtn setTitle:@"审核通过" forState:UIControlStateNormal];
+            [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [vi addSubview:confirmBtn];
+            
+            UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [cancelBtn addTarget:self action:@selector(cancelBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+            [cancelBtn setFrame:CGRectMake(5+MAIN_WIDTH/2, 5, MAIN_WIDTH/2-10, 50)];
+            [cancelBtn setBackgroundColor:[UIColor redColor]];
+            [cancelBtn setTitle:@"审核不通过" forState:UIControlStateNormal];
+            [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [vi addSubview:cancelBtn];
+        }
+    }
+    return self;
+}
+
+- (void)confirmBtnClicked
+{
+    [self showWaitingView];
+    [HTTP_MANAGER dealMeeting:self.m_info[@"roomId"]
+                      address:self.m_info[@"roomAddress"]
+                   relationId:self.m_info[@"relationId"]
+                    auditType:@"3"
+               successedBlock:^(NSDictionary *succeedResult) {
+                   
+                   [self removeWaitingView];
+                   if([succeedResult[@"resultCode"] integerValue] == 0)
+                   {
+                       [self.m_delegate onNeedRefreshTableView];
+                       [self backBtnClicked];
+                   }
+                   else
+                   {
+                       [PubllicMaskViewHelper showTipViewWith:@"审核失败" inSuperView:self.view  withDuration:1];
+                   }
+                   
+                   
+        
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+        [self removeWaitingView];
+        [PubllicMaskViewHelper showTipViewWith:@"审核失败" inSuperView:self.view  withDuration:1];
+
+
+    }];
+}
+
+- (void)cancelBtnClicked
+{
+
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认不通过此次审核" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [alert show];
+    
+  
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        [self showWaitingView];
+        [HTTP_MANAGER dealMeeting:self.m_info[@"roomId"]
+                          address:self.m_info[@"roomAddress"]
+                       relationId:self.m_info[@"relationId"]
+                        auditType:@"2"
+                   successedBlock:^(NSDictionary *succeedResult) {
+                       [self removeWaitingView];
+                       if([succeedResult[@"resultCode"] integerValue] == 0)
+                       {
+                           [self.m_delegate onNeedRefreshTableView];
+                           [self backBtnClicked];
+                       }
+                       else
+                       {
+                           [PubllicMaskViewHelper showTipViewWith:@"审核失败" inSuperView:self.view  withDuration:1];
+                       }
+                       
+
+                       
+                   } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+                       [self removeWaitingView];                       
+                       [PubllicMaskViewHelper showTipViewWith:@"审核失败" inSuperView:self.view  withDuration:1];
+
+                   }];
+    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)requestData:(BOOL)isRefresh
+{
+    [self showWaitingView];
+    [HTTP_MANAGER getMeetingInfo:self.m_info[@"relationId"]
+                  successedBlock:^(NSDictionary *succeedResult) {
+                      
+                      [self removeWaitingView];
+                      NSDictionary *ret = [succeedResult[@"DATA"] mutableObjectFromJSONString];
+                      self.m_info = ret[@"result"];
+                      [self reloadDeals];
+                      
+        
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+        [self removeWaitingView];
+        [self reloadDeals];
+        
+    }];
+}
+
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 14;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell *  cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,15,100, 20)];
+    [tip setTextAlignment:NSTextAlignmentLeft];
+    [tip setTextColor:[UIColor blackColor]];
+    [tip setFont:[UIFont systemFontOfSize:14]];
+    [tip setBackgroundColor:[UIColor clearColor]];
+    [cell addSubview:tip];
+    
+    UITextField *input = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tip.frame)-20, 15, MAIN_WIDTH-CGRectGetMaxX(tip.frame)-20, 20)];
+    [cell addSubview:input];
+    [input setTextColor:UIColorFromRGB(0x797979)];
+    [input setFont:[UIFont systemFontOfSize:14]];
+    
+    if(indexPath.row == 0){
+        [tip setText:@"登记日期:"];
+        [input setText:[LocalTimeUtil timeWithTimeIntervalString:[self.m_info[@"createDate"]longLongValue]]];
+    }
+    else if (indexPath.row == 1){
+        [tip setText:@"会议主题:"];
+        [input setText:self.m_info[@"meetingName"]];
+    }
+    else if (indexPath.row == 2){
+        [tip setText:@"开始时间:"];
+        [input setText:[LocalTimeUtil timeWithTimeIntervalString:[self.m_info[@"meetingDateStart"]longLongValue]]];
+    }
+    else if (indexPath.row == 3){
+        [tip setText:@"结束时间:"];
+        [input setText:[LocalTimeUtil timeWithTimeIntervalString:[self.m_info[@"meetingDateEnd"]longLongValue]]];
+    }
+    else if (indexPath.row == 4){
+        [tip setText:@"会议地点:"];
+        [input setText:self.m_info[@"roomAddress"]];
+    }
+    else if (indexPath.row == 5){
+        [tip setText:@"联 系 人:"];
+        [input setText:self.m_info[@"contacts"]];
+    }
+    else if (indexPath.row == 6){
+        [tip setText:@"联系电话:"];
+        [input setText:self.m_info[@"contactsTel"]];
+    }
+    else if (indexPath.row == 7){
+        [tip setText:@"会议人数:"];
+        [input setText:self.m_info[@"peolpeNum"]];
+    }
+    else if (indexPath.row == 8){
+        [tip setText:@"主办单位:"];
+        [input setText:self.m_info[@"hostUnit"]];
+    }
+    else if (indexPath.row == 9){
+        [tip setText:@"会议要求:"];
+        [input setText:self.m_info[@"specialDemand"]];
+    }
+    else if (indexPath.row == 10){
+        [tip setText:@"桌椅安排:"];
+        NSInteger type = [self.m_info[@"tableSetType"]integerValue];
+        
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 setTitle:@"课桌型" forState:UIControlStateNormal];
+        [btn1 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake(100, 5, 80, 40)];
+        [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn1 setImage:[UIImage imageNamed:type == 1? @"checkbox_checked" : @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [cell addSubview:btn1];
+        
+        
+        UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn2 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn2.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn2 setTitle:@"口字型" forState:UIControlStateNormal];
+        [btn2 setFrame:CGRectMake(220, 5, 80, 40)];
+        [btn2 setImage:[UIImage imageNamed:type == 2? @"checkbox_checked" : @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [cell addSubview:btn2];
+        
+    }
+    else if (indexPath.row == 11){
+        [tip setText:@"会议布置要求:"];
+        NSArray *arrMeetingType = [self.m_info[@"meetingDemand"]componentsSeparatedByString:@","];
+        BOOL is1 = [arrMeetingType containsObject:@"7"];
+        BOOL is2 = [arrMeetingType containsObject:@"2"];
+        BOOL is3 = [arrMeetingType containsObject:@"5"];
+        
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 setTitle:@"会标" forState:UIControlStateNormal];
+        [btn1 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake(100, 5, 60, 40)];
+        [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [cell addSubview:btn1];
+        
+        
+        UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn2 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn2.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn2 setTitle:@"话筒" forState:UIControlStateNormal];
+        [btn2 setFrame:CGRectMake(170, 5, 60, 40)];
+        [cell addSubview:btn2];
+        
+        UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn3 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn3.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn3 setTitle:@"投影仪" forState:UIControlStateNormal];
+        [btn3 setFrame:CGRectMake(240, 5, 80, 40)];
+        [cell addSubview:btn3];
+        
+        [btn1 setImage:[UIImage imageNamed:is1 ?  @"checkbox_checked": @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [btn2 setImage:[UIImage imageNamed:is2 ?  @"checkbox_checked": @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [btn3 setImage:[UIImage imageNamed:is3 ?  @"checkbox_checked": @"checkbox_unchecked"] forState:UIControlStateNormal];
+        
+    }
+    else if (indexPath.row == 12){
+        [tip setText:@"是否公开:"];
+        
+        BOOL isNoOpen = [self.m_info[@"isOpen"]integerValue] == 1;
+        
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 setTitle:@"不公开" forState:UIControlStateNormal];
+        [btn1 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake(100, 5, 80, 40)];
+        [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn1 setImage:[UIImage imageNamed:isNoOpen? @"checkbox_checked" : @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [cell addSubview:btn1];
+    }
+    else if (indexPath.row == 13){
+        [tip setText:@"大型会议:"];
+        
+        BOOL isLarge = [self.m_info[@"isLarge"]integerValue] == 1;
+        
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 setTitle:@"是" forState:UIControlStateNormal];
+        [btn1 setTitleColor:UIColorFromRGB(0x797979) forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake(80, 5, 80, 40)];
+        [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [btn1 setImage:[UIImage imageNamed:isLarge? @"checkbox_checked" : @"checkbox_unchecked"] forState:UIControlStateNormal];
+        [cell addSubview:btn1];
+    }
+    else{
+        
+    }
+    
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, 49.5, MAIN_WIDTH, 0.5)];
+    [sep setBackgroundColor:UIColorFromRGB(0xDCDCDC)];
+    [cell addSubview:sep];
+    return  cell;
+}
+
+
+
+@end

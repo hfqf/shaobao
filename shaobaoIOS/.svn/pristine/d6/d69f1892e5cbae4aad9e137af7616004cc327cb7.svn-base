@@ -1,0 +1,210 @@
+//
+//  NoticeInfoViewController.m
+//  officeMobile
+//
+//  Created by Points on 15-3-15.
+//  Copyright (c) 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "NoticeInfoViewController.h"
+
+@interface NoticeInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
+{
+    NSInteger m_lastHigh;
+}
+@end
+
+@implementation NoticeInfoViewController
+- (id)initWithInfo:(NSDictionary *)info
+{
+    self.m_info = info;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    return self;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self reloadDeals];
+    [title setText:@"通知详情"];
+    [HTTP_MANAGER updateNotice:[self.m_info stringWithFilted:@"id"]
+                successedBlock:^(NSDictionary *retDic){
+                
+                    [self.m_delegate onNeedRefreshTableView];
+
+                    
+                } failedBolck:FAILED_BLOCK{
+                
+                
+                }];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - TableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0)
+    {
+        return 40;
+    }
+    else if(indexPath.row == 1)
+    {
+        CGSize sizeTitle = [FontSizeUtil sizeOfString:[self.m_info stringWithFilted:@"title"] withFont:[UIFont boldSystemFontOfSize:15] withWidth:MAIN_WIDTH-54-10];
+        return sizeTitle.height+20;
+    }
+    else
+    {
+        return m_lastHigh+60;
+    }
+    return 0;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    
+    
+    if(indexPath.row == 0)
+    {
+        
+        CGSize size = [FontSizeUtil sizeOfString:@"日期:" withFont:[UIFont boldSystemFontOfSize:15] withWidth:MAIN_WIDTH-20];
+        UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,10,size.width, 15)];
+        [tip setTextColor:[UIColor blackColor]];
+        [tip setText:@"日期:"];
+        [tip setFont:[UIFont boldSystemFontOfSize:15]];
+        [cell addSubview:tip];
+        
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tip.frame)+10, 5,MAIN_WIDTH-(CGRectGetMaxX(tip.frame)+10)-10,30)];
+        [titleLab setFont:[UIFont boldSystemFontOfSize:15]];
+        [titleLab setText:[NSString stringWithFormat:@"%@",[self.m_info stringWithFilted:@"date"]]];
+        [cell addSubview:titleLab];
+        
+    }
+    else if (indexPath.row == 1)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"标题:" withFont:[UIFont boldSystemFontOfSize:15] withWidth:MAIN_WIDTH-20];
+        UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,10,size.width, 15)];
+        [tip setTextColor:[UIColor blackColor]];
+        [tip setText:@"标题:"];
+        [tip setFont:[UIFont boldSystemFontOfSize:15]];
+        [cell addSubview:tip];
+        
+
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tip.frame)+10, 10,MAIN_WIDTH-(CGRectGetMaxX(tip.frame)+10)-10,30)];
+        titleLab.numberOfLines = 0;
+        [titleLab setText:[NSString stringWithFormat:@"%@",[self.m_info stringWithFilted:@"title"]]];
+        [titleLab setBackgroundColor:[UIColor clearColor]];
+        [titleLab setTextColor:[UIColor blackColor]];
+        [titleLab setFont:[UIFont boldSystemFontOfSize:15]];
+        [cell addSubview:titleLab];
+        
+        CGSize sizeTitle = [FontSizeUtil sizeOfString:titleLab.text withFont:titleLab.font withWidth:titleLab.frame.size.width];
+        
+        if((int)sizeTitle.width < (int)titleLab.frame.size.width)
+        {
+            sizeTitle = CGSizeMake(titleLab.frame.size.width, sizeTitle.height);
+        }
+        [titleLab setFrame:CGRectMake(titleLab.frame.origin.x, titleLab.frame.origin.y, sizeTitle.width, sizeTitle.height)];
+    }
+    else
+    {
+        UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,10,MAIN_WIDTH-20, 15)];
+        [tip setTextColor:[UIColor blackColor]];
+        [tip setText:@"内容:"];
+        [tip setFont:[UIFont boldSystemFontOfSize:15]];
+        [cell addSubview:tip];
+        
+        
+        UIWebView *contentWebView = [[UIWebView alloc]initWithFrame:CGRectMake(10, 35, MAIN_WIDTH-20,m_lastHigh)];
+        contentWebView.scrollView.maximumZoomScale = 10;
+        [contentWebView setBackgroundColor:[UIColor clearColor]];
+        contentWebView.delegate = self;
+        contentWebView.scrollView.scrollEnabled = NO;
+        [contentWebView loadHTMLString:[self.m_info stringWithFilted:@"content"] baseURL:nil];
+        [cell addSubview:contentWebView];
+        
+    }
+    
+    NSInteger high = 0;
+    if(indexPath.row == 0)
+    {
+        high = 40;
+    }
+    else if(indexPath.row == 1)
+    {
+        CGSize sizeTitle = [FontSizeUtil sizeOfString:[self.m_info stringWithFilted:@"title"] withFont:[UIFont boldSystemFontOfSize:15] withWidth:MAIN_WIDTH-54-10];
+        high = sizeTitle.height+20;
+    }
+    else
+    {
+        CGSize size = [FontSizeUtil sizeOfString:[self.m_info stringWithFilted:@"content"] withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-20];
+        high = size.height+ 100;
+    }
+
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, high-0.5, MAIN_WIDTH, 0.5)];
+    [sep setBackgroundColor:[UIColor grayColor]];
+    sep.alpha =0.4;
+    [cell addSubview:sep];
+    return  cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSInteger heightInt = [[webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"] integerValue];
+    SpeLog(@"heightInt==%ld",heightInt);
+    if (heightInt > 0)
+    {
+        if(m_lastHigh == heightInt)
+        {
+            
+            [webView setFrame:CGRectMake(webView.frame.origin.x, webView.frame.origin.y, webView.frame.size.width,m_lastHigh+20)];
+            //            [webView.scrollView setContentSize:CGSizeMake(webView.frame.size.width,m_lastHigh)];
+            webView.layer.cornerRadius = 5;
+            webView.layer.borderColor = [UIColor grayColor].CGColor;
+            webView.layer.borderWidth = 0.5;
+            webView.delegate = nil;
+            return;
+        }
+        m_lastHigh = heightInt;
+        
+        [self.tableView reloadData];
+    }
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    m_lastHigh = 100;
+    [self.tableView reloadData];
+    
+}
+
+- (void)backBtnClicked
+{
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+@end
+

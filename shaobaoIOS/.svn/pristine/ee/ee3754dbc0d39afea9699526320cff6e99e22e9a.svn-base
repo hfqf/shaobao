@@ -1,0 +1,201 @@
+//
+//  MainTabBarViewController.m
+//  xxt_xj
+//
+//  Created by Points on 13-11-25.
+//  Copyright (c) 2013年 Points. All rights reserved.
+//
+
+
+#import "MainTabBarViewController.h"
+@interface MainTabBarViewController ()<sideslipViewDelegate>
+
+@property(nonatomic,strong)NSArray *m_arrTabSet;
+@end
+
+@implementation MainTabBarViewController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+      
+    }
+    return self;
+}
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.m_arrTabSet = @[
+                         @{
+                             @"name":@"首页",
+                             @"icon":@"home_home",
+                             @"class" : @"HomeStartViewController"
+                             },
+                         @{
+                             @"name":@"公文管理",
+                             @"icon":@"home_1",
+                             @"class" : @"TodoViewController"
+                             },
+                         @{
+                             @"name":@"通知管理",
+                             @"icon":@"home_2",
+                             @"class" : @"NoticeViewController"
+
+                             },
+                         @{
+                             @"name":@"会议管理",
+                             @"icon":@"home_3",
+                             @"class" : @"MeetingManagerViewController"
+
+                             },
+                         @{
+                             @"name":@"督查督办",
+                             @"icon":@"home_4",
+                             @"class" : @"ObserveManagerViewController"
+                             },
+                         @{
+                             @"name":@"领导日程",
+                             @"icon":@"home_5",
+                             @"class" : @"LeaderSchudeViewController"
+                             },
+                         @{
+                             @"name":@"通讯录",
+                             @"icon":@"home_6",
+                             @"class" : @"ContactViewController"
+                             },
+                         @{
+                             @"name":@"电子期刊",
+                             @"icon":@"home_7",
+                             @"class" : @"EMaganizeViewController"
+                             },
+                         @{
+                             @"name":@"资料库",
+                             @"icon":@"home_8",
+                             @"class" : @"ResourceCentreViewController"
+                             },
+                         
+                         ];
+    
+    [self initView];
+    [self initViewControllers];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+}
+
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark -  BaseViewControllerDelegate
+
+
+
+
+//自定义头部视图
+- (void)initView
+{
+    self.leftView = [[SideslipView alloc] initWithFrame:CGRectMake(0,HEIGHT_NAVIGATION+HEIGHT_STATUSBAR, MAIN_WIDTH/2-20, MAIN_HEIGHT)];
+    self.leftView.delegate = self;
+    [self.view addSubview:self.leftView];
+    
+    self.moreNavigationController.tabBarController.tabBar.hidden = YES;
+    [self.moreNavigationController setToolbarHidden:YES];
+    [self.moreNavigationController.tabBarController setHidesBottomBarWhenPushed:YES];
+    [self.tabBarController.moreNavigationController setHidesBottomBarWhenPushed:YES];
+    self.tabBar.hidden = YES;
+}
+
+//生成tabbar子ViewController
+- (void)initViewControllers
+{
+    NSMutableArray *arrVc = [NSMutableArray array];
+    for(int i=0;i<self.m_arrTabSet.count;i++)
+    {
+        if(i == 0)
+        {
+            continue;
+        }
+        NSDictionary *info = [self.m_arrTabSet objectAtIndex:i];
+        BaseViewController *vc = [[NSClassFromString(info[@"class"]) alloc]init];
+        vc.m_delegate = self;
+        [arrVc addObject:vc];
+    }
+    self.viewControllers = arrVc;
+}
+
+//选择了第几个一级界面
+- (void)selectWithIndex:(NSInteger)index
+{
+    self.selectedIndex = index;
+}
+
+
+
+#pragma mark - 打开侧滑栏
+- (void)onShowSliderView
+{
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         if(self.leftView.frame.origin.x < 0){
+                               [self.leftView setFrame:CGRectMake(self.leftView.frame.origin.x+self.leftView.frame.size.width, self.leftView.frame.origin.y, self.leftView.frame.size.width, self.leftView.frame.size.height)];
+                         }
+                         else{
+                               [self.leftView setFrame:CGRectMake(self.leftView.frame.origin.x-self.leftView.frame.size.width, self.leftView.frame.origin.y, self.leftView.frame.size.width, self.leftView.frame.size.height)];
+                         }
+                       
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+- (void)hideLeftView
+{
+    [self onShowSliderView];
+}
+#pragma mark - sideslipViewDelegate
+
+- (void)sideslipViewTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self hideLeftView];
+    [self selectWithIndex:indexPath.row-1];
+    self.leftView.currentIndex = indexPath.row;
+}
+
+- (void)onLogoutBtnClicked
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-  (void)onPopToHomeView
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+@end

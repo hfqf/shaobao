@@ -1,0 +1,177 @@
+//
+//  HomeStartViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/7.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "HomeStartViewController.h"
+#import "SideslipViewController.h"
+#import "SpeRefreshAndLoadViewController.h"
+@interface HomeStartViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic,strong)NSArray *m_arrMoudle;
+@property(nonatomic,strong)NSString *m_infoContent;
+@end
+
+@implementation HomeStartViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    backBtn.hidden = YES;
+    
+    UIImageView *naviIcon = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20+(HEIGHT_NAVIGATION-21)/2, 210, 21)];
+    [naviIcon setImage:[UIImage imageNamed:@"home_navi_icon"]];
+    [navigationBG addSubview:naviIcon];
+    
+    UITableView *table = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBG.frame), MAIN_WIDTH, MAIN_HEIGHT-CGRectGetMaxY(navigationBG.frame))];
+    table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    table.dataSource = self;
+    table.delegate = self;
+    [self.view addSubview:table];
+    [table reloadData];
+    
+    self.m_infoContent = @"“智慧建邺移动办公平台”是与区机关协同办公系统对接的移动应用软件，包括公文管理、通知管理、会议管理、督查督办、电子期刊、领导日程及通讯录等功能，实现基于移动终端上的查阅、签批和回复。机关工作人员在移动终端上的操作与PC终端同步，最终实现移动终端和PC终端的操作一致，进一步满足机关工作人基于移动互联网应用的办公需求，全面提升政府管理和服务效能。";
+    
+    self.m_arrMoudle = @[
+                         @{
+                             @"name":@"公文管理",
+                             @"icon":@"home_1"
+                             },
+                         @{
+                             @"name":@"通知管理",
+                             @"icon":@"home_2"
+                             },
+                         @{
+                             @"name":@"会议管理",
+                             @"icon":@"home_3"
+                             },
+                         @{
+                             @"name":@"督查督办",
+                             @"icon":@"home_4"
+                             },
+                         @{
+                             @"name":@"领导日程",
+                             @"icon":@"home_5"
+                             },
+                         @{
+                             @"name":@"通讯录",
+                             @"icon":@"home_6"
+                             },
+                         @{
+                             @"name":@"电子期刊",
+                             @"icon":@"home_7"
+                             },
+                         @{
+                             @"name":@"资源中心",
+                             @"icon":@"home_8"
+                             },
+                         
+                         ];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#define SEP  30
+
+
+#define WIDHT_BTN  (MAIN_WIDTH-5*SEP)/4
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return section == 0 ? 10 : 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0){
+        
+        return (SEP+WIDHT_BTN+SEP)*2+80;
+        
+    }
+    else if(indexPath.section == 1){
+        
+        CGSize size = [FontSizeUtil sizeOfString:self.m_infoContent withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-20];
+        return size.height+20;
+        
+    }
+    else{
+        return MAIN_WIDTH/2.5;
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if(indexPath.section == 0)
+    {
+        for(NSDictionary *info in self.m_arrMoudle)
+        {
+            NSInteger coulmn = [self.m_arrMoudle indexOfObject:info]%4;
+            NSInteger row    = [self.m_arrMoudle indexOfObject:info]/4;
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.tag = [self.m_arrMoudle indexOfObject:info];
+            [btn addTarget:self action:@selector(moduleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [btn setFrame:CGRectMake(SEP+coulmn*(WIDHT_BTN+SEP), SEP*(row+1)+row*(WIDHT_BTN+SEP), WIDHT_BTN, WIDHT_BTN)];
+            [btn setImage:[UIImage imageNamed:info[@"icon"]] forState:UIControlStateNormal];
+            [cell addSubview:btn];
+            
+            UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(btn.frame), CGRectGetMaxY(btn.frame)+5, WIDHT_BTN, 20)];
+            [tip setFont:[UIFont systemFontOfSize:15]];
+            [tip setTextAlignment:NSTextAlignmentCenter];
+            [tip setTextColor:UIColorFromRGB(0x646464)];
+            [tip setText:info[@"name"]];
+            [cell addSubview:tip];
+        }
+    }
+    else if (indexPath.section == 1)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:self.m_infoContent withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-20];
+        UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,10, MAIN_WIDTH-20, size.height)];
+        tip.numberOfLines = 0;
+        [tip setFont:[UIFont systemFontOfSize:14]];
+        [tip setTextAlignment:NSTextAlignmentLeft];
+        [tip setTextColor:UIColorFromRGB(0x5a5a5a)];
+        [tip setText:self.m_infoContent];
+        [cell addSubview:tip];
+    }
+    else
+    {
+        UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, MAIN_WIDTH/2.5)];
+        [icon setImage:[UIImage imageNamed:@"layer"]];
+        [cell addSubview:icon];
+    }
+    return cell;
+}
+
+- (void)moduleBtnClicked:(UIButton *)btn
+{
+    MainTabBarViewController *mainVC  = [[MainTabBarViewController alloc]init];
+    mainVC.leftView.currentIndex = btn.tag+1;
+    [self.navigationController pushViewController:mainVC animated:YES];
+}
+
+#pragma mark - 打开侧滑栏
+- (void)onShowSliderView
+{
+    [self.m_delegate onShowSliderView];
+}
+@end

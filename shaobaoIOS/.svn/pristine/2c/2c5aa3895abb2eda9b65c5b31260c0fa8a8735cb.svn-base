@@ -1,0 +1,85 @@
+//
+//  iAppPDFContentViewController.h
+//  iAppPDF
+//
+//  Created by apple on 14-7-8.K
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+@protocol iAppPDFContentViewControllerDelegate <NSObject>
+
+@required
+
+- (void)onSaveEditPDFCallBack;
+
+@end
+
+#import <UIKit/UIKit.h>
+#import <iAppPDF/iAppPDF.h>
+#import "iAppPDFAppDelegate.h"
+#import "TodoViewController.h"
+@interface iAppPDFContentViewController : UIViewController<UIAlertViewDelegate,pageCountDelegate>
+{
+     iAppPDFAppDelegate *app;
+     BOOL isOpenUp;      // 判断是否打开了第二层导航条
+    IBOutlet UIView *kinggridSignatureView;
+  
+    IBOutlet UIButton *textAnnotationBtn;
+    IBOutlet UIView *showSignatureView;
+    IBOutlet UIView *navigativeView;
+    IBOutlet UIView *loadingView;
+        int buttonFlag;
+    IBOutlet UILabel *pageCurrent;
+    IBOutlet UILabel *fileNameLabe;
+    IBOutlet UIScrollView *scrollView;
+    IBOutlet UIButton *signatureBtn;
+    IBOutlet UIButton *pictureBtn;
+    IBOutlet UIButton *deleteTextAnnotationBtn;
+    IBOutlet UIButton *handWriteBtn;
+    IBOutlet UIButton *signatureFiledSetBtn;
+    IBOutlet UIButton *deleteSignatureBtn;
+    IBOutlet UILabel *handWriteLabel;
+    IBOutlet UILabel *deleteSignatureLabel;
+    IBOutlet UILabel *deleteTextAnnotationLabel;
+    IBOutlet UILabel *pictureLabel;
+    IBOutlet UILabel *textAnnotationLabel;
+    IBOutlet UILabel *signatureLabel;
+    IBOutlet UILabel *signatureFieldSetLabel;
+    UIView *signatureChoiceView ;
+    UIButton *previousButton;
+  BOOL isDigtalSign;
+    
+    IBOutlet UIButton *digtalButton;
+    IBOutlet UILabel *digtalLabel;
+    IBOutlet UIButton *versityButton;
+    IBOutlet UILabel *versityLabel;
+    IBOutlet UILabel *voiceLabel;
+    IBOutlet UIButton *voiceButton;
+}
+@property(nonatomic,weak)id<iAppPDFContentViewControllerDelegate>m_delegate;
+@property (nonatomic,retain)NSMutableData *reciveData;
+@property(nonatomic,retain) iAppPDF *ipp;
+- (IBAction)textAnnotation:(id)sender;
+- (IBAction)saveSignature:(id)sender;
+- (IBAction)savepdf:(id)sender;
+- (IBAction)signatureClick:(id)sender;
+- (IBAction)backToDocument:(id)sender;
+- (IBAction)deleteSignature:(id)sender;
+- (IBAction)deleteAllAn:(id)sender;
+- (IBAction)dignalSignClick:(id)sender;
+- (IBAction)DignalSignalCheck:(id)sender;
+
+- (IBAction)keyboardAnnotations:(id)sender;
+- (IBAction)deleteSignatureClick:(id)sender;
+- (IBAction)signatureForAllClick:(id)sender;
+
+- (IBAction)talePictures:(id)sender;
+- (IBAction)redoStroke:(id)sender;
+- (IBAction)closeSignture:(id)sender;
+- (IBAction)undoStroke:(id)sender;
+- (IBAction)enterHelpView:(id)sender;
+- (IBAction)fieldSetViewClick:(id)sender;
+- (IBAction)fontSettingButtonClick:(id)sender;
+- (IBAction)recoding:(id)sender;
+
+@end

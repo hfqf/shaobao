@@ -1,0 +1,18 @@
+//
+//  LoginViewController.h
+//  GCP
+//
+//  Created by Points on 15-1-12.
+//  Copyright (c) 2015年 Poitns. All rights reserved.
+//
+
+#import "BaseViewController.h"
+
+@interface LoginViewController : BaseViewController
+
++ (NSString *)getPathOfSaveUserPlist;
++ (NSDictionary *)getDicFromCurrentSavedUserPlist;
++ (void)saveUserToAutoPlist:(NSDictionary *)dic;
+@property(nonatomic,retain)NSString *m_name;
+@property(nonatomic,retain)NSString *m_pwd;
+@end

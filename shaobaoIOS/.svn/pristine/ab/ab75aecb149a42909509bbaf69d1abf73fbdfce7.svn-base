@@ -1,0 +1,223 @@
+/***************************************************************************
+ * 版权所有：江西金格科技股份有限公司 2014
+ * 文件名称：iAppPDF
+ * 内容摘要：对外提供的PDF编辑接口界面
+ * 其它说明：
+ * 编辑作者：黄福标
+ * 版本编号：1.0.1
+ * 完成日期：2014年09月17日
+ ***************************************************************************/
+
+/***************************************************************************
+ *                             文件引用
+ ***************************************************************************/
+#import <UIKit/UIKit.h>
+#import <iStylePDF/iStylePDF.h>
+#import <iStylePDF/SPAnnot.h>
+#import <AVFoundation/AVFoundation.h>
+#import <Foundation/Foundation.h>
+#import <iStylePDF/iStylePDFBase.h>
+#import <iStylePDF/SPAppViewController.h>
+#import <iStylePDF/SPDocument.h>
+#import <iStylePDF/SPField.h>
+#import <iStylePDF/SPImage.h>
+#import <iStylePDF/SPPage.h>
+#import <iStylePDF/SPPageText.h>
+#import <iStylePDF/SPPageView.h>
+#import <iStylePDF/SPSignture.h>
+
+/***************************************************************************
+ *                             类引用
+ ***************************************************************************/
+@class fontSettings;
+@class WDCanvas;
+@class iAppPDFRegistration;
+
+/***************************************************************************
+ *                             宏定义
+ ***************************************************************************/
+
+/***************************************************************************
+ *                             常量
+ ***************************************************************************/
+
+/***************************************************************************
+ *                             类型定义
+ ***************************************************************************/
+
+/***************************************************************************
+ *                             类定义
+ ***************************************************************************/
+@protocol pageCountDelegate <NSObject>
+- (void)changePage:(NSString *)currentPage totalPage:(NSString *)totalPages;
+@end
+@interface iAppPDF : UIView<UIImagePickerControllerDelegate,pageDelegate,UIAlertViewDelegate,UITextFieldDelegate,AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource,AVAudioPlayerDelegate>
+{
+    iAppPDFRegistration *m_registration;        // 注册类的对象
+    SPAnnotRef spannotDelete;             // 批注对象
+    SPageView *m_pageView;                     // pdf文档的载入View
+    SPDocumentRef documt;               // document对象
+    UIView *signaturelodingView;       // 签名页面
+    int pageIndex;                     // 当前的页码
+    /* 字体颜色的三基色 */
+    float redProportions;
+    float greenProportions;
+    float blueProportions;
+    float penWidth;                     // 笔宽
+    int penType;                        // 笔的类型
+    UIViewController *viewCtroller;     // 父类的viewCtroller
+    NSString *filePath;                 // 文件名
+    fontSettings *fontSet;              // 手写设置对象
+   
+    NSString *password;
+    CGPoint touchPoint;                 // 触摸点的坐标
+    UITextView *textField2;             // 文字批注的输入框
+    CGRect rect;
+    BOOL isGetAnnot;
+    UIView *textAnnotationView;
+   
+    BOOL isCanCreateNewAnnotation;     // 是否创建新的批注
+    CGRect fieldRect;                   // 域的rect
+    int fieldPage;                      // 域所在的页
+    
+    NSString *m_authorName;             // 用户名
+    __unsafe_unretained id<pageCountDelegate>mydelegate;
+     WDCanvas *signatureView;           // 画布
+ 
+    BOOL isEffect;                      // 是否在期限内使用
+    NSMutableArray *array;              // 存放批注的路径
+    UIView *backView2;                  // 域编辑的透明背景View
+    SPFieldRef spFieldRef;
+    BOOL isCanEditing;                  // 是否可以编辑
+   
+    BOOL m_isVector;                    // 是否使用矢量数据
+    UIView *voiceBackgroundView;        // 语音批注的背景View
+    AVAudioRecorder* audioRecorder;     // 录音对象
+    AVAudioPlayer *audioPlay;           // 播放对象
+    BOOL recording;                     // 是否是录音
+    UIView *v_companyName;              // 显示单位码解析出来的公司名字
+    AVAudioSession *audioSession;
+    BOOL isCanVoice;                    // 是否可以语音批注
+    UIImageView *myAnnimatedView;       // 录音的动画
+    UIButton *recordButon;              // 录音的按钮
+    UITableView *m_tableView;
+    NSMutableArray *getFieldArray;
+    BOOL onlyRead;
+    BOOL isEmptyDelete;
+    BOOL isTextInsert;
+    NSMutableArray *textReturnArray;
+    BOOL island;
+    UIDatePicker *dataPick;
+    NSString *timeStr;
+    NSDateFormatter *outputFormatter;
+    BOOL isVoiceClick;
+}
+
+@property(nonatomic,assign)id<pageCountDelegate>mydelegate;
+@property (nonatomic,retain)  UITextField *subimage2;
+@property(nonatomic,retain)NSString *effectDay;
+@property (nonatomic,retain)NSIndexPath *lastIndexPath;
+- (id)initWithFrame:(CGRect)frame keychain:(NSString *)keychain copyRight:(NSString *)copyRightStr;
+// 设置函数
+- (void)setFileName:(NSString *)fileName;
+- (void)setUserName:(NSString *)userName;
+- (void)setSignatureFieldName:(NSString *)fieldName;
+- (void)setCanAddAnnotation:(BOOL)canAdd;
+- (void)setViewCtroller:(UIViewController *)viewCtr;
+- (void)setLand:(BOOL)isLand;
+- (void)setCanAddSound:(BOOL)canAdd;
+//////////////
+
+// 文档阅读
+- (int)appPDF:(int)flag;
+- (int)appClose;
+- (int)saveDocument;
+
+////////////////////////////////////////////////
+
+
+/// 获取文档的页码和当前页
+- (int)getPageCount;
+
+- (int)getCurrentPage;
+///////////////////////////////////////////////
+
+///字体设置界面
+-(void)fontSetting:(CGRect)frame;
+///////////////////////////////////////////////
+
+// 全文批注
+- (int)openHandwriteAnnotation;
+- (int)closeHandwriteAnnotation;
+- (int)saveHandwriteAnnotation;
+- (int)clearHandwriteAnnotation;
+///////////////////////////////////////////////
+
+
+// 签名（定制界面，只需要调用OpenSignature:(UIView *)view）
+- (int)openSignature:(UIView *)view;
+- (int)closeSignature;
+- (int)saveSignature;
+- (int)clearSignature;
+///////////////////////////////////////////////
+
+
+// 文字注释(定制界面,只需要调用singleRecoginzer就可以实现单击注释)
+- (void)singleRecoginzer;
+- (void)openTextAnnotation;
+- (int)saveTextAnnotation;
+- (int)closeTextAnnotation;
+- (int)deleteTextAnnotation;
+
+///////////////////////////////////////////////
+
+// 删除所有批注
+- (int)deleteAllAnnotations:(int)flag;
+
+// 拍照
+- (void)takePictures;
+
+- (void)refreshView;
+- (void)addAlertLabel:(int)flag;
+
+// 前进后退
+- (void)redo;
+- (void)undo;
+
+/* 获取批注的图片路径 */
+- (NSMutableArray *)getAllAnnotationImagePath;
+/* 功能：盖章
+   注意：图片路径必须是document里面的图片,scale为图片的缩放比例 */
+- (void)insertSeal:(NSString *)path imageName:(NSString *)imageName scale:(float)imageScale;
+
+- (void)setFieldContent:(NSDictionary *)dic;
+- (void)setFieldEdit:(BOOL)canEdit;
+
+// 是否使用矢量（YES表示使用，NO表示不使用）
+- (BOOL)isVectorSign:(BOOL)isVector;
+
+- (NSArray *)getVectorData:(NSString *)author;
+
+- (NSArray *)getFieldRect:(NSString *)fieldName;
+
+/* 查找文字的位置*/
+- (NSArray *)searchTextRect:(NSString *)content;
+/* 设置是否是文本定位 */
+- (void)setTextInsert:(BOOL)isTextSeal;
+// 返回当前也文本定位的数组，page传1则为第一页的所有content的文本的CGRect组成的数组（注意打印下这个的值再取出来）
+- (NSArray *)getTextRect:(NSString *)content page:(int)page;//（可以不用调用，这个在searchTextRect里面调用了）
+
+/* 传nil为所有的批注 */
+- (void)hiddenAnnotation:(NSString *)authorName;
+
+/* 传nil为所有的批注 */
+- (void)disPlayAnnotation:(NSString *)authorName;
+- (void)insertStamp:(NSString *)imagePath imageName:(NSString *)imageName frame:(CGRect)frameRect pageNum:(int)pageNum authorName:(NSString *)authorName;
+
+/* 自定义插入*/
+- (void)insertText:(NSData *)textContentData frame:(CGRect)frameRect pageNum:(int)pageNum authorName:(NSString *)authorName;
+- (void)insertSound:(NSData *)soundData frame:(CGRect)frameRect pageNum:(int)pageNum authorName:(NSString *)authorName;
+/* 刷新 */
+- (void)RefreshPdf:(int)pageNum;
+- (void)getWavPlist:(NSString *)contentStr path:(NSString *)path soundFileName:(NSString *)soundFileName;
+@end

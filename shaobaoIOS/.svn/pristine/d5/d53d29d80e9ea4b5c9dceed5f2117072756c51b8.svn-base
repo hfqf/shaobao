@@ -1,0 +1,190 @@
+//
+//  MainTabBarViewController.m
+//  xxt_xj
+//
+//  Created by Points on 13-11-25.
+//  Copyright (c) 2013年 Points. All rights reserved.
+//
+
+
+#import "MainTabBarViewController.h"
+@interface MainTabBarViewController ()<sideslipViewDelegate>
+
+@property(nonatomic,strong)NSArray *m_arrTabSet;
+@property(nonatomic,strong)UIButton *m_rightBtn;
+@property(nonatomic,strong)UIButton *m_topBtn;
+@end
+
+@implementation MainTabBarViewController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+      
+    }
+    return self;
+}
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.m_arrTabSet = [LoginUserUtil arrModulesSlider];
+    [self initView];
+    [self initViewControllers];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+}
+
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark -  BaseViewControllerDelegate
+
+
+
+
+//自定义头部视图
+- (void)initView
+{
+    self.leftView = [[SideslipView alloc] initWithFrame:CGRectMake(0,HEIGHT_NAVIGATION+HEIGHT_STATUSBAR, MAIN_WIDTH/2-20, MAIN_HEIGHT-(HEIGHT_NAVIGATION+HEIGHT_STATUSBAR))];
+    self.leftView.delegate = self;
+    [self.view addSubview:self.leftView];
+    
+    self.m_rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.m_rightBtn setFrame:CGRectMake(CGRectGetMaxX(self.leftView.frame), HEIGHT_NAVIGATION+HEIGHT_STATUSBAR, (MAIN_WIDTH-CGRectGetMaxX(self.leftView.frame)), MAIN_HEIGHT-(HEIGHT_NAVIGATION+HEIGHT_STATUSBAR))];
+    [self.view addSubview:self.m_rightBtn];
+    self.m_rightBtn.hidden = NO;
+    [self.m_rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.m_topBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.m_topBtn setFrame:CGRectMake(0, 0,MAIN_WIDTH,HEIGHT_NAVIGATION+HEIGHT_STATUSBAR)];
+    [self.view addSubview:self.m_topBtn];
+    self.m_topBtn.hidden = NO;
+    [self.m_topBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.moreNavigationController.tabBarController.tabBar.hidden = YES;
+    [self.moreNavigationController setToolbarHidden:YES];
+    [self.moreNavigationController.tabBarController setHidesBottomBarWhenPushed:YES];
+    [self.tabBarController.moreNavigationController setHidesBottomBarWhenPushed:YES];
+    self.tabBar.hidden = YES;
+}
+
+- (void)rightBtnClicked
+{
+    [self onShowSliderView];
+}
+
+//生成tabbar子ViewController
+- (void)initViewControllers
+{
+    NSMutableArray *arrVc = [NSMutableArray array];
+    for(int i=0;i<self.m_arrTabSet.count;i++)
+    {
+        if(i == 0)
+        {
+            continue;
+        }
+        NSDictionary *info = [self.m_arrTabSet objectAtIndex:i];
+        BaseViewController *vc = [[NSClassFromString(info[@"class"]) alloc]init];
+        vc.m_delegate = self;
+        [arrVc addObject:vc];
+    }
+    self.viewControllers = arrVc;
+}
+
+//选择了第几个一级界面
+- (void)selectWithIndex:(NSInteger)index
+{
+    self.selectedIndex = index;
+}
+
+
+
+#pragma mark - 打开侧滑栏
+- (void)onShowSliderView
+{
+    self.m_rightBtn.hidden = !self.m_rightBtn.hidden;
+    self.m_topBtn.hidden = !self.m_topBtn.hidden;
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         if(self.leftView.frame.origin.x < 0){
+                               [self.leftView setFrame:CGRectMake(self.leftView.frame.origin.x+self.leftView.frame.size.width, self.leftView.frame.origin.y, self.leftView.frame.size.width, self.leftView.frame.size.height)];
+                         }
+                         else{
+                               [self.leftView setFrame:CGRectMake(self.leftView.frame.origin.x-self.leftView.frame.size.width, self.leftView.frame.origin.y, self.leftView.frame.size.width, self.leftView.frame.size.height)];
+                         }
+                       
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+
+- (void)hideLeftView
+{
+    [self onShowSliderView];
+}
+#pragma mark - sideslipViewDelegate
+
+- (void)sideslipViewTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    [self hideLeftView];
+    [self selectWithIndex:indexPath.row-1];
+    self.leftView.currentIndex = indexPath.row;
+}
+
+- (void)onSelectIndex:(NSInteger)index
+{
+    [self selectWithIndex:index-1];
+}
+- (void)onShowMainView
+{
+    [self hideLeftView];
+}
+
+- (void)onLogoutBtnClicked
+{
+    if([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"www.cattsoft.gportal:"]])
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"www.cattsoft.gportal://com.kj.jyoa?info=logout"]];
+        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:KEY_SSO_IS_NEED_LOGIN];
+    }
+    else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+-  (void)onPopToHomeView
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+@end

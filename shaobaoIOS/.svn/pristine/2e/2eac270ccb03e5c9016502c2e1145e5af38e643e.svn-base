@@ -1,0 +1,28 @@
+//
+//  iAppPDFAppDelegate.h
+//  iAppPDF
+//
+//  Created by apple on 14-7-8.
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface iAppPDFAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic,retain)NSString *fileNameStr;
+@property (nonatomic)BOOL isEnableAnnotation;
+@property (nonatomic)BOOL isQianming;
+@property (nonatomic)BOOL isCanAnnotation;
+@property(nonatomic,retain)NSString *signatureNameAp;
+@property(nonatomic,retain)NSString *authorNameAp;
+@property (nonatomic,retain)NSString *effectDayStr;
+@property (nonatomic)BOOL isNotTake;
+@property (nonatomic)BOOL isMeettingFile;
+@property(nonatomic)BOOL isHaveCamera;
+@property (nonatomic)BOOL isCanChangeAuthor;
+@property(nonatomic)BOOL isCountersigned;
+@property (nonatomic) BOOL isPushCamera;
+@property (nonatomic,strong)NSDictionary *m_versionDic;
+@end

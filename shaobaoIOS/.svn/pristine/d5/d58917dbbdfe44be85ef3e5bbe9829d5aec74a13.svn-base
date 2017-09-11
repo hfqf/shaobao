@@ -1,0 +1,144 @@
+//
+//  SPAnnot.h
+//  iStylePDF
+//
+//  Created by xiong on 14-4-22.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+
+enum 
+{
+	spAnnotTEXT =0,
+	spAnnotLINK,
+	spAnnotFREE_TEXT,
+	spAnnotLINE,
+	spAnnotSQUARE,
+	spAnnotCIRCLE,
+	spAnnotPOLYGON,
+	spAnnotPOLY_LINE,
+	spAnnotHIGHLIGHT,
+	spAnnotUNDERLINE,
+	spAnnotSQUIGGLY,
+	spAnnotSTRIKE_OUT,
+	spAnnotSTAMP,
+	spAnnotCARET,
+	spAnnotINK,
+	spAnnotPOPUP,
+	spAnnotFILE_ATTACHMENT,
+	spAnnotSOUND,
+	spAnnotMOVIE,
+	spAnnotWIDGET,
+	spAnnotSCREEN,
+	spAnnotPRINTER_MARK,
+	spAnnotTRAP_NET,
+	spAnnotWATERMARK,
+	spAnnot3D,
+	spAnnotUNKNOWN,
+};
+
+
+// 获得批注类型
+SP_EXTERN NSInteger SPAnnotGetType(SPAnnotRef ref);
+
+// 获得批注的子类型
+SP_EXTERN NSString* SPAnnotGetSubType(SPAnnotRef ref);
+
+// 获得批注的frame值
+SP_EXTERN CGRect SPAnnotGetFrame(SPAnnotRef ref);
+
+// 获得下一个标注
+SP_EXTERN SPAnnotRef SPAnnotGetNext(SPAnnotRef ref);
+
+// 删除标注
+SP_EXTERN void SPAnnotDelete(SPAnnotRef ref, SPDocumentRef docRef);
+
+// 设置标注主题
+SP_EXTERN NSInteger SPAnnotSetSubject(SPAnnotRef ref,NSString *subject);
+
+// 设置批注标题
+SP_EXTERN NSInteger SPAnnotSetTitle(SPAnnotRef ref, NSString *title);
+
+// 设置批注内容
+SP_EXTERN NSInteger SPAnnotSetContents(SPAnnotRef ref, NSString *contents);
+
+// 设置标注唯一名
+SP_EXTERN NSInteger SPAnnotSetUniqueName(SPAnnotRef ref, NSString *name);
+
+// 设置文本标注区域
+SP_EXTERN NSInteger SPAnnotSetRect(SPAnnotRef ref, CGRect frame);
+
+// 设置标注的透明度
+SP_EXTERN NSInteger SPAnnotSetBlendMend(SPAnnotRef ref, NSString *mode);
+
+// 文本标注设置完成
+SP_EXTERN void SPAnnotCreateFinished(SPAnnotRef ref);
+
+// 设置文本批注弹出框的颜色
+SP_EXTERN NSInteger SPAnnotSetColor(SPAnnotRef ref, NSInteger r, NSInteger g, NSInteger b);
+
+// 设置边框的宽
+SP_EXTERN NSInteger SPAnnotSetBorderWidth(SPAnnotRef ref, float w);
+
+// 设置旋转角度
+SP_EXTERN NSInteger SPAnnotSetRotate(SPAnnotRef ref, NSInteger rotate);
+
+// 获取旋转角度
+SP_EXTERN NSInteger SPAnnotGetRotate(SPAnnotRef ref);
+
+// 得到边框的宽
+SP_EXTERN float SPAnnotGetBorderWidth(SPAnnotRef ref);
+
+// 获得批注的标志
+SP_EXTERN NSInteger SPAnnotGetFlags(SPAnnotRef ref);
+
+// 获取批注的标志位
+SP_EXTERN NSInteger SPAnnotSetFlags(SPAnnotRef ref, NSInteger flags);
+
+// 获得文本批注的title
+SP_EXTERN NSString* SPAnnotGetTitle(SPAnnotRef ref);
+
+// 获得文本批注的唯一名
+SP_EXTERN NSString* SPAnnotGetUniqueName(SPAnnotRef ref);
+
+// 获得文本批注的内容
+SP_EXTERN NSString* SPAnnotGetContents(SPAnnotRef ref);
+
+// 获得文本批注的主题
+SP_EXTERN NSString* SPAnnotGetSubject(SPAnnotRef ref);
+
+// 获得文本批注的修改日期
+SP_EXTERN NSString* SPAnnotGetModifiedDate(SPAnnotRef ref);
+
+// 获得文本批注的创建日期
+SP_EXTERN NSString* SPAnnotGetCreationDate(SPAnnotRef ref);
+
+// 获取注释空间的颜色
+SP_EXTERN NSArray* SPAnnotGetColorSpace(SPAnnotRef ref);
+
+SP_EXTERN NSInteger SPAnnotSetFormAppearance(SPAnnotRef ref,CGRect rect, NSData * data);
+
+// 设置并保存矢量数据
+SP_EXTERN void SPAnnotSetPrivateData(SPDocumentRef doc, SPAnnotRef ref, NSString *KeyName, NSData *data);
+
+// 获得保存的矢量数据
+SP_EXTERN NSData* SPAnnotGetPrivateData(SPAnnotRef ref,NSString *KeyName);
+
+SP_EXTERN NSInteger SPAnnotSetSound(SPAnnotRef ref, NSData *data);
+
+SP_EXTERN NSData * SPAnnotGetSound(SPAnnotRef ref);
+
+SP_EXTERN NSInteger SPAnnotSetFreeTextFontColor(SPAnnotRef ref,float r, float g, float b);
+
+SP_EXTERN NSInteger SPAnnotSetFreeTextFontSize(SPAnnotRef ref, float size);
+
+SP_EXTERN float SPAnnotGetFreeTextFontSize(SPAnnotRef ref);
+
+SP_EXTERN NSArray * SPAnnotGetFreeTextFontColor(SPAnnotRef ref);
+
+SP_EXTERN SPCosObjectRef SPAnnotGetCosObject(SPAnnotRef ref);
+

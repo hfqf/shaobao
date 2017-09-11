@@ -1,0 +1,774 @@
+//
+//  iAppPDFContentViewController.m
+//  iAppPDF
+//
+//  Created by apple on 14-7-8.
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+#import "iAppPDFContentViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "iAppPDFHelpViewController.h"
+#import <iStylePDF/iStylePDF.h>
+#import <iAppPDF/iAppPDF.h>
+#import <iAppPDF/fontSettings.h>
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define iPhone6PLUS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1080, 1920), [[UIScreen mainScreen] currentMode].size) : NO)
+//#define IPHONE5 [UIScreen mainScreen].bounds.size
+NSString *signaturePdfUrl = @"pdf/isignature/template.pdf";
+NSString *verifyPdfUrl = @"pdf/verify/template.pdf";
+@interface iAppPDFContentViewController ()
+
+@end
+
+@implementation iAppPDFContentViewController
+@synthesize ipp;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    app = (iAppPDFAppDelegate *)[[UIApplication sharedApplication] delegate];
+    buttonFlag = 188;
+    self.view.backgroundColor = [UIColor clearColor];
+    scrollView.contentSize= CGSizeMake(416, 0);
+    [scrollView setScrollEnabled:YES];
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [ipp refreshView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    loadingView.frame = CGRectMake(0,HEIGHT_NAVIGATION+DISTANCE_TOP, MAIN_WIDTH, MAIN_HEIGHT-(HEIGHT_NAVIGATION+DISTANCE_TOP));
+
+    fileNameLabe.adjustsFontSizeToFitWidth = YES;
+    showSignatureView .backgroundColor = [UIColor clearColor];
+    NSString *filename = [NSString stringWithFormat:@"%@",app.fileNameStr];
+   
+    if (app.isNotTake)
+    {
+        if(ipp != nil)
+        {
+            ipp = nil;
+        }
+        ipp = [[iAppPDF alloc] initWithFrame:CGRectMake(0,0, MAIN_WIDTH, loadingView.frame.size.height) keychain:@"" copyRight:@"epKuVIj0I0jdIFMHoEOfEXpqsdZo2v8hZkJ3sZ8huC+biVY0SHRkvAjwutc0FYgfgVWzLhLBzLfnd/CfcPFSjsMOSY4pn4NTNmQ4rMuUBsht6TbOq9UJoe1dIUTEHawWOtMii0FmEaIHeh6682JMzrpauvKIpz6wXB3enh2h0lo="];
+        ipp.mydelegate = (id)self;
+        [ipp setSignatureFieldName:app.signatureNameAp];
+        [ipp setUserName:app.authorNameAp];
+        
+        [ipp setViewCtroller:self];
+        [loadingView addSubview:ipp];
+        [ipp setFileName:filename];
+        [ipp appPDF:1];
+        [ipp setFieldEdit:YES];
+        //        NSDictionary *dic  = [[NSDictionary alloc] initWithObjectsAndKeys:@"A362331199001172134",@"formnum", nil];
+       NSDictionary *dic  = [[NSDictionary alloc] initWithObjectsAndKeys:@"2014",@"year",@"07",@"mon",@"28",@"day", nil];
+        [ipp setFieldContent:dic];
+        NSLog(@"getAllVectorData = %@",[ipp getVectorData:nil]);
+        NSLog(@"getSingleVectorData = %@",[ipp getVectorData:app.authorNameAp]);
+    }
+    
+    kinggridSignatureView.frame = CGRectMake(0, 44, kinggridSignatureView.frame.size.width, kinggridSignatureView.frame.size.height);
+    [self.view addSubview:kinggridSignatureView];
+    isOpenUp = YES;
+    
+    fileNameLabe.text = [NSString stringWithFormat:@"%@",app.fileNameStr];
+    
+    if (app.isMeettingFile)
+    {
+        signatureFieldSetLabel.hidden = YES;
+        signatureFiledSetBtn.hidden = YES;
+        signatureBtn.hidden = YES;
+        signatureLabel.hidden = YES;
+        pictureBtn.hidden = YES;
+        pictureLabel.hidden = YES;
+        deleteSignatureBtn.hidden = YES;
+        deleteSignatureLabel.hidden = YES;
+        deleteTextAnnotationBtn.frame = CGRectMake(108, 3, 32, 32);
+        deleteTextAnnotationLabel.frame = CGRectMake(96, 32, 66, 21);
+        textAnnotationBtn.frame = CGRectMake(186, 3, 32, 32);
+        textAnnotationLabel.frame = CGRectMake(174, 32, 66, 21);
+        digtalButton.frame = CGRectMake(337, 3, 32, 32);
+        digtalLabel.frame = CGRectMake(330, 32, 66, 21);
+        versityButton.frame = CGRectMake(415, 3, 32, 32);
+        versityLabel.frame = CGRectMake(398, 32, 66, 21);
+        voiceButton.frame = CGRectMake(259, 3, 32, 32);
+        voiceLabel.frame = CGRectMake(252, 32, 66, 21);
+    }
+    else
+    {
+        digtalLabel.hidden = YES;
+        digtalButton.hidden = YES;
+        versityLabel.hidden = YES;
+        versityButton.hidden = YES;
+        voiceLabel.hidden = YES;
+        voiceButton.hidden = YES;
+        if (app.isCountersigned)
+        {
+            textAnnotationBtn.hidden = YES;
+            textAnnotationLabel.hidden = YES;
+            deleteTextAnnotationBtn.hidden = NO;
+            deleteTextAnnotationLabel.hidden = NO;
+            signatureFiledSetBtn.hidden =NO;
+            signatureFieldSetLabel.hidden = NO;
+            handWriteBtn.hidden = NO;
+            handWriteLabel.hidden = NO;
+            deleteSignatureBtn.hidden = YES;
+            deleteSignatureLabel.hidden = YES;
+        }
+        else
+        {
+            textAnnotationBtn.hidden = YES;
+            textAnnotationLabel.hidden = YES;
+            deleteTextAnnotationBtn.hidden = YES;
+            deleteTextAnnotationLabel.hidden = YES;
+            signatureFiledSetBtn.hidden =NO;
+            signatureFieldSetLabel.hidden = NO;
+            if (app.isPushCamera)
+            {
+                deleteSignatureBtn.hidden = YES;
+                deleteSignatureLabel.hidden = YES;
+            }
+            else
+            {
+                deleteSignatureBtn.hidden = NO;
+                deleteSignatureLabel.hidden = NO;
+            }
+            
+            handWriteBtn.hidden = YES;
+            handWriteLabel.hidden = YES;
+            signatureBtn.frame = CGRectMake(35, 0, 32, 32);
+            signatureLabel.frame = CGRectMake(21, 32, 66, 21);
+        }
+        if (app.isHaveCamera)
+        {
+            pictureBtn.hidden = NO;
+            pictureLabel.hidden = NO;
+            if (app.isPushCamera)
+            {
+                pictureBtn.frame = CGRectMake(108, 0, 32, 32);
+                pictureLabel.frame = CGRectMake(96, 32, 66, 21);
+            }
+            else
+            {
+                pictureBtn.frame = CGRectMake(186, 3, 32, 32);
+                pictureLabel.frame = CGRectMake(174, 32, 66, 21);
+            }
+        }
+        else
+        {
+            pictureBtn.hidden = YES;
+            pictureLabel.hidden = YES;
+        }
+        if (app.isCanChangeAuthor)
+        {
+            signatureFiledSetBtn.hidden = NO;
+            signatureFieldSetLabel.hidden = NO;
+            signatureFiledSetBtn.frame = CGRectMake(264, 0, 32, 32);
+            signatureFieldSetLabel.frame = CGRectMake(252, 32, 66, 21);
+        }
+        else
+        {
+            signatureFiledSetBtn.hidden = YES;
+            signatureFieldSetLabel.hidden = YES;
+        }
+    }
+}
+
+- (void)changePage:(NSString *)currentPage totalPage:(NSString *)totalPages
+{
+    if (currentPage != nil)
+    {
+        currentPage = [NSString stringWithFormat:@"%d",[ipp getCurrentPage]];
+    }
+    if (totalPages == nil)
+    {
+        totalPages = [NSString stringWithFormat:@"%d",[ipp getPageCount]];
+    }
+    pageCurrent.text = [NSString stringWithFormat:@"%@/%@",currentPage,totalPages];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)textAnnotation:(id)sender {
+    [ipp isVectorSign:YES];
+    int result = [ipp openHandwriteAnnotation];
+    if (result == 0)
+    {
+        navigativeView.hidden = YES;
+        kinggridSignatureView.hidden = YES;
+        showSignatureView.hidden = NO;
+    }
+
+}
+
+- (IBAction)saveSignature:(id)sender
+{
+    int relsult = [ipp saveHandwriteAnnotation];
+    if (relsult == 0)
+    {
+        showSignatureView.hidden = YES;
+        navigativeView.hidden = NO;
+        kinggridSignatureView.hidden = NO;
+    }
+}
+
+- (IBAction)savepdf:(id)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"是否保存文档并退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 1002;
+    [alert show];
+}
+
+- (IBAction)signatureClick:(id)sender
+{
+    [ipp isVectorSign:YES];
+    [ipp openSignature:self.view];
+    //[ipp openSignature:self.view rect:self.view.frame];
+}
+
+- (IBAction)backToDocument:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"是否关闭文档？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    alert.tag = 1003;
+    [alert show];
+}
+
+- (IBAction)deleteSignature:(id)sender {
+     [ipp clearHandwriteAnnotation];
+}
+
+- (IBAction)deleteAllAn:(id)sender {
+    UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:nil message:@"是否删除所有的批注？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    deleteAlert.tag = 1001;
+    [deleteAlert show];
+}
+
+- (IBAction)dignalSignClick:(id)sender
+{
+    isDigtalSign = NO;
+    [self SignatureVerification];
+}
+
+- (IBAction)DignalSignalCheck:(id)sender {
+    isDigtalSign = YES;
+    [self digitalSignature];
+}
+
+- (IBAction)savePDFContent:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"是否保存文档并退出？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 1002;
+    [alert show];
+}
+
+- (IBAction)keyboardAnnotations:(id)sender {
+    [ipp addAlertLabel:0];
+    [ipp setCanAddAnnotation:YES];
+}
+
+- (IBAction)deleteSignatureClick:(id)sender {
+    UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:nil message:@"是否删除所有的签名？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    deleteAlert.tag = 1004;
+    [deleteAlert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 1001)
+    {
+        if (buttonIndex == 1)
+        {
+            int result =[ipp deleteAllAnnotations:1];
+            if (result ==2)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不能删除" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+
+        }
+    }
+    else if (alertView.tag == 1002)
+    {
+        if (buttonIndex == 1)
+        {
+            int result = [ipp saveDocument];
+            if ( result==0 || result == 10)
+            {
+                if(self.m_delegate && [self.m_delegate respondsToSelector:@selector(onSaveEditPDFCallBack)])
+                {
+                    [self.m_delegate onSaveEditPDFCallBack];
+                }
+                
+                [ipp appClose];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                app.isNotTake = YES;
+                kinggridSignatureView = nil;
+                showSignatureView = nil;
+                navigativeView = nil;
+                fileNameLabe = nil;
+                pageCurrent = nil;
+                loadingView = nil;
+                ipp = nil;
+                self.view = nil;
+
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    else if (alertView.tag == 1003)
+    {
+        if (buttonIndex == 1)
+        {
+            
+            [ipp appClose];
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+            app.isNotTake = YES;
+            kinggridSignatureView = nil;
+            showSignatureView = nil;
+            navigativeView = nil;
+            fileNameLabe = nil;
+            pageCurrent = nil;
+            loadingView = nil;
+            [ipp removeFromSuperview];
+            
+            ipp = nil;
+            [self.view removeFromSuperview];
+            self.view = nil;
+            // [self.view removeFromSuperview];
+            
+        }
+    }
+    else if (alertView.tag == 1004)
+    {
+        if (buttonIndex == 1)
+        {
+            int result =[ipp deleteAllAnnotations:1];
+            if (result ==2)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不能删除" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+
+        }
+    }
+}
+
+- (IBAction)signatureForAllClick:(id)sender {
+    [self showKinggridSiagnatureView];
+}
+
+- (void)showKinggridSiagnatureView
+{
+    if (!isOpenUp)
+    {
+        kinggridSignatureView.hidden = NO;
+        isOpenUp = YES;
+    }
+    else
+    {
+        kinggridSignatureView.hidden = YES;
+        isOpenUp = NO;
+    }
+}
+- (IBAction)talePictures:(id)sender {
+    app.isNotTake = NO;
+    [ipp takePictures];
+}
+
+- (IBAction)redoStroke:(id)sender {
+    [ipp redo];
+}
+
+- (IBAction)closeSignture:(id)sender {
+    int result = [ipp closeHandwriteAnnotation];
+    if (result == 0)
+    {
+        showSignatureView.hidden = YES;
+        navigativeView.hidden = NO;
+        kinggridSignatureView.hidden = NO;
+    }
+
+}
+
+- (IBAction)undoStroke:(id)sender {
+    [ipp undo];
+}
+
+- (IBAction)enterHelpView:(id)sender
+{
+    iAppPDFHelpViewController *helpView = [[iAppPDFHelpViewController alloc] init];
+    helpView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    app.isNotTake = NO;
+    app.effectDayStr =[NSString stringWithFormat:@"%@",ipp.effectDay];
+    [self presentViewController:helpView animated:YES completion:nil];
+}
+
+- (IBAction)fieldSetViewClick:(id)sender
+{
+    [self readButtonPlistData];
+    /* 选择签名域的整个UIView */
+    signatureChoiceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    signatureChoiceView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:signatureChoiceView];
+    
+    /* 背景图片  */
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake((signatureChoiceView.frame.size.width-200)/2, (signatureChoiceView.frame.size.height-150)/2, 200, 150)];
+    backgroundImage.image = [UIImage imageNamed:@"kinggrid_bg_menu_sub.jpg"];
+    backgroundImage.userInteractionEnabled = YES;
+    [signatureChoiceView addSubview:backgroundImage];
+    
+    /* 审稿按钮 */
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button1.tag = 188;
+    button1.frame = CGRectMake(60, 35, 20 , 20);
+    [button1 setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+    [button1 addTarget:self action:@selector(chioceSignatureField:) forControlEvents:UIControlEventTouchUpInside];
+    [backgroundImage addSubview:button1];
+    
+    /* 核稿按钮 */
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button2.tag = 189;
+    [button2 addTarget:self action:@selector(chioceSignatureField:) forControlEvents:UIControlEventTouchUpInside];
+    button2.frame = CGRectMake(60, 75, 20, 20);
+    [button2 setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+    [backgroundImage addSubview:button2];
+    
+    /* 签发按钮 */
+    UIButton *button3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button3.frame = CGRectMake(60, 115, 20, 20);
+    button3.tag = 190;
+    [button3 addTarget:self action:@selector(chioceSignatureField:) forControlEvents:UIControlEventTouchUpInside];
+    [button3 setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+    [backgroundImage addSubview:button3];
+    
+    /* 关闭按钮 */
+    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    closeButton.frame = CGRectMake(160, 0, 32, 32);
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"bg_close_n"] forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(removeSignatureChoiceView) forControlEvents:UIControlEventTouchUpInside];
+    [backgroundImage addSubview:closeButton];
+    
+    /* 添加label */
+    UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(90, 35, 100, 20)];
+    lab1.text = @"审稿";
+    lab1.textColor = [UIColor whiteColor];
+    lab1.backgroundColor = [UIColor clearColor];
+    [backgroundImage addSubview:lab1];
+    
+    UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(90, 75, 100, 20)];
+    lab2.text = @"核稿";
+    lab2.textColor = [UIColor whiteColor];
+    lab2.backgroundColor = [UIColor clearColor];
+    
+    [backgroundImage addSubview:lab2];
+    
+    UILabel *lab3 = [[UILabel alloc] initWithFrame:CGRectMake(90, 115, 100, 20)];
+    lab3.text = @"签发";
+    lab3.textColor = [UIColor whiteColor];
+    lab3.backgroundColor = [UIColor clearColor];
+    
+    [backgroundImage addSubview:lab3];
+    
+    if (buttonFlag == 189)
+    {
+        [button2 setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+        previousButton = button2;
+        
+    }
+    else if (buttonFlag == 190)
+    {
+        [button3 setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+        previousButton = button3;
+    }
+    else
+    {
+        [button1 setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+        previousButton = button1;
+        
+    }
+
+}
+
+- (IBAction)fontSettingButtonClick:(id)sender
+{
+    [ipp fontSetting:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+}
+
+- (IBAction)recoding:(id)sender
+{
+     [ipp setCanAddSound:YES];
+}
+
+/* 选择签名域页面的关闭按钮方法 */
+- (void)removeSignatureChoiceView
+{
+    [signatureChoiceView removeFromSuperview];
+}
+
+/* 选择签名域的按钮 */
+- (void)chioceSignatureField:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    buttonFlag = button.tag;
+    switch (button.tag)
+    {
+        case 188:
+            [previousButton setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+            [ipp setSignatureFieldName:@"sg"];
+            break;
+        case 189:
+            [previousButton setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+            [ipp setSignatureFieldName:@"hg"];
+            break;
+        case 190:
+            [previousButton setBackgroundImage:[UIImage imageNamed:@"radio_unchecked"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"radio_checked"] forState:UIControlStateNormal];
+            [ipp setSignatureFieldName:@"qf"];
+            break;
+        default:
+            break;
+    }
+    previousButton = button;
+    [self setAllButtonChoise];
+}
+
+
+- (void)setAllButtonChoise
+{
+    // 取得路径
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    NSString* filename = [path stringByAppendingPathComponent:@"button.plist"];
+    // 检查文件是否存在，如果不存在，则创建
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:filename] == NO)
+    {
+        // 新建文件
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+        [dic writeToFile:filename atomically:YES];
+    }
+    // 写数据
+    NSMutableDictionary* dic = [[NSMutableDictionary alloc] initWithContentsOfFile:filename];
+    [dic setObject:[NSNumber numberWithInt:buttonFlag] forKey:@"ButtonTag"];
+    [dic writeToFile:filename atomically:YES];
+}
+
+- (void)readButtonPlistData
+{
+    //取得路径
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    NSString* filename = [path stringByAppendingPathComponent:@"button.plist"];
+    //读数据
+    NSMutableDictionary* dic =  [[NSMutableDictionary alloc] initWithContentsOfFile:filename];
+    buttonFlag = [[dic objectForKey:@"ButtonTag"] intValue];
+}
+
+/* 数字签名 */
+- (void)digitalSignature
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    paths = nil;
+    NSString* filename = [path stringByAppendingPathComponent:@"testSignature.jpg"];
+    NSData *imageData = [NSData dataWithContentsOfFile:filename];
+    UIImage *image = [UIImage imageWithData:imageData];
+    NSLog(@"imageNdata = %@",imageData);
+    NSLog(@"imageLeght = %d",imageData.length);
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    for (int i = 0; i<[ipp getFieldRect:@"hg"].count; i++)
+    {
+        NSDictionary *dic= (NSDictionary *)[NSJSONSerialization JSONObjectWithData:[[[ipp getFieldRect:@"hg"] objectAtIndex:i] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:nil];
+        if (i == 0)
+        {
+            [str appendFormat:@"{\"pageno\":\"%@\",\"x\":\"%@\",\"y\":\"%@\"}",[NSString stringWithFormat:@"%@",[dic objectForKey:@"pageNumber"]],[[dic objectForKey:@"rect"] objectForKey:@"x"],[[dic objectForKey:@"rect"] objectForKey:@"y"]];
+        }
+        else
+        {
+            [str appendFormat:@",{\"pageno\":\"%@\",\"x\":\"%@\",\"y\":\"%@\"}",[dic objectForKey:@"pageNumber"],[[dic objectForKey:@"rect"] objectForKey:@"x"],[[dic objectForKey:@"rect"] objectForKey:@"y"]];
+        }
+    }
+    NSLog(@"str = %@",str);
+    NSString *jsonStr = [NSString stringWithFormat:@"{\"positions\":[%@]}",str];
+    
+    NSLog(@"jsonStr = %@",jsonStr);
+    NSURL *url = [NSURL URLWithString:@"http://192.168.0.48:8888/Demo/DefaulServlet"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    [req setHTTPMethod:@"POST"];
+    NSMutableData *bodyStrData = [[NSMutableData alloc] init];
+    [bodyStrData appendData:[@"type=1" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"debug=0" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"position=%@",jsonStr] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"w=%d",(int)image.size.width] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"h=%d",(int)image.size.height] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"imagetype=jpg" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"pdfPath=%@",signaturePdfUrl] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"fileSize=%d,fileName=%@",imageData.length,@"IMAGE"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:imageData];
+    NSLog(@"totalData = %d",bodyStrData.length);
+    [req setHTTPBody:bodyStrData];
+    if (_reciveData != nil)
+    {
+        _reciveData = nil;
+    }
+    _reciveData = [[NSMutableData alloc] init];
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    
+}
+
+/* 签名认证 */
+- (void)SignatureVerification
+{
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* path = [paths objectAtIndex:0];
+    paths = nil;
+    NSString* filename = [path stringByAppendingPathComponent:@"testSignature.jpg"];
+    NSData *imageData = [NSData dataWithContentsOfFile:filename];
+    UIImage *image = [UIImage imageWithData:imageData];
+    NSLog(@"imageNdata = %@",imageData);
+    NSLog(@"imageLeght = %d",imageData.length);
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    for (int i = 0; i<[ipp getFieldRect:@"hg"].count; i++)
+    {
+        NSDictionary *dic= (NSDictionary *)[NSJSONSerialization JSONObjectWithData:[[[ipp getFieldRect:@"hg"] objectAtIndex:i] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:nil];
+        if (i == 0)
+        {
+            [str appendFormat:@"{\"pageno\":\"%@\",\"x\":\"%@\",\"y\":\"%@\"}",[NSString stringWithFormat:@"%@",[dic objectForKey:@"pageNumber"]],[[dic objectForKey:@"rect"] objectForKey:@"x"],[[dic objectForKey:@"rect"] objectForKey:@"y"]];
+        }
+        else
+        {
+            [str appendFormat:@",{\"pageno\":\"%@\",\"x\":\"%@\",\"y\":\"%@\"}",[dic objectForKey:@"pageNumber"],[[dic objectForKey:@"rect"] objectForKey:@"x"],[[dic objectForKey:@"rect"] objectForKey:@"y"]];
+        }
+    }
+    NSLog(@"str = %@",str);
+    NSString *jsonStr = [NSString stringWithFormat:@"{\"positions\":[%@]}",str];
+    
+    
+    NSLog(@"jsonStr = %@",jsonStr);
+    NSURL *url = [NSURL URLWithString:@"http://192.168.0.48:8888/Demo/DefaulServlet"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    [req setHTTPMethod:@"POST"];
+    NSMutableData *bodyStrData = [[NSMutableData alloc] init];
+    [bodyStrData appendData:[@"type=2" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"debug=0" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"position=%@",jsonStr] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"w=%d",(int)image.size.width] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"h=%d",(int)image.size.height] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"imagetype=jpg" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"pdfPath=%@",verifyPdfUrl] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[[NSString stringWithFormat:@"fileSize=%d,fileName=%@",imageData.length,@"IMAGE"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [bodyStrData appendData:imageData];
+    NSLog(@"totalData = %d",bodyStrData.length);
+    [req setHTTPBody:bodyStrData];
+    if (_reciveData != nil)
+    {
+        _reciveData = nil;
+    }
+    _reciveData = [[NSMutableData alloc] init];
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+}
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_reciveData appendData:data];
+    NSLog(@"reciveData = %@",_reciveData);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"recivaD = %@",_reciveData);
+    //    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString* path = [paths objectAtIndex:0];
+    //    paths = nil;
+    //     NSString* filename = [path stringByAppendingPathComponent:@"template.pdf"];
+    //    [_reciveData writeToFile:filename atomically:YES];
+    NSString *dataString = [[NSString alloc] initWithData:_reciveData encoding:NSUTF8StringEncoding];
+    NSLog(@"dataString = %@",dataString);
+    if (isDigtalSign)
+    {
+        NSString *messageStr;
+        if ([dataString isEqualToString:@"iSignature Successed"])
+        {
+            messageStr = @"数字签名成功";
+        }
+        else
+        {
+            messageStr = @"数字签名失败";
+        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"数字签名结果" message:messageStr delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
+    else
+    {
+        if ([dataString isEqualToString:@"-1"])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证结果" message:@"验证失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+        }
+        else
+        {
+            NSLog(@"location = %d,leight = %d",[dataString rangeOfString:@"time="].location,[dataString rangeOfString:@"time="].length);
+            NSLog(@"location = %d,leight = %d",[dataString rangeOfString:@"=+C"].location,[dataString rangeOfString:@"time="].length);
+            NSString *time=  [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"time="].location+[dataString rangeOfString:@"time="].length, [dataString rangeOfString:@"=+C"].location-([dataString rangeOfString:@"time="].location+[dataString rangeOfString:@"time="].length))];
+            NSString *country = [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"=+C="].location+[dataString rangeOfString:@"=+C="].length, [dataString rangeOfString:@"+L="].location-([dataString rangeOfString:@"=+C="].location+[dataString rangeOfString:@"=+C="].length))];
+            NSString *city = [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"+L="].location+[dataString rangeOfString:@"+L="].length, [dataString rangeOfString:@"+ST="].location-([dataString rangeOfString:@"+L="].location+[dataString rangeOfString:@"+L="].length))];
+            NSString *bigCity = [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"+ST="].location+[dataString rangeOfString:@"+ST="].length, [dataString rangeOfString:@"+O="].location-([dataString rangeOfString:@"+ST="].location+[dataString rangeOfString:@"+ST="].length))];
+            NSString *bumen =[dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"+O="].location+[dataString rangeOfString:@"+O="].length, [dataString rangeOfString:@"+OU="].location-([dataString rangeOfString:@"+O="].location+[dataString rangeOfString:@"+O="].length))];
+            NSString *company = [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"+OU="].location+[dataString rangeOfString:@"+OU="].length, [dataString rangeOfString:@"+E="].location-([dataString rangeOfString:@"+OU="].location+[dataString rangeOfString:@"+OU="].length))];
+            NSString *email = [dataString substringWithRange:NSMakeRange([dataString rangeOfString:@"+E="].location+[dataString rangeOfString:@"+E="].length, [dataString rangeOfString:@"+CN="].location-([dataString rangeOfString:@"+E="].location+[dataString rangeOfString:@"+E="].length))];
+            NSString *ceshi = [dataString substringFromIndex:[dataString rangeOfString:@"+CN="].location+[dataString rangeOfString:@"+CN="].length];
+            NSString *messagestr = [NSString stringWithFormat:@"验证时间:%@\r\n所在国家:%@\r\n所在城市:%@\r\n所在省份:%@\r\n组织:%@\r\n组织单位:%@\r\n电子邮件:%@\r\n公用名称：%@",time,country,city,bigCity,bumen,company,email,ceshi];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证结果" message:messagestr delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+        }
+        // NSString *timeMessage = [dataString]
+    }
+}
+
+#pragma mark - 每次退出pdf编辑页面需要清除本地文件
+
+@end

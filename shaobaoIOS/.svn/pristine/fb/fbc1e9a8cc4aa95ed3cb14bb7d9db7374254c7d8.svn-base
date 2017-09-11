@@ -1,0 +1,31 @@
+//
+//  CSignView.h
+//  iStylePDF
+//
+//  Created by xiong on 14-10-24.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "SPDocument.h"
+
+@protocol signViewDelegate;
+
+@interface CSignView : UIView
+{
+    id _signDelegate;
+}
+
+@property (assign, nonatomic) id signDelegate;
+
+- (id)initWithFrame:(CGRect)frame docoument:(SPDocumentRef)doc;
+
+@end
+
+@protocol  signViewDelegate<NSObject>
+
+- (void)signView:(CSignView *)signView signGotoPage:(NSInteger)pageNumber;
+
+@end
+
+

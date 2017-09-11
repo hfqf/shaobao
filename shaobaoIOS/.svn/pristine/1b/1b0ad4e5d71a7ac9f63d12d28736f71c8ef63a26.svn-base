@@ -1,0 +1,48 @@
+//
+//  EMaganizeViewController.m
+//  jianye
+//
+//  Created by points on 2017/2/10.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "EMaganizeViewController.h"
+
+@interface EMaganizeViewController ()
+
+@end
+
+@implementation EMaganizeViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [title setText:@"电子期刊"];
+    backBtn.hidden = YES;
+    UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [slideBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [slideBtn setFrame:CGRectMake(10,4+DISTANCE_TOP, 32, 34)];
+    [slideBtn setBackgroundImage:[UIImage imageNamed:@"home_more"] forState:UIControlStateNormal];
+    [navigationBG addSubview:slideBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -  侧滑栏操作
+- (void)backBtnClicked
+{
+    [self.m_delegate onShowSliderView];
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

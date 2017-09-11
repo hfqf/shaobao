@@ -1,0 +1,18 @@
+//
+//  SPSignture.h
+//  iStylePDF
+//
+//  Created by xiong on 14-7-18.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+
+#import <Foundation/Foundation.h>
+#import "iStylePDFBase.h"
+#import <UIKit/UIKit.h>
+
+SP_EXTERN SPSignatureRef SPSignatureGetSignature(SPFieldRef ref);
+
+SP_EXTERN NSInteger SPSignatureFree(SPSignatureRef ref);
+
+SP_EXTERN NSInteger SPSignatureAddSignature(SPFieldRef ref, SPSignatureRef sign);

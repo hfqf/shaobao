@@ -1,0 +1,232 @@
+//
+//  ContactForGroupSelectViewController.m
+//  officeMobile
+//
+//  Created by Points on 15/11/10.
+//  Copyright © 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "ContactForGroupSelectViewController.h"
+#import "ContactTableViewCell.h"
+@implementation ContactForGroupSelectViewController
+
+- (id)initForNotice
+{
+    if(self = [super initForSelectContact])
+    {
+        self.m_selectedContactDic = [NSMutableDictionary dictionary];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        
+        self.tableView.tableHeaderView = nil;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    return self;
+}
+
+- (id)init
+{
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.m_selectedContactDic = [NSMutableDictionary dictionary];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+
+        self.tableView.tableHeaderView = nil;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    return self;
+}
+
+- (void)requestData:(BOOL)isRefresh
+{
+    [self showWaitingView];
+    __block  NSMutableArray *arr = [NSMutableArray array];
+    
+    
+    [HTTP_MANAGER getGroupList:self.m_depId
+                successedBlock:^(NSDictionary *succeedResult) {
+                    
+                            NSDictionary *ret = [succeedResult[@"DATA"] mutableObjectFromJSONString];
+                            NSArray *arrGroup = ret[@"result"];
+                              for(NSDictionary *contact in arrGroup)
+                              {
+                                  ADTGropuInfo *groupData  = [[ADTGropuInfo alloc]init];
+                                  groupData.isContactView = YES;
+                                  groupData.m_strDepId = [contact stringWithFilted:@"deptId"];
+                                  groupData.m_strDeptName = [contact stringWithFilted:@"deptName"];
+                                  groupData.m_strParentId = [contact stringWithFilted:@"parentId"];
+                                  [arr addObject:groupData];
+                              }
+                                            
+                                self.m_arrGroup = arr;
+                                [self reloadDeals];
+                    
+                                            } failedBolck:FAILED_BLOCK{
+                                                [self reloadDeals];
+                                            }];
+
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.m_arrGroup.count;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ADTContacterInfo *info = [self.m_arrData objectAtIndex:indexPath.row];
+    CGSize size = [FontSizeUtil sizeOfString:info.m_strUserName withFont:[UIFont boldSystemFontOfSize:16] withWidth:MAIN_WIDTH-60];
+    return size.height+20;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return section == m_index ?  self.m_arrData.count : 0;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    ContactTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    if(cell == nil)
+    {
+        cell = [[ContactTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    }
+    ADTContacterInfo *info = [self.m_arrData objectAtIndex:indexPath.row];
+    cell.currentData = info;
+    return  cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    ADTGropuInfo *group = [self.m_arrGroup objectAtIndex:section];
+    CGSize size = [FontSizeUtil sizeOfString:group.m_strDeptName withFont:[UIFont boldSystemFontOfSize:16] withWidth:MAIN_WIDTH-60];
+    return size.height+20;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    ADTGropuInfo *group = [self.m_arrGroup objectAtIndex:section];
+    
+
+    
+    
+    CGSize size = [FontSizeUtil sizeOfString:group.m_strDeptName withFont:[UIFont boldSystemFontOfSize:16] withWidth:MAIN_WIDTH-60];
+    
+    UIButton *vi = [UIButton buttonWithType:UIButtonTypeCustom];
+    vi.tag = section;
+    [vi setFrame:CGRectMake(0, 0, MAIN_WIDTH, size.height+20)];
+    [vi addTarget:self action:@selector(groupBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *m_icon = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
+    [m_icon setImage:[UIImage imageNamed:@"unit"]];
+    [vi addSubview:m_icon];
+    UILabel *m_nameLab = [[UILabel alloc]initWithFrame:CGRectMake(50, 10, MAIN_WIDTH-20, 20)];
+    m_nameLab.numberOfLines = 0;
+    m_nameLab.lineBreakMode = NSLineBreakByCharWrapping;
+    [m_nameLab setBackgroundColor:[UIColor clearColor]];
+    [m_nameLab setTextColor:[UIColor blackColor]];
+    [m_nameLab setFont:[UIFont boldSystemFontOfSize:16]];
+    [vi addSubview:m_nameLab];
+    
+    m_nameLab.frame = CGRectMake(50, 10, MAIN_WIDTH-60, size.height);
+    [m_nameLab setText:group.m_strDeptName];
+    return vi;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        ADTContacterInfo *info = [self.m_arrData objectAtIndex:indexPath.row];
+        info.isSelected= !info.isSelected;
+        if(info.isSelected)
+        {
+            [self.m_selectedContactDic setObject:info forKey:info.m_strUserID];
+            
+        }
+        else
+        {
+            [self.m_selectedContactDic removeObjectForKey:info.m_strUserID];
+        }
+        
+        if([info.m_strUserID isEqualToString:[LoginUserUtil userId]])
+        {
+            [self.m_selectedContactDic removeObjectForKey:info.m_strUserID];
+            [self reloadDeals];
+            [PubllicMaskViewHelper showTipViewWith:@"不能选择自己" inSuperView:self.view withDuration:1];
+            return;
+        }
+    
+        
+        
+        
+        [self reloadDeals];
+}
+
+- (void)groupBtnClicked:(UIButton *)btn
+{
+    __block  NSMutableArray *arr = [NSMutableArray array];
+    m_index = btn.tag;
+    ADTGropuInfo *group = [self.m_arrGroup objectAtIndex:btn.tag];
+    [HTTP_MANAGER getDeptUsers:group.m_strDepId
+              successedBlock:^(NSDictionary *retDic){
+                  
+                  NSDictionary *ret = [retDic[@"DATA"] mutableObjectFromJSONString];
+                  NSArray *arrContact = ret[@"result"];
+                  for(NSDictionary *contact in arrContact)
+                  {
+                      ADTContacterInfo *groupData  = [[ADTContacterInfo alloc]init];
+                      groupData.m_strDepId = group.m_strDepId;
+                      groupData.m_strLoginName = [contact stringWithFilted:@"loginName"];
+                      groupData.m_strUserID = [contact stringWithFilted:@"userId"];
+                      groupData.m_strUserName = [contact stringWithFilted:@"userName"];
+                      groupData.m_strMobile = [contact stringWithFilted:@"mobile"];
+                      groupData.m_strTel = [contact stringWithFilted:@"mobile"];
+                      groupData.m_strJob = [contact stringWithFilted:@"job"];
+                      [arr addObject:groupData];
+                  }
+                  
+                  self.m_arrData = arr;
+                  [self reloadDeals];
+                  
+              } failedBolck:FAILED_BLOCK{
+                  [self reloadDeals];
+              }];
+}
+
+- (void)clearBtnClicked
+{
+    for(ADTContacterInfo *info in self.m_arrData)
+    {
+        info.isSelected = NO;
+    }
+    [self.m_selectedContactDic removeAllObjects];
+    [self reloadDeals];
+}
+
+- (void)confrimBtnClicked
+{
+    NSArray *arr = [self.m_selectedContactDic allValues];
+    if(arr == nil || arr.count == 0)
+    {
+        [PubllicMaskViewHelper showTipViewWith:@"还未选择联系人" inSuperView:self.view withDuration:1];
+        return;
+    }
+    
+    if(self.m_selectDelegate && [self.m_selectDelegate respondsToSelector:@selector(onSelected:)])
+    {
+        [self backBtnClicked];
+        [self.m_selectDelegate onSelected:arr];
+    }
+    
+}
+@end

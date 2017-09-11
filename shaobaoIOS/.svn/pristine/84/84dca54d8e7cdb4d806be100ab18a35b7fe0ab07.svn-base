@@ -1,0 +1,523 @@
+//
+//  EmailDetailViewController.m
+//  officeMobile
+//
+//  Created by Points on 15-3-12.
+//  Copyright (c) 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "EmailDetailViewController.h"
+#import "SendEmailViewController.h"
+#import "FilePreviewViewController.h"
+@interface EmailDetailViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
+{
+    NSInteger m_lastHigh;
+}
+@end
+
+@implementation EmailDetailViewController
+- (id)initWith:(NSDictionary *)contactInfo mailType:(NSInteger)mailType
+{
+    self.m_info = contactInfo;
+    self.m_msgId = [contactInfo  stringWithFilted:@"msgId"];
+    self.m_type = mailType;
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    {
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    return self;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [HTTP_MANAGER updateEmailStateToReaded:[self.m_info stringWithFilted:@"msgId"]
+                            successedBlock:^(NSDictionary *succeedResult) {
+                                [self.m_delegate onNeedRefreshTableView];
+        
+    } failedBolck:FAILED_BLOCK{
+    
+    }];
+    
+    app = (iAppPDFAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    [title setText:[self.m_info stringWithFilted:@"subject"]];
+    
+    [self createFooterView];
+    
+    [HTTP_MANAGER GetEmialInfo:[self.m_info stringWithFilted:@"mailId"]
+                isSaveBox:self.m_type == 30
+                         msgId:[self.m_info stringWithFilted:@"msgId"]
+                successedBlock:^(NSDictionary *retDic){
+                
+                    NSDictionary *ret = [retDic[@"DATA"] mutableObjectFromJSONString];
+                    self.m_info = ret;
+                    [self reloadDeals];
+
+                    
+                } failedBolck:FAILED_BLOCK{
+                
+                    [self reloadDeals];
+
+                    
+                }];
+}
+
+- (void)createFooterView
+{
+    UIView *headVeiw = [[UIView alloc]initWithFrame:CGRectMake(0,MAIN_HEIGHT-50, MAIN_WIDTH, 50)];
+    
+    if(self.m_type == 30 || self.m_type == 20)
+    {
+        int width = 40;
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 addTarget:self action:@selector(feedbackClickde) forControlEvents:UIControlEventTouchUpInside];
+        [btn1 setTitle:@"回复" forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake((MAIN_WIDTH/2)-80, 10, width, 30)];
+        [btn1 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        btn1.layer.borderWidth = 0.5;
+        btn1.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        btn1.layer.cornerRadius = 4;
+        [headVeiw addSubview:btn1];
+        
+        UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn2 addTarget:self action:@selector(repostBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [btn2 setTitle:@"转发" forState:UIControlStateNormal];
+        [btn2 setFrame:CGRectMake((MAIN_WIDTH/2)-20, 10, width, 30)];
+        [btn2 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        btn2.layer.borderWidth = 0.5;
+        btn2.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        btn2.layer.cornerRadius = 4;
+        [headVeiw addSubview:btn2];
+        
+        
+        UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn3 addTarget:self action:@selector(deleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [btn3 setTitle:@"删除" forState:UIControlStateNormal];
+        [btn3 setFrame:CGRectMake((MAIN_WIDTH/2)+40, 10, width, 30)];
+        [btn3 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        btn3.layer.borderWidth = 0.5;
+        btn3.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        btn3.layer.cornerRadius = 4;
+        [headVeiw addSubview:btn3];
+    }
+    else if (self.m_type == 40)//已删除邮件
+    {
+        
+    }
+    else
+    {
+        int width = 40;
+        UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn1 addTarget:self action:@selector(saveClicked) forControlEvents:UIControlEventTouchUpInside];
+        [btn1 setTitle:@"保存" forState:UIControlStateNormal];
+        [btn1 setFrame:CGRectMake((MAIN_WIDTH/2)-40, 10, width, 30)];
+        [btn1 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        btn1.layer.borderWidth = 0.5;
+        btn1.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        btn1.layer.cornerRadius = 4;
+        [headVeiw addSubview:btn1];
+        
+        UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn2 addTarget:self action:@selector(commitClicked) forControlEvents:UIControlEventTouchUpInside];
+        [btn2 setTitle:@"发送" forState:UIControlStateNormal];
+        [btn2 setFrame:CGRectMake((MAIN_WIDTH/2)+20, 10, width, 30)];
+        [btn2 setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+        btn2.layer.borderWidth = 0.5;
+        btn2.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        btn2.layer.cornerRadius = 4;
+        [headVeiw addSubview:btn2];
+    }
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, self.tableView.frame.size.width,  self.tableView.frame.size.height-50)];
+    [self.view addSubview:headVeiw];
+    
+}
+
+- (void)feedbackClickde
+{
+    SendEmailViewController *send = [[SendEmailViewController alloc]initWithInfo:self.m_info WithType:email_feedback];
+    [self.navigationController pushViewController:send animated:YES];
+    
+}
+
+
+- (void)repostBtnClicked
+{
+
+    [HTTP_MANAGER GetRepostEmialInfo:self.m_info[@"mailId"]
+                successedBlock:^(NSDictionary *retDic){
+                    
+                    NSDictionary *ret = [retDic[@"DATA"] mutableObjectFromJSONString];
+                    SendEmailViewController *send = [[SendEmailViewController alloc]initWithInfo:ret WithType:email_repost];
+                    [self.navigationController pushViewController:send animated:YES];
+                    
+                } failedBolck:FAILED_BLOCK{
+                    
+                    
+                }];
+    
+
+}
+
+- (void)deleteBtnClicked
+{
+    NSDictionary * info =
+         @{
+          @"mailId":@[[self.m_info stringWithFilted:@"mailId"]],
+          @"msgId":self.m_type == 30 ? @[self.m_msgId] : @[],
+          @"userId":[LoginUserUtil userId],
+          @"delType" : @"1"
+          
+          };
+    [HTTP_MANAGER deleteEmail:info
+              successedBlock:^(NSDictionary *retDic){
+               
+                  
+                   if([retDic[@"resultCode"]integerValue] == 0)
+                   {
+                       [PubllicMaskViewHelper showTipViewWith:@"删除成功" inSuperView:self.view withDuration:1];
+                       [self.m_delegate onNeedRefreshTableView];
+                       [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1
+                        ];
+                   }
+                   else
+                   {
+                       [PubllicMaskViewHelper showTipViewWith:@"删除失败" inSuperView:self.view withDuration:1];
+                       
+                   }
+                   
+               }
+                  failedBolck:FAILED_BLOCK{
+                   [PubllicMaskViewHelper showTipViewWith:@"删除失败" inSuperView:self.view withDuration:1];
+                  }];
+}
+
+
+- (void)saveClicked
+{
+    [HTTP_MANAGER dealwithEmail:1
+                       withInfo:self.m_info
+                   withReceiver:nil
+                withReceiverBTW:nil
+             withReceiverSecret:nil
+                       withUUid:[self.m_info stringWithFilted:@"mailId"]
+                 successedBlock:^(NSDictionary *retDic){
+                     
+                     if([retDic[@"resultCode"]integerValue] == 0)
+                     {
+                         [PubllicMaskViewHelper showTipViewWith:@"保存成功" inSuperView:self.view withDuration:1];
+                         [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1
+                          ];
+                     }
+                     else
+                     {
+                         [PubllicMaskViewHelper showTipViewWith:@"保存失败" inSuperView:self.view withDuration:1];
+                     }
+                     
+                 }
+                    failedBolck:FAILED_BLOCK{
+                        
+                        
+                    }];
+}
+
+
+- (void)commitClicked
+{
+    SendEmailViewController *send = [[SendEmailViewController alloc]initWithInfo:self.m_info WithType:email_feedback];
+    [self.navigationController pushViewController:send animated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - TableViewDelegate
+
+- (int)highOf:(int)row
+{
+    if(row == 5)
+    {
+        return m_lastHigh+40;
+    }
+    else if (row == 4)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"附   件:" withFont:[UIFont systemFontOfSize:14]];
+        
+        NSArray *arr = self.m_info[@"accessory"];
+        if(arr.count == 0)
+        {
+            return 50;
+        }
+        NSInteger lastY = 10;
+        for(NSDictionary *fileDic in arr)
+        {
+            CGSize sizeContnt = [FontSizeUtil sizeOfString:fileDic[@"filename"]  withFont:[UIFont systemFontOfSize:12] withWidth:MAIN_WIDTH-size.width-10-10];
+            lastY += sizeContnt.height+10;
+        }
+        return lastY+10;
+        
+    }
+    else if (row == 2)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"收件人:" withFont:[UIFont systemFontOfSize:14]];
+        CGSize sizeContent = [FontSizeUtil sizeOfString:self.m_info[@"mainNames"] withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-size.width-10];
+        return sizeContent.height+20;
+    }
+    else if (row == 0)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"主   题:" withFont:[UIFont systemFontOfSize:14]];
+        
+        CGSize contentSize = [FontSizeUtil sizeOfString:self.m_info[@"subject"] withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-size.width-10];
+        if((int)contentSize.width  == 0)
+        {
+            contentSize = CGSizeMake(MAIN_WIDTH, 20);
+        }
+        return contentSize.height+20;
+    }
+    return 40;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self highOf:indexPath.row];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 6;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identify = @"spe";
+    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    
+    
+    if(indexPath.row == 0)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"主   题:" withFont:[UIFont systemFontOfSize:14]];
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,size.width, size.height)];
+        [titleLab setFont:[UIFont systemFontOfSize:14]];
+        [titleLab setText:@"主   题:"];
+        [cell addSubview:titleLab];
+        
+        CGSize contentSize = [FontSizeUtil sizeOfString:self.m_info[@"subject"] withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-size.width-10];
+
+        UILabel *contentLab = [[UILabel alloc]initWithFrame:CGRectMake(size.width+10, 10,MAIN_WIDTH-size.width-10, contentSize.height)];
+        contentLab.numberOfLines = 0;
+        [contentLab setFont:[UIFont systemFontOfSize:14]];
+        [contentLab setText:self.m_info[@"subject"]];
+        [cell addSubview:contentLab];
+        
+    }
+    else if (indexPath.row == 1)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"发件人:" withFont:[UIFont systemFontOfSize:14]];
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,size.width, size.height)];
+        [titleLab setFont:[UIFont systemFontOfSize:14]];
+        [titleLab setText:@"发件人:"];
+        [cell addSubview:titleLab];
+        
+        UILabel *contentLab = [[UILabel alloc]initWithFrame:CGRectMake(size.width+10, 10,MAIN_WIDTH-size.width-10, size.height)];
+        [contentLab setFont:[UIFont systemFontOfSize:14]];
+        [contentLab setText:self.m_info[@"senderName"]];
+        [cell addSubview:contentLab];
+    }
+    else if (indexPath.row == 2)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"收件人:" withFont:[UIFont systemFontOfSize:14]];
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,size.width, size.height)];
+        [titleLab setFont:[UIFont systemFontOfSize:14]];
+        [titleLab setText:@"收件人:"];
+        [cell addSubview:titleLab];
+        
+        CGSize contentSize = [FontSizeUtil sizeOfString:self.m_info[@"mainNames"] withFont:[UIFont systemFontOfSize:14] withWidth:MAIN_WIDTH-size.width-10];
+
+        UILabel *contentLab = [[UILabel alloc]initWithFrame:CGRectMake(size.width+10, 10,MAIN_WIDTH-size.width-10, contentSize.height)];
+        contentLab.numberOfLines = 0;
+        [contentLab setFont:[UIFont systemFontOfSize:14]];
+        //[contentLab setTextColor:KEY_COMMON_CORLOR];
+        [contentLab setText:self.m_info[@"mainNames"]];
+        [cell addSubview:contentLab];
+    }
+    else if (indexPath.row == 3)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"时   间:" withFont:[UIFont systemFontOfSize:14]];
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,size.width, size.height)];
+        [titleLab setFont:[UIFont systemFontOfSize:14]];
+        [titleLab setText:@"时   间:"];
+        [cell addSubview:titleLab];
+        
+        UILabel *contentLab = [[UILabel alloc]initWithFrame:CGRectMake(size.width+10, 10,MAIN_WIDTH-size.width-10, size.height)];
+        [contentLab setFont:[UIFont systemFontOfSize:14]];
+        [contentLab setText:self.m_info[@"sendDate"]];
+        [cell addSubview:contentLab];
+    }
+    else if (indexPath.row == 4)
+    {
+        CGSize size = [FontSizeUtil sizeOfString:@"附   件:" withFont:[UIFont systemFontOfSize:14]];
+        UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10,size.width, size.height)];
+        [titleLab setFont:[UIFont systemFontOfSize:14]];
+        [titleLab setText:@"附   件:"];
+        [cell addSubview:titleLab];
+        
+        NSArray *arr = self.m_info[@"accessory"];
+        if(arr.count ==  1)
+        {
+            
+            NSDictionary *fileDic = [arr firstObject];
+            
+            CGSize sizeContnt = [FontSizeUtil sizeOfString:fileDic[@"filename"]  withFont:[UIFont systemFontOfSize:12] withWidth:MAIN_WIDTH-size.width-10-10];
+
+            UIButton *fileBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [fileBtn addTarget:self action:@selector(fileBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            fileBtn.tag = 0;
+            [fileBtn.titleLabel setTextAlignment:NSTextAlignmentLeft];
+            [fileBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+            [fileBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [fileBtn setFrame:CGRectMake(CGRectGetMaxX(titleLab.frame)+5, 12.5,MAIN_WIDTH-size.width-10-10,sizeContnt.height)];
+            [cell addSubview:fileBtn];
+            
+            UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, fileBtn.frame.size.width, sizeContnt.height)];
+            lab.font = [UIFont systemFontOfSize:12];
+            lab.numberOfLines = 0;
+            [lab setTextAlignment:NSTextAlignmentLeft];
+            [lab setTextColor:KEY_COMMON_CORLOR];
+            [lab setText:fileDic[@"filename"]];
+            [fileBtn addSubview:lab];
+            
+        }
+        else if (arr.count > 1)
+        {
+            NSInteger lastY = 10;
+            for(NSDictionary *fileDic in arr)
+            {
+                CGSize sizeContnt = [FontSizeUtil sizeOfString:fileDic[@"filename"]  withFont:[UIFont systemFontOfSize:12] withWidth:MAIN_WIDTH-size.width-10-10];
+
+                UIButton *fileBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [fileBtn setBackgroundColor:[UIColor clearColor]];
+                [fileBtn addTarget:self action:@selector(fileBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                fileBtn.tag = [arr indexOfObject:fileDic];
+                [fileBtn.titleLabel setTextAlignment:NSTextAlignmentLeft];
+                [fileBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+                fileBtn.titleLabel.numberOfLines = 0;
+                [fileBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+                [fileBtn setFrame:CGRectMake(CGRectGetMaxX(titleLab.frame)+5,lastY, MAIN_WIDTH-size.width-10-10,sizeContnt.height)];
+                [cell addSubview:fileBtn];
+                
+                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, fileBtn.frame.size.width, sizeContnt.height)];
+                lab.font = [UIFont systemFontOfSize:12];
+                lab.numberOfLines = 0;
+                [lab setTextAlignment:NSTextAlignmentLeft];
+                [lab setTextColor:KEY_COMMON_CORLOR];
+                [lab setText:fileDic[@"filename"]];
+                [fileBtn addSubview:lab];
+                lastY = CGRectGetMaxY(fileBtn.frame)+10;
+            }
+        }
+        else
+        {
+            
+        }
+    }
+    else
+    {
+        UIWebView *contentWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 10, MAIN_WIDTH,m_lastHigh)];
+        contentWebView.scrollView.maximumZoomScale = 10;
+        [contentWebView setBackgroundColor:[UIColor clearColor]];
+        contentWebView.delegate = self;
+        contentWebView.scrollView.scrollEnabled = NO;
+        [contentWebView loadHTMLString:self.m_info[@"content"] baseURL:nil];
+        [cell addSubview:contentWebView];
+    }
+    
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0,[self highOf:indexPath.row]-0.5, MAIN_WIDTH, 0.5)];
+    sep.alpha = 0.2;
+    [sep setBackgroundColor:[UIColor grayColor]];
+    [cell addSubview:sep];
+    return  cell;
+}
+
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSInteger heightInt = [[webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"] integerValue];
+    if (heightInt > 0)
+    {
+        if(m_lastHigh == heightInt)
+        {
+            
+            [webView setFrame:CGRectMake(webView.frame.origin.x, webView.frame.origin.y, webView.frame.size.width,m_lastHigh+20)];
+//            [webView.scrollView setContentSize:CGSizeMake(webView.frame.size.width,m_lastHigh)];
+            webView.delegate = nil;
+            return;
+        }
+        m_lastHigh = heightInt;
+
+        [self.tableView reloadData];
+    }
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    m_lastHigh = 100;
+    [self.tableView reloadData];
+
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+- (void)fileBtnClicked:(UIButton *)btn
+{
+    NSArray *arr = self.m_info[@"accessory"];
+    NSDictionary *dic = [arr objectAtIndex:btn.tag];
+    [self showWaitingView];
+    BOOL iosFile = [dic[@"rettype"]integerValue] == 1;
+    [HTTP_MANAGER downloadFileWithUrl:dic[@"filetype"]
+                           params:
+                             iosFile ? @{
+                                         @"filepath" : [dic stringWithFilted:@"filepath"],
+                                         @"fileid"   :dic[@"filebody"],
+                                         @"userid"   : [LoginUserUtil userId],
+                                         @"doctype"  : dic[@"doctype"],
+                                         @"token"    : [LoginUserUtil accessToken]
+                                         }
+                                     :
+                                         @{
+                                           @"fileid" :dic[@"fileid"],
+                                           @"userid" : [LoginUserUtil userId],
+                                           @"doctype" : dic[@"doctype"],
+                                           @"token"   : [LoginUserUtil accessToken]
+                                          }
+                    successBlock:^(NSDictionary *retDic){
+                                [self removeWaitingView];
+                                [PubllicMaskViewHelper showTipViewWith:@"下载完毕" inSuperView:self.view withDuration:1];
+                                SpeLog(@"%@",retDic);
+                                FilePreviewViewController *info = [[FilePreviewViewController alloc]init];
+                                info.fileLocalUrl = retDic[@"path"];
+                                [self.navigationController pushViewController:info animated:YES];
+                        
+                            }
+                    failedBolck:FAILED_BLOCK{
+                        
+                              [self removeWaitingView];
+                              [PubllicMaskViewHelper showTipViewWith:@"下载失败" inSuperView:self.view withDuration:1];
+                        
+                                                   }];
+}
+
+@end
+

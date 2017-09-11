@@ -1,0 +1,20 @@
+//
+//  iAppPDFViewController.h
+//  iAppPDF
+//
+//  Created by apple on 14-7-8.
+//  Copyright (c) 2014年 com.kinggrid. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "iAppPDFAppDelegate.h"
+#import "BaseViewController.h"
+@interface iAppPDFViewController : BaseViewController
+{
+    NSMutableArray *PDFArray;
+    iAppPDFAppDelegate *app;
+}
+@property(nonatomic,retain)NSString *sinatureName;
+- (IBAction)meettingButtonClick:(id)sender;
+
+@end

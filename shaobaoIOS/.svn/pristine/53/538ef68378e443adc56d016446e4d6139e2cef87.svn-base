@@ -1,0 +1,14 @@
+//
+//  ResourceFileInfoViewController.h
+//  jianye
+//
+//  Created by points on 2017/2/20.
+//  Copyright © 2017年 com.kinggrid. All rights reserved.
+//
+
+#import "SpeRefreshAndLoadViewController.h"
+
+@interface ResourceFileInfoViewController : SpeRefreshAndLoadViewController
+
+- (id)initWith:(NSDictionary *)fileInfo;
+@end

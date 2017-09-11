@@ -1,0 +1,156 @@
+//
+//  ADTGovermentFileInfo.m
+//  officeMobile
+//
+//  Created by Points on 15-3-11.
+//  Copyright (c) 2015年 com.kinggrid. All rights reserved.
+//
+
+#import "ADTGovermentFileInfo.h"
+
+
+@implementation ADTAttachmentInfo
+
+@end
+
+
+@implementation ADTCommitButtonInfo
+
+@end
+
+
+@implementation ADTFormInfo
+
+@end
+
+
+@implementation ADTMainBodyInfo
+
+@end
+
+
+@implementation ADTProcessData
+
+@end
+
+@implementation ADTCheckInfo
+
+@end
+
+
+
+
+
+@implementation ADTGovermentFileInfo
+
++(ADTGovermentFileInfo *)getInfoFrom:(NSDictionary *)infoDic
+{
+    NSDictionary *dic = [infoDic[@"DATA"]mutableObjectFromJSONString];
+    ADTGovermentFileInfo *info = [[ADTGovermentFileInfo alloc]init];
+    
+    NSMutableArray * arrAttachment = [NSMutableArray array];
+    info.m_arrOriginalAccessory =  dic[@"accessory"];
+    for(NSDictionary *cell in  dic[@"accessory"])
+    {
+        ADTAttachmentInfo *attachInfo = [[ADTAttachmentInfo alloc]init];
+        attachInfo.m_docType = [NSString stringWithFormat:@"%ld",(long)[cell[@"doctype"]integerValue]];
+        attachInfo.m_strFileBody =  cell[@"filebody"];
+        attachInfo.m_strFileId = cell[@"fileid"];
+        attachInfo.m_strFileName = cell[@"filename"];
+        attachInfo.m_strFilleType = cell[@"filetype"];
+        attachInfo.m_strRecordId = cell[@"recordid"];
+        [arrAttachment addObject:attachInfo];
+    }
+    info.m_arrAttachment         = arrAttachment;
+    
+    NSMutableArray * arrDocument = [NSMutableArray array];
+    for(NSDictionary *cell in  dic[@"document"])
+    {
+        ADTMainBodyInfo *attachInfo = [[ADTMainBodyInfo alloc]init];
+        attachInfo.m_strDocType  = cell[@"doctype"];
+        attachInfo.m_strFileBody  = cell[@"filebody"];
+        attachInfo.m_strFileId  = cell[@"fileid"];
+        attachInfo.m_strFileName  = cell[@"filename"];
+        attachInfo.m_strFilleType  = cell[@"filetype"];
+        [arrDocument addObject:attachInfo];
+    }
+    info.m_arrDocument           = arrDocument;
+    
+    NSMutableArray * arr3 = [NSMutableArray array];
+    for(NSDictionary *cell in  dic[@"flowlog"])
+    {
+        ADTProcessData *attachInfo = [[ADTProcessData alloc]init];
+        attachInfo.m_strNodeName = cell[@"nodename"];
+        attachInfo.m_strProcesser = cell[@"processer"];
+        attachInfo.m_strProcessTime = cell[@"processtime"];
+        attachInfo.m_strStatus = cell[@"status"];
+        attachInfo.m_strOpinion = cell[@"opinion"];
+        [arr3 addObject:attachInfo];
+    }
+    info.m_arrFlowLog            = arr3;
+    
+    
+    NSMutableArray * arr4 = [NSMutableArray array];
+    info.m_arrOriginalForm =  dic[@"form"];
+    for(NSDictionary *cell in  dic[@"form"])
+    {
+        ADTFormInfo *attachInfo = [[ADTFormInfo alloc]init];
+        attachInfo.m_strFieldChineseName =  [NSString stringWithFormat:@"%@:",cell[@"cname"]];
+        attachInfo.m_strFieldName = cell[@"fieldname"];
+        attachInfo.m_filedType = (enum_Field_Type)[cell[@"fieldtype"]integerValue];
+        attachInfo.m_strFieldValue = cell[@"fieldvalue"];
+        attachInfo.m_isCanEdit   = [cell[@"isedit"] integerValue] == 1 ;
+        attachInfo.m_isHidden   = [cell[@"isvisible"] integerValue] == 0 ;
+        
+        [arr4 addObject:attachInfo];
+    }
+    info.m_arrForm               = arr4;
+
+    NSMutableArray * arr5 = [NSMutableArray array];
+    for(NSDictionary *cell in  dic[@"nextbutton"])
+    {
+        ADTCommitButtonInfo *attachInfo = [[ADTCommitButtonInfo alloc]init];
+        attachInfo.m_strActionId = [NSString stringWithFormat:@"%ld",(long)[cell[@"actionid"]integerValue]];
+        attachInfo.m_strFlowModelId = [NSString stringWithFormat:@"%ld",(long)[cell[@"flowmodelid"]integerValue]];
+        attachInfo.m_strNodeModelId = [NSString stringWithFormat:@"%ld",(long)[cell[@"nodemodelid"]integerValue]];
+        attachInfo.m_strActionName = cell[@"actionname"];
+        [arr5 addObject:attachInfo];
+    }
+    
+    NSMutableArray * arr6 = [NSMutableArray array];
+    NSArray *arrCheckInfo = dic[@"readerlog"];
+    for(NSDictionary *info in arrCheckInfo)
+    {
+        ADTCheckInfo *readInfo = [[ADTCheckInfo alloc]init];
+        readInfo.m_strNodename = info[@"nodename"];
+        readInfo.m_strOpinion = info[@"opinion"];
+        readInfo.m_strProcesser = info[@"processer"];
+        readInfo.m_strProcessTime = info[@"processtime"];
+        readInfo.m_strStatus = info[@"status"];
+        [arr6 addObject:readInfo];
+        
+    }
+    info.m_arrReadInfo = arr6;
+    
+    info.m_arrNextButton           = arr5;
+
+    
+    info.m_strFlowId             = dic[@"flowid"];
+    info.m_strFlowModelId         = [dic stringWithFilted:@"flowmodelid"];
+    info.m_flowState             = (enum_File_Statue)[[dic stringWithFilted:@"flowstatus"]longLongValue];
+    info.m_isHandSign             =  [dic[@"handsign"]integerValue] == 1;
+    info.m_strMessageId            = [dic stringWithFilted:@"messageid"];
+    info.m_strNodemodelId          = [dic stringWithFilted:@"nodemodelid"];
+    info.m_strNodeName            = [dic stringWithFilted:@"nodename"];
+    info.m_isReadOnly             =  [dic[@"readonly"]integerValue] == 1;
+    info.m_strReceiverId           = [dic stringWithFilted:@"receiverid"];
+    info.m_fileState              = (enum_File_Statue)[[dic stringWithFilted:@"status"]longLongValue];
+    info.m_strSubject             = [dic stringWithFilted:@"subject"];
+    info.m_strInnerid             = [dic stringWithFilted:@"innerid"];
+    info.m_isCanBack             = [[dic stringWithFilted:@"canback"]integerValue] == 1;
+    
+
+    return info;
+}
+
+@end

@@ -1,0 +1,43 @@
+//
+//  SPAppViewController.h
+//  iStylePDF
+//
+//  Created by liuhuahua on 14-3-20.
+//  Copyright (c) 2014年 iStyle. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "SPDocument.h"
+#import "SPPageView.h"
+
+@protocol  SPAppViewDelegate;
+
+// 说明：此类只做简单的一些页面显示，若要自定义功能，一般不用此类。
+@interface SPAppViewController : UIViewController
+{
+}
+
+@property (nonatomic, assign)   id delegate;
+@property (nonatomic, assign)   BOOL showPageView;
+@property (nonatomic, readonly) SPDocumentRef  document;
+
+// 打开文件（是否需要密码）
+- (NSInteger)openDocument:(NSString *)path showPassword:(Boolean)showPassword;
+
+// 关闭文件
+- (NSInteger)closeDocument;
+
+// 打开的文档，用视图显示出来
+- (void)showDocument:(CGRect)frame pageViewMode:(SPageMode)mode currentIndex:(NSInteger)index;
+
+
+
+@end
+
+@protocol SPAppViewDelegate <NSObject>
+@optional
+
+// 返回当前页数。
+- (void)SPAppViewDelegate:(SPAppViewController *)pageView  currentPage:(int)index;
+
+@end
