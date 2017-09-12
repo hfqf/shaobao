@@ -96,4 +96,21 @@
 + (NSArray *)arrModules;
 
 + (NSArray *)arrModulesSlider;
+
+#pragma mark - shaobao
++(NSString *)shaobaoToken;
+
++(NSString *)shaobaoHeadUrl;
+
++(NSString *)shaobaoUserId;
+
++(NSString *)shaobaoLoginName;
+
++(NSString *)shaobaoLoginPass;
+
++(NSString *)shaobaoTel;
+
++(NSString *)shaobaoUserType;
+
++(NSString *)shaobaoUserName;
 @end

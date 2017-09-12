@@ -147,10 +147,10 @@
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     SpeLog(@"parameters==%@",parameters);
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[self.baseURL  absoluteString]substringToIndex:[[self.baseURL  absoluteString]length] -1]parameters:parameters];
-    [request setTimeoutInterval:60];
-//    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters];
-    
+//    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[self.baseURL  absoluteString]substringToIndex:[[self.baseURL  absoluteString]length] -1]parameters:parameters];
+//    [request setTimeoutInterval:60];
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters];
+
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
     [self.operationQueue addOperation:operation];
     

@@ -80,7 +80,7 @@
     
     
     UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(setBtn.frame)+50, (MAIN_WIDTH-40), (MAIN_WIDTH-40)/9)];
-    [icon setImage:[UIImage imageNamed:@"login_icon"]];
+//    [icon setImage:[UIImage imageNamed:@"login_icon"]];
     [self.view addSubview:icon];
     
     LoginScrollerView *scr = [[LoginScrollerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(icon.frame)+50, MAIN_WIDTH, MAIN_HEIGHT-CGRectGetMaxY(icon.frame))];
@@ -88,7 +88,7 @@
     scr.m_delegate = self;
     [self.view addSubview:scr];
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"login_bg"]]];
+//    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"login_bg"]]];
 
     UIView *m_bg = [[UIView alloc]initWithFrame:CGRectMake(20,0, MAIN_WIDTH-40, 300)];
     m_bg.layer.cornerRadius = 5;
@@ -114,9 +114,9 @@
         [m_nameText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_ACCOUTN]];
     }
     [m_nameText setTextColor:[UIColor blackColor]];
-    m_nameText.layer.cornerRadius = 5;
-    m_nameText.layer.borderWidth = 0.5;
-    m_nameText.layer.borderColor = [UIColor grayColor].CGColor;
+//    m_nameText.layer.cornerRadius = 5;
+//    m_nameText.layer.borderWidth = 0.5;
+//    m_nameText.layer.borderColor = [UIColor grayColor].CGColor;
     [m_bg addSubview:m_nameText];
     
     m_pwdText = [[UITextField alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(m_nameText.frame)+20, MAIN_WIDTH-40, 50)];
@@ -139,9 +139,9 @@
     [m_pwdText setTextColor:[UIColor blackColor]];
    // [m_pwdText setText:@"320836"];
     [m_pwdText setSecureTextEntry:YES];
-    m_pwdText.layer.cornerRadius = 5;
-    m_pwdText.layer.borderWidth = 0.5;
-    m_pwdText.layer.borderColor = [UIColor grayColor].CGColor;
+//    m_pwdText.layer.cornerRadius = 5;
+//    m_pwdText.layer.borderWidth = 0.5;
+//    m_pwdText.layer.borderColor = [UIColor grayColor].CGColor;
     [m_bg addSubview:m_pwdText];
     
     
@@ -149,29 +149,20 @@
     [rememberPwdBtn setBackgroundColor:[UIColor clearColor]];
     rememberPwdBtn.selected = flag;
     [rememberPwdBtn addTarget:self action:@selector(rememberPwdBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rememberPwdBtn setBackgroundImage:[UIImage imageNamed:@"login_uncheck"] forState:UIControlStateNormal];
-    [rememberPwdBtn setBackgroundImage:[UIImage imageNamed:@"login_check"] forState:UIControlStateSelected];
-    [rememberPwdBtn setFrame:CGRectMake(20, CGRectGetMaxY(m_pwdText.frame)+10, 20, 20)];
+    [rememberPwdBtn setFrame:CGRectMake(MAIN_WIDTH-60, CGRectGetMaxY(m_pwdText.frame)+10, 50, 30)];
+    [rememberPwdBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
     [m_bg addSubview:rememberPwdBtn];
-    
-    UILabel *rememberLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(rememberPwdBtn.frame)+10, CGRectGetMaxY(m_pwdText.frame)+10, 80, 20)];
-    
-    [rememberLab setTextColor:[UIColor whiteColor]];
-    [rememberLab setTextAlignment:NSTextAlignmentLeft];
-    [rememberLab setFont:[UIFont boldSystemFontOfSize:12]];
-    [rememberLab setText:@"记住密码"];
-    [m_bg addSubview:rememberLab];
-    
+
  
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginBtn setBackgroundColor:[UIColor clearColor]];
+    [loginBtn setBackgroundColor:KEY_COMMON_CORLOR];
     [loginBtn addTarget:self action:@selector(loginBtnBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [loginBtn setFrame:CGRectMake(0, CGRectGetMaxY(rememberLab.frame)+30,(m_bg.frame.size.width-10)/2, 45)];
+    [loginBtn setFrame:CGRectMake(20, CGRectGetMaxY(rememberPwdBtn.frame)+30,(m_bg.frame.size.width-40), 45)];
     [loginBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    loginBtn.layer.cornerRadius = 5;
+    loginBtn.layer.cornerRadius = 22.5;
     loginBtn.layer.borderWidth = 1;
     loginBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     [m_bg addSubview:loginBtn];
@@ -180,13 +171,13 @@
     UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logoutBtn setBackgroundColor:[UIColor clearColor]];
     [logoutBtn addTarget:self action:@selector(logoutBtnBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [logoutBtn setFrame:CGRectMake(CGRectGetMaxX(loginBtn.frame)+10, CGRectGetMaxY(rememberLab.frame)+30,(m_bg.frame.size.width-10)/2, 45)];
+    [logoutBtn setFrame:CGRectMake((m_bg.frame.size.width-100)/2, CGRectGetMaxY(loginBtn.frame)+30,100, 30)];
     [logoutBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
-    [logoutBtn setTitle:@"退出" forState:UIControlStateNormal];
-    [logoutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    logoutBtn.layer.cornerRadius = 5;
-    logoutBtn.layer.borderWidth = 1;
-    logoutBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    [logoutBtn setTitle:@"注册账号" forState:UIControlStateNormal];
+    [logoutBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+//    logoutBtn.layer.cornerRadius = 5;
+//    logoutBtn.layer.borderWidth = 1;
+//    logoutBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     [m_bg addSubview:logoutBtn];
 
 }
@@ -215,7 +206,7 @@
 
 - (void)logoutBtnBtnClicked
 {
-    exit(0);
+    [self.navigationController pushViewController:[[NSClassFromString(@"ShaobaoRegisterViewController") alloc]init] animated:YES];
 }
 
 
@@ -236,7 +227,7 @@
     }
     [self showWaitingView];
     [HTTP_MANAGER startLogin:m_nameText.text
-                         pwd:m_pwdText.text
+                         loginPass:m_pwdText.text
               successedBlock:^(NSDictionary *retDic){
                   [self removeWaitingView];
                   [self processLoginReturnData:retDic];
@@ -266,51 +257,8 @@
     [self writeAutoLogDic];
     
     NSDictionary *resultDict=[[data objectForKey:@"DATA"] objectFromJSONString];
-    if([[resultDict objectForKey:@"resultCode"]intValue] != 0)
-    {
-        NSInteger ret = [[resultDict objectForKey:@"resultCode"]intValue];
-        if(ret == 1)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"用户名或密码错误" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 10)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"服务端未知异常" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 11)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"服务端请求数据异常" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 20)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"客户端请求异常" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 21)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"客户端请求服务端异常" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 1000)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"用户未登录" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else if (ret == 1001 ||ret == 2001 || ret == 2002)
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"用户名或密码错误" inSuperView:self.view withDuration:1];
-            return;
-        }
-        else
-        {
-            [PubllicMaskViewHelper showTipViewWith:@"登录失败" inSuperView:self.view withDuration:1];
-            return;
-        }
-    }
-    if (resultDict != nil) {
+
+    if ([data[@"ret"]integerValue] == 0) {
         
         //add by huangfu
         [LoginUserUtil writeDictionaryToPlist:resultDict];

@@ -677,10 +677,17 @@ successedBlock:(SuccessedBlock)success
 - (void)startRegister:(NSString *)loginName
             loginPass:(NSString *)loginPass
              userName:(NSString *)userName
+                 type:(NSString *)type
                 phone:(NSString *)phone
                 email:(NSString *)email
                weixin:(NSString *)weixin
                    qq:(NSString *)qq
        successedBlock:(SuccessedBlock)success
           failedBolck:(FailedBlock)failed;
+
+
+- (void)startLogin:(NSString *)loginName
+         loginPass:(NSString *)loginPass
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
 @end

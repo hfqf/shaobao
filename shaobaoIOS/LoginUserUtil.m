@@ -785,5 +785,53 @@
     
 }
 
+#pragma mark - shaobao
++(NSString *)shaobaoToken
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"accessToken"];
+}
+
++(NSString *)shaobaoHeadUrl
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"avatar"];
+}
+
++(NSString *)shaobaoUserId
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"id"];
+}
+
++(NSString *)shaobaoLoginName
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"loginName"];
+}
+
++(NSString *)shaobaoLoginPass
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"loginPass"];
+}
+
++(NSString *)shaobaoTel
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"phone"];
+}
+
++(NSString *)shaobaoUserType
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"type"];
+}
+
++(NSString *)shaobaoUserName
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"userName"];
+}
 
 @end

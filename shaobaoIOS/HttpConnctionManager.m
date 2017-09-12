@@ -2865,6 +2865,7 @@ successedBlock:(SuccessedBlock)success
 - (void)startRegister:(NSString *)loginName
             loginPass:(NSString *)loginPass
              userName:(NSString *)userName
+                 type:(NSString *)type
                 phone:(NSString *)phone
                 email:(NSString *)email
                weixin:(NSString *)weixin
@@ -2877,13 +2878,28 @@ successedBlock:(SuccessedBlock)success
                               @"loginName":loginName,
                               @"loginPass":loginPass,
                               @"userName" :userName,
-                              @"phone":phone,
-                              @"email":email,
-                              @"weixin":weixin,
-                              @"qq":qq
+                              @"type":type,
+                              @"phone":phone==nil ? @"" :phone,
+                              @"email":email==nil?@"":email,
+                              @"weixin":weixin==nil?@"":weixin,
+                              @"qq":qq==nil?@"":qq
                               };
 
     [self startNormalPostWith:@"reg" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)startLogin:(NSString *)loginName
+            loginPass:(NSString *)loginPass
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"loginName":loginName,
+                              @"loginPass":loginPass,
+                              };
+
+    [self startNormalPostWith:@"login" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
 @end

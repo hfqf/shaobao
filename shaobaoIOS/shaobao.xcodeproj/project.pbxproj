@@ -128,6 +128,7 @@
 		7D90E13F1AB7CDA300D586B4 /* NewAbsenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D90E13E1AB7CDA300D586B4 /* NewAbsenceViewController.m */; };
 		7D9408A11EADE56B0077B187 /* TodoCommitContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9408A01EADE56B0077B187 /* TodoCommitContactsViewController.m */; };
 		7D99B9B51F66E95100723537 /* ShaobaoRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */; };
+		7D99B9F11F67C7FA00723537 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D99B9F01F67C7FA00723537 /* Images.xcassets */; };
 		7D99FA731EB9D15C0058ECCB /* SliderUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D99FA721EB9D15C0058ECCB /* SliderUITableView.m */; };
 		7DA2784A1AAF31E8004E8BF2 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA278491AAF31E8004E8BF2 /* ContactTableViewCell.m */; };
 		7DA2784D1AAF3D33004E8BF2 /* PublicFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA2784C1AAF3D33004E8BF2 /* PublicFileViewController.m */; };
@@ -263,7 +264,7 @@
 		18E21A7C19751F9A0029EC1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		18E21A8019751F9A0029EC1F /* shaobao-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "shaobao-Info.plist"; sourceTree = "<group>"; };
 		18E21A8419751F9A0029EC1F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		18E21A8619751F9A0029EC1F /* officeMobile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "officeMobile-Prefix.pch"; sourceTree = "<group>"; };
+		18E21A8619751F9A0029EC1F /* shaobao-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shaobao-Prefix.pch"; sourceTree = "<group>"; };
 		18E21A8719751F9A0029EC1F /* iAppPDFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iAppPDFAppDelegate.h; path = iAppPDF/iAppPDFAppDelegate.h; sourceTree = "<group>"; };
 		18E21A8819751F9A0029EC1F /* iAppPDFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = iAppPDFAppDelegate.m; path = iAppPDF/iAppPDFAppDelegate.m; sourceTree = "<group>"; };
 		18E21A8A19751F9A0029EC1F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iAppPDF/Images.xcassets; sourceTree = "<group>"; };
@@ -463,6 +464,7 @@
 		7D9582241AD8B24700BBC00C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaobaoRegisterViewController.h; sourceTree = "<group>"; };
 		7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaobaoRegisterViewController.m; sourceTree = "<group>"; };
+		7D99B9F01F67C7FA00723537 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = shaobao/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		7D99FA711EB9D15C0058ECCB /* SliderUITableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderUITableView.h; sourceTree = "<group>"; };
 		7D99FA721EB9D15C0058ECCB /* SliderUITableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderUITableView.m; sourceTree = "<group>"; };
 		7DA278481AAF31E8004E8BF2 /* ContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
@@ -771,7 +773,7 @@
 				7DCA844E1C245945000C2200 /* TabSet.plist */,
 				18E21A8119751F9A0029EC1F /* InfoPlist.strings */,
 				18E21A8419751F9A0029EC1F /* main.m */,
-				18E21A8619751F9A0029EC1F /* officeMobile-Prefix.pch */,
+				18E21A8619751F9A0029EC1F /* shaobao-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1091,6 +1093,7 @@
 			children = (
 				7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */,
 				7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */,
+				7D99B9F01F67C7FA00723537 /* Images.xcassets */,
 			);
 			name = shaobao;
 			path = imagePdf/shaobao;
@@ -1657,6 +1660,7 @@
 				7D5549441AE9DBB400E1B47A /* mail_user_add.png in Resources */,
 				7D44FAE81EFA72CD00098242 /* sign.png in Resources */,
 				7DD3C9A51AADD5CE0003FE7D /* 640X960.png in Resources */,
+				7D99B9F11F67C7FA00723537 /* Images.xcassets in Resources */,
 				7D077C321B1F48F000313F62 /* username_ipt_bg@2x.png in Resources */,
 				7D3722CC1AACA3A2001F8914 /* register_check_un@3x.png in Resources */,
 				7D5549471AE9DBB400E1B47A /* person.png in Resources */,
