@@ -2902,4 +2902,238 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:@"login" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
+
+#pragma mark - 发现
+- (void)findDeleteOne:(NSString *)_id
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":_id,
+                              };
+
+    [self startNormalPostWith:@"help/delete" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///查询需求服务列表
+- (void)findGetHelpList:(NSString *)type
+               userType:(NSString *)userType
+                  status:(NSString *)status
+                provice:(NSString *)provice
+                   city:(NSString *)city
+                 county:(NSString *)county
+              startTime:(NSString *)startTime
+                endTime:(NSString *)endTime
+                 helpId:(NSString *)helpId
+               pageSize:(NSString *)pageSize
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"type":type,
+                              @"userType":userType,
+                              @"status":status,
+                              @"provice":provice,
+                              @"county":county,
+                              @"startTime":startTime,
+                              @"endTime":endTime,
+                              @"helpId":helpId,
+                              @"pageSize":pageSize,
+                              @"city":city,
+
+                              };
+
+    [self startNormalPostWith:@"help/getHelpList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///POST 查询咨询消息组列表(需求发布者调用)
+
+- (void)findGetMessageGroupList:(NSString *)helpId
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              };
+
+    [self startNormalPostWith:@"help/getMessageGroupList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+///POST /help/getMessageList 查询消息详情列表
+
+- (void)findGetMessageList:(NSString *)groupId
+                 messageId:(NSString *)messageId
+                  pageSize:(NSString *)pageSize
+                 successedBlock:(SuccessedBlock)success
+                    failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"groupId":groupId,
+                              @"messageId":messageId,
+                              @"pageSize":pageSize,
+                              };
+
+    [self startNormalPostWith:@"help/getMessageList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+///POST /help/getMessagetGroup 查询咨询消息组（咨询者调用，组不存在自动创建并返回）
+- (void)findGetMessagetGroup:(NSString *)helpId
+            successedBlock:(SuccessedBlock)success
+               failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              };
+
+    [self startNormalPostWith:@"help/getMessagetGroup" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+
+///POST /help/getMyAcceptHelpList 查询我承接的需求列表
+- (void)findGetMyAcceptHelpList:(NSString *)helpId
+                       pageSize:(NSString *)pageSize
+              successedBlock:(SuccessedBlock)success
+                 failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              @"pageSize":pageSize
+                              };
+
+    [self startNormalPostWith:@"help/getMyAcceptHelpList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///POST /help/getMySendHelpList 查询我发布的需求列表
+- (void)findGetMySendHelpList:(NSString *)helpId
+                       pageSize:(NSString *)pageSize
+                 successedBlock:(SuccessedBlock)success
+                    failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              @"pageSize":pageSize
+                              };
+
+    [self startNormalPostWith:@"help/getMySendHelpList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///POST /help/pay 支付
+
+- (void)findPay:(NSString *)helpId
+     serviceFee:(NSString *)serviceFee
+      creditFee:(NSString *)creditFee
+          total:(NSString *)total
+       netMoney:(NSString *)netMoney
+       relMoney:(NSString *)relMoney
+        payType:(NSString *)payType
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              @"serviceFee":serviceFee,
+                              @"serviceFee":serviceFee,
+                              @"total":total,
+                              @"netMoney":netMoney,
+                              @"relMoney":relMoney,
+                              @"payType":payType,
+                              };
+
+    [self startNormalPostWith:@"help/pay" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+/// POST /help/send 发布(个人发布需求、商家发布服务)
+- (void)findSend:(NSString *)type
+         content:(NSString *)content
+        province:(NSString *)province
+            city:(NSString *)city
+          county:(NSString *)county
+         address:(NSString *)address
+      serviceFee:(NSString *)serviceFee
+       creditFee:(NSString *)creditFee
+           phone:(NSString *)phone
+          weixin:(NSString *)weixin
+              qq:(NSString *)qq
+         picUrls:(NSString *)picUrls
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"type":type,
+                              @"content":content,
+                              @"province":province,
+                              @"city":city,
+                              @"county":county,
+                              @"address":address,
+                              @"serviceFee":serviceFee,
+                              @"creditFee":creditFee,
+                              @"phone":phone,
+                              @"weixin":weixin,
+                              @"qq":qq,
+                              @"picUrls":picUrls,
+                              };
+
+    [self startNormalPostWith:@"help/send" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+/// POST /help/sendMessage 发送消息
+- (void)findSendMessage:(NSString *)groupId
+         content:(NSString *)content
+         picUrls:(NSString *)picUrls
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"groupId":groupId,
+                              @"content":content,
+                              @"picUrls":picUrls,
+                              };
+
+    [self startNormalPostWith:@"help/sendMessage" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///POST /help/updateStatus 确认承接或确认需求完成（用于更新需求状态）
+
+- (void)findUpdateStatus:(NSString *)helpId
+                optType:(NSString *)optType
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"helpId":helpId,
+                              @"optType":optType,
+                              };
+
+    [self startNormalPostWith:@"help/updateStatus" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+#pragma mark - 广告
+
+- (void)getAds:(NSString *)type
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"type":type,
+                              };
+
+    [self startNormalPostWith:@"ad/getAdList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 @end

@@ -83,6 +83,7 @@
 		7D5A160B1E5C348D0071BD31 /* ObserberInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A160A1E5C348D0071BD31 /* ObserberInfoViewController.m */; };
 		7D648DD71EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D648DD61EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m */; };
 		7D648DDA1EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D648DD91EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m */; };
+		7D6E04881F692E0E009EA38C /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6E04871F692E0E009EA38C /* HomePageViewController.m */; };
 		7D7411E11B31C32800FC01BE /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411A71B31C32800FC01BE /* MWCaptionView.m */; };
 		7D7411E21B31C32800FC01BE /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411AA1B31C32800FC01BE /* MWGridCell.m */; };
 		7D7411E31B31C32800FC01BE /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411AC1B31C32800FC01BE /* MWGridViewController.m */; };
@@ -128,7 +129,6 @@
 		7D90E13F1AB7CDA300D586B4 /* NewAbsenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D90E13E1AB7CDA300D586B4 /* NewAbsenceViewController.m */; };
 		7D9408A11EADE56B0077B187 /* TodoCommitContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9408A01EADE56B0077B187 /* TodoCommitContactsViewController.m */; };
 		7D99B9B51F66E95100723537 /* ShaobaoRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */; };
-		7D99B9F11F67C7FA00723537 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D99B9F01F67C7FA00723537 /* Images.xcassets */; };
 		7D99FA731EB9D15C0058ECCB /* SliderUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D99FA721EB9D15C0058ECCB /* SliderUITableView.m */; };
 		7DA2784A1AAF31E8004E8BF2 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA278491AAF31E8004E8BF2 /* ContactTableViewCell.m */; };
 		7DA2784D1AAF3D33004E8BF2 /* PublicFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA2784C1AAF3D33004E8BF2 /* PublicFileViewController.m */; };
@@ -365,6 +365,8 @@
 		7D648DD61EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepartmentReceiveArticeViewController.m; sourceTree = "<group>"; };
 		7D648DD81EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartmentReceiveArticeInfoViewController.h; sourceTree = "<group>"; };
 		7D648DD91EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepartmentReceiveArticeInfoViewController.m; sourceTree = "<group>"; };
+		7D6E04861F692E0E009EA38C /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
+		7D6E04871F692E0E009EA38C /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		7D7411A61B31C32800FC01BE /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		7D7411A71B31C32800FC01BE /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		7D7411A81B31C32800FC01BE /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
@@ -464,7 +466,6 @@
 		7D9582241AD8B24700BBC00C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaobaoRegisterViewController.h; sourceTree = "<group>"; };
 		7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaobaoRegisterViewController.m; sourceTree = "<group>"; };
-		7D99B9F01F67C7FA00723537 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = shaobao/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		7D99FA711EB9D15C0058ECCB /* SliderUITableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderUITableView.h; sourceTree = "<group>"; };
 		7D99FA721EB9D15C0058ECCB /* SliderUITableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderUITableView.m; sourceTree = "<group>"; };
 		7DA278481AAF31E8004E8BF2 /* ContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableViewCell.h; sourceTree = "<group>"; };
@@ -922,6 +923,36 @@
 			name = COMMON;
 			sourceTree = "<group>";
 		};
+		7D65DEF01F69209800FA25E7 /* tab1 */ = {
+			isa = PBXGroup;
+			children = (
+				7D6E04861F692E0E009EA38C /* HomePageViewController.h */,
+				7D6E04871F692E0E009EA38C /* HomePageViewController.m */,
+			);
+			name = tab1;
+			sourceTree = "<group>";
+		};
+		7D65DEF11F69209F00FA25E7 /* tab2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = tab2;
+			sourceTree = "<group>";
+		};
+		7D65DEF21F6920A700FA25E7 /* tab3 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = tab3;
+			sourceTree = "<group>";
+		};
+		7D65DEF31F6920AD00FA25E7 /* tab4 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = tab4;
+			sourceTree = "<group>";
+		};
 		7D7411A41B31C32800FC01BE /* MWPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1093,7 +1124,10 @@
 			children = (
 				7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */,
 				7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */,
-				7D99B9F01F67C7FA00723537 /* Images.xcassets */,
+				7D65DEF01F69209800FA25E7 /* tab1 */,
+				7D65DEF11F69209F00FA25E7 /* tab2 */,
+				7D65DEF21F6920A700FA25E7 /* tab3 */,
+				7D65DEF31F6920AD00FA25E7 /* tab4 */,
 			);
 			name = shaobao;
 			path = imagePdf/shaobao;
@@ -1660,7 +1694,6 @@
 				7D5549441AE9DBB400E1B47A /* mail_user_add.png in Resources */,
 				7D44FAE81EFA72CD00098242 /* sign.png in Resources */,
 				7DD3C9A51AADD5CE0003FE7D /* 640X960.png in Resources */,
-				7D99B9F11F67C7FA00723537 /* Images.xcassets in Resources */,
 				7D077C321B1F48F000313F62 /* username_ipt_bg@2x.png in Resources */,
 				7D3722CC1AACA3A2001F8914 /* register_check_un@3x.png in Resources */,
 				7D5549471AE9DBB400E1B47A /* person.png in Resources */,
@@ -1698,6 +1731,7 @@
 				7D8C6C3A1E49C6FF00478E97 /* HomeStartViewController.m in Sources */,
 				7D3722BC1AAC9D9F001F8914 /* SideslipView.m in Sources */,
 				7DD3E5B01E5D821400C6A265 /* LeaderSchudeInfoControllerViewController.m in Sources */,
+				7D6E04881F692E0E009EA38C /* HomePageViewController.m in Sources */,
 				7DBB00501AA5F88E000F1DCD /* MainTabBarViewController.m in Sources */,
 				7D90E13F1AB7CDA300D586B4 /* NewAbsenceViewController.m in Sources */,
 				7D04067D1E4D57FC00036FE6 /* ResourceCentreViewController.m in Sources */,

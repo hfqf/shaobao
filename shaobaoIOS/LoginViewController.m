@@ -97,6 +97,8 @@
     
     BOOL flag = [[[NSUserDefaults standardUserDefaults]objectForKey:KEY_AUTO_SAVE]isEqualToString:@"1"];
 
+    flag = YES;
+
     UIImageView *left = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 18)];
     
     m_nameText = [[UITextField alloc]initWithFrame:CGRectMake(0,20, MAIN_WIDTH-40, 50)];
@@ -111,7 +113,8 @@
     [m_nameText setPlaceholder:@"用户账号"];
     if(flag)
     {
-        [m_nameText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_ACCOUTN]];
+//        [m_nameText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_ACCOUTN]];
+        [m_nameText setText:@"kaka "];
     }
     [m_nameText setTextColor:[UIColor blackColor]];
 //    m_nameText.layer.cornerRadius = 5;
@@ -124,7 +127,8 @@
     [m_pwdText setPlaceholder:@"密码"];
     if(flag)
     {
-        [m_pwdText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD]];
+//        [m_pwdText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD]];
+        [m_pwdText setText:@"1234"];
     }
     UIImageView *leftPwd = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 44, 18)];
     [leftPwd setImage:[UIImage imageNamed:@""]];
@@ -266,11 +270,7 @@
         //创建存放图片和音频的文件夹
         [LocalImageHelper createUploadFileInDocument];
         
-//        MainTabBarViewController *mainVC  = [[MainTabBarViewController alloc]init];
-        HomeStartViewController *mainVC = [[HomeStartViewController alloc]init];
-        
-//        SideslipViewController *sliderVC = [[SideslipViewController alloc]initWithLeftView:nil andMainView:mainVC andRightView:nil andBackgroundImage:nil];
-        
+        MainTabBarViewController *mainVC  = [[MainTabBarViewController alloc]init];
         [self.navigationController pushViewController:mainVC animated:YES];
         
         BOOL flag = [[[NSUserDefaults standardUserDefaults]objectForKey:KEY_AUTO_SAVE]isEqualToString:@"1"];
