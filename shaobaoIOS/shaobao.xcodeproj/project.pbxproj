@@ -23,6 +23,8 @@
 		7D04067A1E4D57C000036FE6 /* EMaganizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0406791E4D57C000036FE6 /* EMaganizeViewController.m */; };
 		7D04067D1E4D57FC00036FE6 /* ResourceCentreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D04067C1E4D57FC00036FE6 /* ResourceCentreViewController.m */; };
 		7D0406811E5193F400036FE6 /* AddNewMeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0406801E5193F400036FE6 /* AddNewMeetingViewController.m */; };
+		7D04DE131F6A88A5004C0A10 /* MXCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D04DE0F1F6A88A5004C0A10 /* MXCycleScrollView.m */; };
+		7D04DE141F6A88A5004C0A10 /* MXPageControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D04DE121F6A88A5004C0A10 /* MXPageControlView.m */; };
 		7D077C2E1B1F40B700313F62 /* imp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D077C2D1B1F40B700313F62 /* imp@2x.png */; };
 		7D077C311B1F48F000313F62 /* password_ipt_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D077C2F1B1F48F000313F62 /* password_ipt_bg@2x.png */; };
 		7D077C321B1F48F000313F62 /* username_ipt_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D077C301B1F48F000313F62 /* username_ipt_bg@2x.png */; };
@@ -281,6 +283,11 @@
 		7D04067C1E4D57FC00036FE6 /* ResourceCentreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCentreViewController.m; sourceTree = "<group>"; };
 		7D04067F1E5193F400036FE6 /* AddNewMeetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewMeetingViewController.h; sourceTree = "<group>"; };
 		7D0406801E5193F400036FE6 /* AddNewMeetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewMeetingViewController.m; sourceTree = "<group>"; };
+		7D04DE0E1F6A88A5004C0A10 /* MXCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCycleScrollView.h; sourceTree = "<group>"; };
+		7D04DE0F1F6A88A5004C0A10 /* MXCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCycleScrollView.m; sourceTree = "<group>"; };
+		7D04DE101F6A88A5004C0A10 /* MXCycleScrollViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCycleScrollViewHeader.h; sourceTree = "<group>"; };
+		7D04DE111F6A88A5004C0A10 /* MXPageControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXPageControlView.h; sourceTree = "<group>"; };
+		7D04DE121F6A88A5004C0A10 /* MXPageControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXPageControlView.m; sourceTree = "<group>"; };
 		7D077C2D1B1F40B700313F62 /* imp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imp@2x.png"; sourceTree = "<group>"; };
 		7D077C2F1B1F48F000313F62 /* password_ipt_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password_ipt_bg@2x.png"; sourceTree = "<group>"; };
 		7D077C301B1F48F000313F62 /* username_ipt_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "username_ipt_bg@2x.png"; sourceTree = "<group>"; };
@@ -779,6 +786,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		7D04DE071F6A8707004C0A10 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				7D04DE0D1F6A88A5004C0A10 /* MXCycleScrollView */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		7D04DE0D1F6A88A5004C0A10 /* MXCycleScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				7D04DE0E1F6A88A5004C0A10 /* MXCycleScrollView.h */,
+				7D04DE0F1F6A88A5004C0A10 /* MXCycleScrollView.m */,
+				7D04DE101F6A88A5004C0A10 /* MXCycleScrollViewHeader.h */,
+				7D04DE111F6A88A5004C0A10 /* MXPageControlView.h */,
+				7D04DE121F6A88A5004C0A10 /* MXPageControlView.m */,
+			);
+			path = MXCycleScrollView;
+			sourceTree = "<group>";
+		};
 		7D30CE971AB0761500088A6E /* ADT */ = {
 			isa = PBXGroup;
 			children = (
@@ -1124,6 +1151,7 @@
 			children = (
 				7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */,
 				7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */,
+				7D04DE071F6A8707004C0A10 /* Library */,
 				7D65DEF01F69209800FA25E7 /* tab1 */,
 				7D65DEF11F69209F00FA25E7 /* tab2 */,
 				7D65DEF21F6920A700FA25E7 /* tab3 */,
@@ -1811,6 +1839,7 @@
 				7D7412321B31C3FD00FC01BE /* UIImageView+WebCache.m in Sources */,
 				7D0406771E4D579A00036FE6 /* LeaderSchudeViewController.m in Sources */,
 				7DBB00851AA5FB7D000F1DCD /* UIProgressView+AFNetworking.m in Sources */,
+				7D04DE131F6A88A5004C0A10 /* MXCycleScrollView.m in Sources */,
 				7DD3E5BB1E61193400C6A265 /* AddNoticeGroupViewController.m in Sources */,
 				7DBB00601AA5F8B1000F1DCD /* BaseViewController.m in Sources */,
 				7D7412261B31C3FD00FC01BE /* SDImageCache.m in Sources */,
@@ -1877,6 +1906,7 @@
 				7DEC2E281AE74A460031E98F /* SBJson4StreamWriter.m in Sources */,
 				7DFF54821B0C9B0300B67652 /* TodoTableViewCell.m in Sources */,
 				7DBB00861AA5FB7D000F1DCD /* UIWebView+AFNetworking.m in Sources */,
+				7D04DE141F6A88A5004C0A10 /* MXPageControlView.m in Sources */,
 				7D5546C31BC3EE9C008397F0 /* LKBadgeView.m in Sources */,
 				7D7411E11B31C32800FC01BE /* MWCaptionView.m in Sources */,
 				7D3722BE1AAC9D9F001F8914 /* SliderTableViewCell.m in Sources */,
