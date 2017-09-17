@@ -85,6 +85,10 @@
 		7D5A160B1E5C348D0071BD31 /* ObserberInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A160A1E5C348D0071BD31 /* ObserberInfoViewController.m */; };
 		7D648DD71EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D648DD61EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m */; };
 		7D648DDA1EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D648DD91EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m */; };
+		7D64B4031F6D6A4B00709A6C /* FindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D64B4021F6D6A4B00709A6C /* FindViewController.m */; };
+		7D64B4061F6D74CF00709A6C /* LlxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D64B4051F6D74CF00709A6C /* LlxViewController.m */; };
+		7D64B4091F6D74E400709A6C /* WoyiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D64B4081F6D74E400709A6C /* WoyiViewController.m */; };
+		7D64B40C1F6DF1C800709A6C /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D64B40B1F6DF1C800709A6C /* HomeTableViewCell.m */; };
 		7D6E04881F692E0E009EA38C /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6E04871F692E0E009EA38C /* HomePageViewController.m */; };
 		7D7411E11B31C32800FC01BE /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411A71B31C32800FC01BE /* MWCaptionView.m */; };
 		7D7411E21B31C32800FC01BE /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411AA1B31C32800FC01BE /* MWGridCell.m */; };
@@ -372,6 +376,14 @@
 		7D648DD61EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepartmentReceiveArticeViewController.m; sourceTree = "<group>"; };
 		7D648DD81EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartmentReceiveArticeInfoViewController.h; sourceTree = "<group>"; };
 		7D648DD91EF2D54C004026D0 /* DepartmentReceiveArticeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepartmentReceiveArticeInfoViewController.m; sourceTree = "<group>"; };
+		7D64B4011F6D6A4A00709A6C /* FindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindViewController.h; sourceTree = "<group>"; };
+		7D64B4021F6D6A4B00709A6C /* FindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindViewController.m; sourceTree = "<group>"; };
+		7D64B4041F6D74CF00709A6C /* LlxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LlxViewController.h; sourceTree = "<group>"; };
+		7D64B4051F6D74CF00709A6C /* LlxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LlxViewController.m; sourceTree = "<group>"; };
+		7D64B4071F6D74E400709A6C /* WoyiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WoyiViewController.h; sourceTree = "<group>"; };
+		7D64B4081F6D74E400709A6C /* WoyiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WoyiViewController.m; sourceTree = "<group>"; };
+		7D64B40A1F6DF1C800709A6C /* HomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
+		7D64B40B1F6DF1C800709A6C /* HomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		7D6E04861F692E0E009EA38C /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		7D6E04871F692E0E009EA38C /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		7D7411A61B31C32800FC01BE /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
@@ -955,6 +967,8 @@
 			children = (
 				7D6E04861F692E0E009EA38C /* HomePageViewController.h */,
 				7D6E04871F692E0E009EA38C /* HomePageViewController.m */,
+				7D64B40A1F6DF1C800709A6C /* HomeTableViewCell.h */,
+				7D64B40B1F6DF1C800709A6C /* HomeTableViewCell.m */,
 			);
 			name = tab1;
 			sourceTree = "<group>";
@@ -962,6 +976,8 @@
 		7D65DEF11F69209F00FA25E7 /* tab2 */ = {
 			isa = PBXGroup;
 			children = (
+				7D64B4011F6D6A4A00709A6C /* FindViewController.h */,
+				7D64B4021F6D6A4B00709A6C /* FindViewController.m */,
 			);
 			name = tab2;
 			sourceTree = "<group>";
@@ -969,6 +985,8 @@
 		7D65DEF21F6920A700FA25E7 /* tab3 */ = {
 			isa = PBXGroup;
 			children = (
+				7D64B4041F6D74CF00709A6C /* LlxViewController.h */,
+				7D64B4051F6D74CF00709A6C /* LlxViewController.m */,
 			);
 			name = tab3;
 			sourceTree = "<group>";
@@ -976,6 +994,8 @@
 		7D65DEF31F6920AD00FA25E7 /* tab4 */ = {
 			isa = PBXGroup;
 			children = (
+				7D64B4071F6D74E400709A6C /* WoyiViewController.h */,
+				7D64B4081F6D74E400709A6C /* WoyiViewController.m */,
 			);
 			name = tab4;
 			sourceTree = "<group>";
@@ -1848,11 +1868,13 @@
 				7DBB000C1AA5F7CD000F1DCD /* AFURLResponseSerialization.m in Sources */,
 				7D1319271AB1C9E400A321F4 /* ContactDetailViewController.m in Sources */,
 				7DF83B2A1BE6710400E9C16E /* TodoProcessInfoViewController.m in Sources */,
+				7D64B4091F6D74E400709A6C /* WoyiViewController.m in Sources */,
 				7DBB00801AA5FB7D000F1DCD /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7DEC2E241AE74A460031E98F /* SBJson4Parser.m in Sources */,
 				7DD3E5B31E5D8E3A00C6A265 /* AddNewSchudelViewController.m in Sources */,
 				7DBB000B1AA5F7CD000F1DCD /* AFURLRequestSerialization.m in Sources */,
 				7DBB00461AA5F857000F1DCD /* LoginUserUtil.m in Sources */,
+				7D64B40C1F6DF1C800709A6C /* HomeTableViewCell.m in Sources */,
 				7DBB00821AA5FB7D000F1DCD /* UIAlertView+AFNetworking.m in Sources */,
 				7D648DD71EF2CE0F004026D0 /* DepartmentReceiveArticeViewController.m in Sources */,
 				7DBB00491AA5F857000F1DCD /* LocalImageHelper.m in Sources */,
@@ -1863,6 +1885,8 @@
 				7D7411F61B31C32800FC01BE /* PSTGridLayoutRow.m in Sources */,
 				7D7411E41B31C32800FC01BE /* MWPhoto.m in Sources */,
 				7DBB00451AA5F857000F1DCD /* LocalTimeUtil.m in Sources */,
+				7D64B4031F6D6A4B00709A6C /* FindViewController.m in Sources */,
+				7D64B4061F6D74CF00709A6C /* LlxViewController.m in Sources */,
 				7DBB006C1AA5F9E3000F1DCD /* LoginScrollerView.m in Sources */,
 				7DBB00221AA5F7D5000F1DCD /* MJRefreshFooterView.m in Sources */,
 				7D99FA731EB9D15C0058ECCB /* SliderUITableView.m in Sources */,

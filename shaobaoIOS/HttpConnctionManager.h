@@ -785,6 +785,17 @@ successedBlock:(SuccessedBlock)success
           successedBlock:(SuccessedBlock)success
              failedBolck:(FailedBlock)failed;
 
+/**
+
+ 父级ID，省份的父级为中国id=1
+
+ @param pid
+ @param success
+ @param failed
+ */
+- (void)findQueryArea:(NSString *)pid
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
 #pragma mark - 广告
 
 - (void)getAds:(NSString *)type

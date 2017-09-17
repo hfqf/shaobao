@@ -3122,6 +3122,27 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:@"help/updateStatus" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
+
+/**
+
+ 父级ID，省份的父级为中国id=1
+
+ @param pid
+ @param success
+ @param failed 
+ */
+- (void)findQueryArea:(NSString *)pid
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"pid":pid,
+                              };
+
+    [self startNormalPostWith:@"getArea" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 #pragma mark - 广告
 
 - (void)getAds:(NSString *)type

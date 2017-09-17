@@ -9,6 +9,10 @@
 
 #import "MainTabBarViewController.h"
 #import "TabbarButtonsBGView.h"
+#import "HomePageViewController.h"
+#import "FindViewController.h"
+#import "LlxViewController.h"
+#import "WoyiViewController.h"
 
 @interface MainTabBarViewController ()<UIActionSheetDelegate>
 {
@@ -41,7 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.tabBar.hidden = YES;
     [self initView];
     [self initViewControllers];
     //第一次进来默认是选互动对话
@@ -67,7 +71,7 @@
     [super didReceiveMemoryWarning];
 }
 
-#define NUM_TAB 5
+#define NUM_TAB 4
 #pragma mark -  BaseViewControllerDelegate
 
 - (void)initData
@@ -91,24 +95,24 @@
         if(i==0)
         {
             title = @"工单";
-            unSelectedImg = @"wrench_un";
-            selectedImg = @"wrench_un";
+            unSelectedImg = @"tab_0_un";
+            selectedImg = @"tab_0_on";
         }else if(i==1)
         {
             title = @"提醒";
-            unSelectedImg = @"clock_un";
-            selectedImg = @"clock_un";
+            unSelectedImg = @"tab_1_un";
+            selectedImg = @"tab_1_on";
         }else if (i==2)
         {
             title = @"客户";
-            unSelectedImg = @"people_un";
-            selectedImg = @"people_un";
+            unSelectedImg = @"tab_2_un";
+            selectedImg = @"tab_2_on";
         }
         else if (i==3)
         {
             title = @"统计";
-            unSelectedImg =  @"tongji_on";
-            selectedImg = @"tongji_on";
+            unSelectedImg =  @"tab_3_un";
+            selectedImg = @"tab_3_on";
         }
         else
         {
@@ -125,34 +129,18 @@
     tabar.m_delegate = self;
     [self.view addSubview:tabar];
     self.m_tabbar = tabar;
-
-
-    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addBtn setFrame:CGRectMake((MAIN_WIDTH-50)/2, MAIN_HEIGHT-HEIGHT_MAIN_BOTTOM-60, 50, 50)];
-    [addBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [addBtn setImage:[UIImage imageNamed:@"ic_tabbar_compose_icon_add_highlighted"] forState:UIControlStateNormal];
-    [self.view addSubview:addBtn];
 }
 
 
 //生成tabbar子ViewController
 - (void)initViewControllers
 {
-    WorkroomListViewController *vc0 = [[WorkroomListViewController alloc]init];
-    vc0.m_delegate = self;
 
-    NewTipViewController *vc1 = [[NewTipViewController alloc]init];
-    vc1.m_delegate = self;
-
-    CustomerViewController *vc2 = [[CustomerViewController alloc]init];
-    vc2.m_delegate = self;
-
-    RepairPrintViewController *vc3 = [[RepairPrintViewController alloc]init];
-    vc3.m_delegate = self;
-
-    SettingViewController *vc4 = [[SettingViewController alloc]init];
-    vc4.m_delegate = self;
-    self.viewControllers = @[vc0,vc1,vc2,vc3,vc4];
+    HomePageViewController *vc1 = [[HomePageViewController alloc]init];
+    FindViewController *vc2 = [[FindViewController alloc]init];
+    LlxViewController *vc3 = [[LlxViewController alloc]init];
+    WoyiViewController *vc4 = [[WoyiViewController alloc]init];
+    self.viewControllers = @[vc1,vc2,vc3,vc4];
 }
 
 //选择了第几个一级界面

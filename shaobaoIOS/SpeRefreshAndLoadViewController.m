@@ -51,6 +51,12 @@ withIsNeedBottobBar:(BOOL)isNeedBottom
 //        [table setBackgroundView:bg];
         self.tableView = table;
         [self.view addSubview:self.tableView];
+
+        if (@available(iOS 11.0, *)) {
+            self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
         
         
     }
@@ -74,6 +80,12 @@ withIsCustomNavigatiionHeight:(int)customNavHeight
         self.tableView = table;
         
         [self.view addSubview:table];
+
+        if (@available(iOS 11.0, *)) {
+            self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     }
     return self;
 }

@@ -41,6 +41,7 @@ typedef void(^MXClickHandler)(NSInteger index);
         self.imageView.backgroundColor = [UIColor whiteColor];
     
         [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
+        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
         [self addSubview:self.imageView];
         
         self.blurImageView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
@@ -211,7 +212,7 @@ typedef void(^MXClickHandler)(NSInteger index);
     self.imageViewArray = [NSMutableArray new];
     for (NSInteger i = 0; i < self.imageCount; i++) {
         @autoreleasepool {
-            MXImageView *imageView = [[MXImageView alloc]initWithFrame:CGRectMake(self.width*i, 0, self.width, self.height) imageURL:_mImageArray[i] placeholderImage:[UIImage imageNamed:@"default_ads_icon"]];
+            MXImageView *imageView = [[MXImageView alloc]initWithFrame:CGRectMake(self.width*i, 0, self.width, self.height) imageURL:_mImageArray[i] placeholderImage:[UIImage imageNamed:@"home_ads_default"]];
             imageView.tag = i+MXImageViewTagBase;
             if (self.imageCount > 1) {
                 imageView.actionTag = i-1;

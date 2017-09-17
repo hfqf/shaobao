@@ -260,7 +260,7 @@
     //写如当前帐号信息
     [self writeAutoLogDic];
     
-    NSDictionary *resultDict=[[data objectForKey:@"DATA"] objectFromJSONString];
+    NSDictionary *resultDict=[data objectForKey:@"data"];
 
     if ([data[@"ret"]integerValue] == 0) {
         

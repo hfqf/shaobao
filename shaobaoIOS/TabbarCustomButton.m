@@ -31,14 +31,14 @@
         [self setImage:img1 forState:UIControlStateNormal];
         [self setImage:img2 forState:UIControlStateSelected];
 
-        [self setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, 0)];
+        [self setImageEdgeInsets:UIEdgeInsetsMake(5, 0, 0, 0)];
         //title
-        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,37, self.frame.size.width, 19)];
-        [titleLab setBackgroundColor:[UIColor clearColor]];
-        [titleLab setText:title];
-        [titleLab setTextAlignment:NSTextAlignmentCenter];
-        [titleLab setFont:[UIFont boldSystemFontOfSize:12]];
-        [self addSubview:titleLab];
+//        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,37, self.frame.size.width, 19)];
+//        [titleLab setBackgroundColor:[UIColor clearColor]];
+//        [titleLab setText:title];
+//        [titleLab setTextAlignment:NSTextAlignmentCenter];
+//        [titleLab setFont:[UIFont boldSystemFontOfSize:12]];
+//        [self addSubview:titleLab];
         
     
     }
@@ -73,38 +73,7 @@
 
 - (void)refreshNum
 {
-    [HTTP_MANAGER getNum:self.index
-          successedBlock:^(NSDictionary *succeedResult) {
-              
-              NSDictionary *ret = [succeedResult[@"DATA"] mutableObjectFromJSONString];
-              
-              if([ret[@"resultCode"]integerValue] == 0)
-              {
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      
-                      NSInteger num = [ret[@"result"]integerValue];
-                      if(num == 0)
-                      {
-                          [m_numLab setText:@""];
-                      }
-                      else
-                      {
-                          if(num > 99)
-                          {
-                              [m_numLab setText:@"99+"];
-                          }
-                          else
-                          {
-                              [m_numLab setText:[NSString stringWithFormat:@"%ld",num]]; 
-                          }
-                      }
-                  });
-              }
-        
-    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-        
-        
-    }];
+
 }
 
 @end

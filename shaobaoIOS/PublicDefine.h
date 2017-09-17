@@ -26,7 +26,7 @@
 #define  IS_FIRST_LAUNCH               @"IS_FIRST_LAUNCH"
 #define  NOT_FIRST_LAUNCH              @"NOT_FIRST_LAUNCH"
 
-#define  HEIGHT_MAIN_BOTTOM            0
+#define  HEIGHT_MAIN_BOTTOM            49
 
 #define  MAIN_HEIGHT                  [UIScreen mainScreen].bounds.size.height
 #define  MAIN_WIDTH                   [UIScreen mainScreen].bounds.size.width
