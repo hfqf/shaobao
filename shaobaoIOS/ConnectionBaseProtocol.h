@@ -52,6 +52,8 @@
 - (void)onHideTabbar;
 
 - (void)onShowTabbar;
+
+- (void)onSelectedProvice:(NSDictionary *)pInfo withCity:(NSDictionary *)cInfo withArea:(NSDictionary *)aInfo;
 @end
 
 #endif

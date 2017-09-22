@@ -31,6 +31,12 @@
 		7D1319271AB1C9E400A321F4 /* ContactDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D1319261AB1C9E400A321F4 /* ContactDetailViewController.m */; };
 		7D13192A1AB1DFB500A321F4 /* EmailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D1319291AB1DFB500A321F4 /* EmailDetailViewController.m */; };
 		7D1A07311B46CEC500B0FCAC /* AddressSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D1A07301B46CEC500B0FCAC /* AddressSetViewController.m */; };
+		7D20449B1F735D8E0061D6AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D20449A1F735D8D0061D6AD /* LaunchScreen.storyboard */; };
+		7D20449E1F736B630061D6AD /* ADTHelpInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D20449D1F736B630061D6AD /* ADTHelpInfo.m */; };
+		7D2044A11F73B1210061D6AD /* SelectProviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A01F73B1210061D6AD /* SelectProviceViewController.m */; };
+		7D2044A41F73B14C0061D6AD /* SelectCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */; };
+		7D2044A71F73B1590061D6AD /* SelectAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */; };
+		7D2044AA1F7408EB0061D6AD /* FindFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A91F7408EB0061D6AD /* FindFilterView.m */; };
 		7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */; };
 		7D3722B41AAC9A1F001F8914 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B31AAC9A1F001F8914 /* MessageTableViewCell.m */; };
 		7D3722BC1AAC9D9F001F8914 /* SideslipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B71AAC9D9F001F8914 /* SideslipView.m */; };
@@ -69,6 +75,7 @@
 		7D44FAEC1EFA72D100098242 /* SignPDFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D44FAEB1EFA72D000098242 /* SignPDFSDK.framework */; };
 		7D458B031ADD61AC00BCACAB /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D458B021ADD61AC00BCACAB /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7D4D2D891B03A33000A88CAF /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D2D881B03A33000A88CAF /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7D50A45E1F72C40E00ACAA80 /* SendHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */; };
 		7D5546C31BC3EE9C008397F0 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5546C21BC3EE9C008397F0 /* LKBadgeView.m */; };
 		7D55492A1AE9DBB400E1B47A /* checkbox_single_null.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D5548D91AE9DBB400E1B47A /* checkbox_single_null.png */; };
 		7D55492B1AE9DBB400E1B47A /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D5548DA1AE9DBB400E1B47A /* delete_icon.png */; };
@@ -302,6 +309,17 @@
 		7D1A072F1B46CEC500B0FCAC /* AddressSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressSetViewController.h; sourceTree = "<group>"; };
 		7D1A07301B46CEC500B0FCAC /* AddressSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressSetViewController.m; sourceTree = "<group>"; };
 		7D1E93F31E1C806E006D0E73 /* officeMobile copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "officeMobile copy-Info.plist"; path = "/Users/points/Documents/Svn/officeMobile-Jianye/officeMobile copy-Info.plist"; sourceTree = "<absolute>"; };
+		7D20449A1F735D8D0061D6AD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7D20449C1F736B630061D6AD /* ADTHelpInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTHelpInfo.h; sourceTree = "<group>"; };
+		7D20449D1F736B630061D6AD /* ADTHelpInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTHelpInfo.m; sourceTree = "<group>"; };
+		7D20449F1F73B1210061D6AD /* SelectProviceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectProviceViewController.h; sourceTree = "<group>"; };
+		7D2044A01F73B1210061D6AD /* SelectProviceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectProviceViewController.m; sourceTree = "<group>"; };
+		7D2044A21F73B14C0061D6AD /* SelectCityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectCityViewController.h; sourceTree = "<group>"; };
+		7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectCityViewController.m; sourceTree = "<group>"; };
+		7D2044A51F73B1590061D6AD /* SelectAreaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectAreaViewController.h; sourceTree = "<group>"; };
+		7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectAreaViewController.m; sourceTree = "<group>"; };
+		7D2044A81F7408EB0061D6AD /* FindFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindFilterView.h; sourceTree = "<group>"; };
+		7D2044A91F7408EB0061D6AD /* FindFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindFilterView.m; sourceTree = "<group>"; };
 		7D30CE981AB076A500088A6E /* ADTGovermentFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTGovermentFileInfo.h; sourceTree = "<group>"; };
 		7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTGovermentFileInfo.m; sourceTree = "<group>"; };
 		7D3722B21AAC9A1F001F8914 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
@@ -355,6 +373,8 @@
 		7D458B021ADD61AC00BCACAB /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		7D4D2D871B03A33000A88CAF /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		7D4D2D881B03A33000A88CAF /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		7D50A45C1F72C40E00ACAA80 /* SendHelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendHelpViewController.h; sourceTree = "<group>"; };
+		7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendHelpViewController.m; sourceTree = "<group>"; };
 		7D5546C11BC3EE9C008397F0 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBadgeView.h; sourceTree = "<group>"; };
 		7D5546C21BC3EE9C008397F0 /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKBadgeView.m; sourceTree = "<group>"; };
 		7D5548D91AE9DBB400E1B47A /* checkbox_single_null.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_single_null.png; sourceTree = "<group>"; };
@@ -735,6 +755,7 @@
 		18E21A6C19751F9A0029EC1F = {
 			isa = PBXGroup;
 			children = (
+				7D20449A1F735D8D0061D6AD /* LaunchScreen.storyboard */,
 				7D44FAEB1EFA72D000098242 /* SignPDFSDK.framework */,
 				7D99B9B21F66E93000723537 /* shaobao */,
 				7D44FAC81EFA72CC00098242 /* imagePdf */,
@@ -978,6 +999,18 @@
 			children = (
 				7D64B4011F6D6A4A00709A6C /* FindViewController.h */,
 				7D64B4021F6D6A4B00709A6C /* FindViewController.m */,
+				7D50A45C1F72C40E00ACAA80 /* SendHelpViewController.h */,
+				7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */,
+				7D20449F1F73B1210061D6AD /* SelectProviceViewController.h */,
+				7D2044A01F73B1210061D6AD /* SelectProviceViewController.m */,
+				7D2044A21F73B14C0061D6AD /* SelectCityViewController.h */,
+				7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */,
+				7D2044A51F73B1590061D6AD /* SelectAreaViewController.h */,
+				7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */,
+				7D20449C1F736B630061D6AD /* ADTHelpInfo.h */,
+				7D20449D1F736B630061D6AD /* ADTHelpInfo.m */,
+				7D2044A81F7408EB0061D6AD /* FindFilterView.h */,
+				7D2044A91F7408EB0061D6AD /* FindFilterView.m */,
 			);
 			name = tab2;
 			sourceTree = "<group>";
@@ -1738,6 +1771,7 @@
 				7DD3C9A71AADD5CE0003FE7D /* 114.png in Resources */,
 				7D3722C31AAC9EFA001F8914 /* leftStart.png in Resources */,
 				7D5549641AE9DBB400E1B47A /* top_bg.png in Resources */,
+				7D20449B1F735D8E0061D6AD /* LaunchScreen.storyboard in Resources */,
 				7D3722C61AACA06B001F8914 /* slider_bg.png in Resources */,
 				7D5549441AE9DBB400E1B47A /* mail_user_add.png in Resources */,
 				7D44FAE81EFA72CD00098242 /* sign.png in Resources */,
@@ -1815,6 +1849,7 @@
 				7DEC2E111AE69F010031E98F /* ADTGropuInfo.m in Sources */,
 				7D3722C11AAC9E45001F8914 /* SettingViewController.m in Sources */,
 				7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */,
+				7D50A45E1F72C40E00ACAA80 /* SendHelpViewController.m in Sources */,
 				7D458B031ADD61AC00BCACAB /* OpenUDID.m in Sources */,
 				7DCC05B21AA899B500C23E3B /* TodoViewController.m in Sources */,
 				7DBB00201AA5F7D5000F1DCD /* MJRefreshBaseView.m in Sources */,
@@ -1850,6 +1885,7 @@
 				7D7411EE1B31C32800FC01BE /* PSTCollectionViewController.m in Sources */,
 				7DBB00081AA5F7CD000F1DCD /* AFNetworkReachabilityManager.m in Sources */,
 				7DBB00441AA5F857000F1DCD /* ReachabilityObserver.m in Sources */,
+				7D20449E1F736B630061D6AD /* ADTHelpInfo.m in Sources */,
 				7D74122B1B31C3FD00FC01BE /* SDWebImageManager.m in Sources */,
 				7DCC05BB1AA899EF00C23E3B /* ContactViewController.m in Sources */,
 				7DC004D01ABEFEAC006616B0 /* SelectContactViewController.m in Sources */,
@@ -1870,6 +1906,7 @@
 				7DF83B2A1BE6710400E9C16E /* TodoProcessInfoViewController.m in Sources */,
 				7D64B4091F6D74E400709A6C /* WoyiViewController.m in Sources */,
 				7DBB00801AA5FB7D000F1DCD /* AFNetworkActivityIndicatorManager.m in Sources */,
+				7D2044A41F73B14C0061D6AD /* SelectCityViewController.m in Sources */,
 				7DEC2E241AE74A460031E98F /* SBJson4Parser.m in Sources */,
 				7DD3E5B31E5D8E3A00C6A265 /* AddNewSchudelViewController.m in Sources */,
 				7DBB000B1AA5F7CD000F1DCD /* AFURLRequestSerialization.m in Sources */,
@@ -1902,6 +1939,7 @@
 				7DEC2E251AE74A460031E98F /* SBJson4StreamParser.m in Sources */,
 				7D0406811E5193F400036FE6 /* AddNewMeetingViewController.m in Sources */,
 				7DBB00061AA5F7CD000F1DCD /* AFHTTPRequestOperationManager.m in Sources */,
+				7D2044A71F73B1590061D6AD /* SelectAreaViewController.m in Sources */,
 				7DBB00681AA5F979000F1DCD /* sqliteADO.m in Sources */,
 				7DCF96051BF1D81B00813503 /* ContactForGroupSelectViewController.m in Sources */,
 				18E21A8919751F9A0029EC1F /* iAppPDFAppDelegate.m in Sources */,
@@ -1911,6 +1949,7 @@
 				7DA2784D1AAF3D33004E8BF2 /* PublicFileViewController.m in Sources */,
 				7D74122D1B31C3FD00FC01BE /* UIButton+WebCache.m in Sources */,
 				7DBB00091AA5F7CD000F1DCD /* AFSecurityPolicy.m in Sources */,
+				7D2044A11F73B1210061D6AD /* SelectProviceViewController.m in Sources */,
 				7DFF547D1B0C94D300B67652 /* EmailTableViewCell.m in Sources */,
 				7D7411F31B31C32800FC01BE /* PSTCollectionViewUpdateItem.m in Sources */,
 				7D7411F41B31C32800FC01BE /* PSTGridLayoutInfo.m in Sources */,
@@ -1941,6 +1980,7 @@
 				7DBB006F1AA5FA2C000F1DCD /* Reachability.m in Sources */,
 				7D7412241B31C3FD00FC01BE /* MKAnnotationView+WebCache.m in Sources */,
 				7DBBFFCD1AA5F6EC000F1DCD /* HttpConnctionManager.m in Sources */,
+				7D2044AA1F7408EB0061D6AD /* FindFilterView.m in Sources */,
 				7D7411EB1B31C32800FC01BE /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				7DA60E8E1B77A016001A5BD0 /* DownloadUrlSetViewController.m in Sources */,
 			);
@@ -2050,7 +2090,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: wei liu (C78H27QVSY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BJW9F34F29;
@@ -2090,7 +2129,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nanjing kaijiang technology company limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = BJW9F34F29;

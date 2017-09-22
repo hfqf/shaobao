@@ -3157,4 +3157,34 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:@"ad/getAdList" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
+
+- (void)uploadShaobaoFileWithPath:(NSString *)filePath
+                 successBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed
+{
+
+    [self POST:[NSString stringWithFormat:@"%@/file/save",BJ_SERVER]
+    parameters:nil
+constructingBodyWithBlock:^(id <AFMultipartFormData> formData)
+     {
+         NSData *data = [NSData dataWithContentsOfFile:filePath];
+         [formData appendPartWithFileData:data name:@"file" fileName:[LocalTimeUtil getCurrentTimstamp] mimeType:@"image/jpeg"];
+     }
+       success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         if(success)
+         {
+             id res  = [operation.responseString objectFromJSONString];
+             success((NSDictionary *)res);
+         }
+     }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         if (failed)
+         {
+             failed(nil, error);
+         }
+     }
+     ];
+}
 @end

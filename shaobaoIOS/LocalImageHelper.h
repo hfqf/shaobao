@@ -25,6 +25,8 @@
 //将图片保存至给定的路径
 + (NSString *)saveImage:(UIImage *)tempImage;
 
++ (NSString *)saveImage2:(UIImage *)tempImage;
+
 //保存音频文件
 + (BOOL)saveAudioFileWithFileData:(NSData *)data withPath:(NSString *)filePath;
 

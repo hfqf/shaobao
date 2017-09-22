@@ -57,37 +57,33 @@
 + (BOOL)saveOriginalImage:(NSString *)cutedPath withImage:(UIImage *)image error:(NSError *)error
 
 {
-    NSData * picData  = UIImageJPEGRepresentation(image, 1.0);
+    NSData * picData  = UIImageJPEGRepresentation(image, 0.1);
     [picData writeToFile:cutedPath atomically:YES];
     return error == nil;
 }
 
 
++ (NSString *)saveImage2:(UIImage *)tempImage
+{
+    NSString *fileName = [self getPicNameFromCurrentTime];
+    NSString *maxPicPath = [NSString stringWithFormat:@"%@/%@",[self getStoredFilePath:YES],fileName];
+
+    NSError *error = nil;
+    SpeLog(@"homePath==%@",NSHomeDirectory());
+    if([self saveOriginalImage:maxPicPath withImage:tempImage error:error])
+    {
+        SpeLog(@"大图写入:%@",maxPicPath);
+        return maxPicPath;
+    }
+    else
+    {
+        SpeLog(@"error:%@",error);
+        return nil;
+    }
+}
+
 + (NSString *)saveImage:(UIImage *)tempImage
 {
-    //  UIImage * newImage = nil;
-    //当宽高有个大于MAX_LENGTH_PIC就要进行剪切
-    //    if(tempImage.size.height > MAX_LENGTH_PIC || tempImage.size.width > MAX_LENGTH_PIC)
-    //    {
-    //        CGSize currentSize = CGSizeZero;
-    //        if(tempImage.size.height > tempImage.size.width)
-    //        {
-    //            currentSize = CGSizeMake(tempImage.size.width*MAX_LENGTH_PIC/tempImage.size.height , MAX_LENGTH_PIC);
-    //        }
-    //        else
-    //        {
-    //            currentSize = CGSizeMake(MAX_LENGTH_PIC , tempImage.size.height*MAX_LENGTH_PIC/tempImage.size.width);
-    //        }
-    //
-    //        newImage = [self imageWithImageSimple:tempImage scaledToSize:currentSize];
-    //    }
-    //    else
-    //    {
-    //        newImage = tempImage;
-    //    }
-    // NSData * picData  = UIImageJPEGRepresentation(tempImage, 1);
-    // NSString* fullPathToFile = [NSString stringWithFormat:@"%@/%@",[self getStoredFilePath:YES],[self getPicNameFromCurrentTime]];
-    
     NSString *fileName = [self getPicNameFromCurrentTime];
     NSString *maxPicPath = [NSString stringWithFormat:@"%@/%@",[self getStoredFilePath:YES],fileName];
     
@@ -103,16 +99,6 @@
         SpeLog(@"error:%@",error);
         return nil;
     }
-    
-    //    if([picData writeToFile:fullPathToFile atomically:NO])
-    //    {
-    //        return fullPathToFile;
-    //        SpeLog(@"小图写入:%@",fullPathToFile);
-    //    }
-    //    else
-    //    {
-    //        return nil;
-    //    }
 }
 
 //按路径保存音频文件
@@ -247,7 +233,7 @@
 + (NSString *)getStoredFilePath:(BOOL)isPic
 {
     
-    NSString *imageDir = [NSString stringWithFormat:@"%@/uploadFile/%@/%@", [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],[LoginUserUtil userId],@"file"];
+    NSString *imageDir = [NSString stringWithFormat:@"%@/uploadFile%@/%@", [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],[LoginUserUtil userId],@"file"];
     return imageDir;
 }
 

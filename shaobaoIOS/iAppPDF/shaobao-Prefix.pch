@@ -30,4 +30,5 @@
 #import "NSDictionary+ValueCheck.h"
 #import "MLTableAlert.h"
 #import "SBJson4.h"
+#import "ADTHelpInfo.h"
 #endif

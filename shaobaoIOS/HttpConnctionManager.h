@@ -801,4 +801,8 @@ successedBlock:(SuccessedBlock)success
 - (void)getAds:(NSString *)type
 successedBlock:(SuccessedBlock)success
    failedBolck:(FailedBlock)failed;
+
+- (void)uploadShaobaoFileWithPath:(NSString *)filePath
+                 successBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed;
 @end
