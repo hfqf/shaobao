@@ -3084,6 +3084,7 @@ successedBlock:(SuccessedBlock)success
                               @"weixin":weixin,
                               @"qq":qq,
                               @"picUrls":picUrls,
+                              @"accessToken":[LoginUserUtil shaobaoLoginPass]
                               };
 
     [self startNormalPostWith:@"help/send" paragram:reqDic successedBlock:success failedBolck:failed];
@@ -3101,6 +3102,9 @@ successedBlock:(SuccessedBlock)success
                               @"groupId":groupId,
                               @"content":content,
                               @"picUrls":picUrls,
+                              @"accessToken":[LoginUserUtil shaobaoLoginPass]
+
+
                               };
 
     [self startNormalPostWith:@"help/sendMessage" paragram:reqDic successedBlock:success failedBolck:failed];

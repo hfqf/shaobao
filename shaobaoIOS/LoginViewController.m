@@ -114,7 +114,7 @@
     if(flag)
     {
 //        [m_nameText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_ACCOUTN]];
-        [m_nameText setText:@"kaka "];
+        [m_nameText setText:@"test"];
     }
     [m_nameText setTextColor:[UIColor blackColor]];
 //    m_nameText.layer.cornerRadius = 5;

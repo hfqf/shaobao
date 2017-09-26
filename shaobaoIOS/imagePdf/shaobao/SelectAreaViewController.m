@@ -81,7 +81,7 @@
     [self.m_delegate onSelectedProvice:nil withCity:self.m_info withArea:info];
 
     for(UIViewController *vc in self.navigationController.viewControllers){
-        if([vc isKindOfClass:NSClassFromString(@"SendHelpViewController")]){
+        if([vc isKindOfClass:NSClassFromString(@"SendHelpViewController")] || [vc isKindOfClass:NSClassFromString(@"FindViewController")] ){
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
