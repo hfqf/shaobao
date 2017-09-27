@@ -9,5 +9,12 @@
 #import "ADTHelpInfo.h"
 
 @implementation ADTHelpInfo
+- (id)init{
+    if(self = [super init]){
+        self.m_type = @"1";
+        self.m_desc = @"";
+    }
+    return self;
+}
 
 @end

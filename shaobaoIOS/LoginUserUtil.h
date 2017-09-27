@@ -106,6 +106,8 @@
 
 +(NSString *)shaobaoLoginName;
 
++(NSString *)shaobaoAccessToken;
+
 +(NSString *)shaobaoLoginPass;
 
 +(NSString *)shaobaoTel;

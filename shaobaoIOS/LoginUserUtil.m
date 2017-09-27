@@ -810,6 +810,12 @@
     return [dic stringWithFilted:@"loginName"];
 }
 
++(NSString *)shaobaoAccessToken
+{
+    NSDictionary *dic = [self readDictionartFromPlist];
+    return [dic stringWithFilted:@"accessToken"];
+}
+
 +(NSString *)shaobaoLoginPass
 {
     NSDictionary *dic = [self readDictionartFromPlist];
