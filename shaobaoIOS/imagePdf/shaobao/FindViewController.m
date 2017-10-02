@@ -9,7 +9,9 @@
 #import "FindViewController.h"
 #import "FindFilterView.h"
 #import "SelectProviceViewController.h"
-@interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate>
+#import "ADTFindItem.h"
+#import "FindTableViewCell.h"
+@interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong) FindFilterView *m_filterView;
 @end
 
@@ -81,8 +83,14 @@
                    successedBlock:^(NSDictionary *succeedResult) {
                        [self removeWaitingView];
                        if([succeedResult[@"ret"]integerValue] == 0){
-                           [self reloadDeals];
+                           NSMutableArray *arr = [NSMutableArray array];
+                           for(NSDictionary *info in  succeedResult[@"data"]){
+                               ADTFindItem *item = [ADTFindItem from:info];
+                               [arr addObject:item];
+                           }
+                           self.m_arrData = arr;
                        }
+                       [self reloadDeals];
 
     } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
         [self removeWaitingView];
@@ -90,14 +98,10 @@
     }];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return self.m_arrData.count;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : self.m_arrData.count+1;
+   return self.m_arrData.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,10 +111,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
+    FindTableViewCell *cell = [[FindTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
     [cell setBackgroundColor:[UIColor whiteColor]];
+    cell.m_delegate = self;
+    cell.currentData = [self.m_arrData objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -139,5 +145,16 @@
 {
     self.m_filterView.hidden= YES;
     [self requestData:YES];
+}
+
+#pragma mark - FindTableViewCellDelegate
+- (void)onAccept
+{
+
+}
+
+- (void)onDelete
+{
+    
 }
 @end

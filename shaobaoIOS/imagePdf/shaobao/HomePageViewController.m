@@ -10,8 +10,8 @@
 
 #import "HomePageViewController.h"
 #import "MXCycleScrollView.h"
-#import "HomeTableViewCell.h"
-@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate>
+#import "FindTableViewCell.h"
+@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
 
@@ -57,6 +57,14 @@
                          pageSize:@"20"
                    successedBlock:^(NSDictionary *succeedResult) {
 
+                       if([succeedResult[@"ret"]integerValue] == 0){
+                           NSMutableArray *arr = [NSMutableArray array];
+                           for(NSDictionary *info in  succeedResult[@"data"]){
+                               ADTFindItem *item = [ADTFindItem from:info];
+                               [arr addObject:item];
+                           }
+                           self.m_arrData = arr;
+                       }
                        [self reloadDeals];
 
 
@@ -110,7 +118,7 @@
         if(indexPath.row == 0){
             return 40;
         }else{
-            return 120;
+            return 300;
         }
     }
     return 0;
@@ -177,11 +185,11 @@
             return cell;
         }else{
             NSString *iden1 = @"cell2";
-            HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:iden1];
+            FindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:iden1];
             if(cell == nil){
-                cell = [[HomeTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
+                cell = [[FindTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
             }
-            cell.infoData= [self.m_arrData objectAtIndex:indexPath.row];
+            cell.currentData= [self.m_arrData objectAtIndex:indexPath.row-1];
             return cell;
         }
     }
@@ -209,4 +217,16 @@
 
 
 }
+
+#pragma mark - FindTableViewCellDelegate
+- (void)onDelete
+{
+
+}
+
+- (void)onAccept
+{
+
+}
+
 @end
