@@ -7,7 +7,7 @@
 //
 
 #import "FindTableViewCell.h"
-
+#import "SDImageCache.h"
 @implementation FindTableViewCell
 
 - (void)awakeFromNib {
@@ -30,7 +30,7 @@
         m_head.clipsToBounds = YES;
         [self addSubview:m_head];
 
-        m_userType = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(m_head.frame), 60, 18)];
+        m_userType = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(m_head.frame)+10, 60, 18)];
         [m_userType setTextAlignment:NSTextAlignmentCenter];
         [m_userType setTextColor:[UIColor blackColor]];
         [m_userType setFont:[UIFont systemFontOfSize:15]];
@@ -44,20 +44,20 @@
 
         m_timeLab = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-120,10,110, 18)];
         [m_timeLab setTextAlignment:NSTextAlignmentRight];
-        [m_timeLab setTextColor:[UIColor blackColor]];
-        [m_timeLab setFont:[UIFont systemFontOfSize:13]];
+        [m_timeLab setTextColor:UIColorFromRGB(0xc9c9c9)];
+        [m_timeLab setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:m_timeLab];
 
-        m_addressLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,CGRectGetMaxY(m_nameLab.frame),(MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+10)), 18)];
+        m_addressLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,CGRectGetMaxY(m_nameLab.frame)+20,(MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+10)), 18)];
         [m_addressLab setTextAlignment:NSTextAlignmentLeft];
-        [m_addressLab setTextColor:[UIColor blackColor]];
+        [m_addressLab setTextColor:UIColorFromRGB(0x999999)];
         [m_addressLab setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:m_addressLab];
 
-        m_contentLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,CGRectGetMaxY(m_addressLab.frame),(MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+10)), 18)];
+        m_contentLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,CGRectGetMaxY(m_addressLab.frame)+20,(MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+10)), 18)];
         m_contentLab.numberOfLines = 0;
         [m_contentLab setTextAlignment:NSTextAlignmentLeft];
-        [m_contentLab setTextColor:[UIColor blackColor]];
+        [m_contentLab setTextColor:UIColorFromRGB(0x999999)];
         [m_contentLab setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:m_contentLab];
 
@@ -75,18 +75,45 @@
 
 
         m_acceptBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-100, CGRectGetMinY(m_feeLab.frame), 90, 30)];
-        m_acceptBtn.layer.cornerRadius = m_acceptBtn.frame.size.width/2;
-        m_acceptBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [m_acceptBtn addTarget:self action:@selector(acceptBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [m_acceptBtn setTitle:@"承接" forState:0];
+        [m_acceptBtn setTitleColor:KEY_COMMON_CORLOR forState:0];
+        [m_acceptBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-100, CGRectGetMinY(m_feeLab.frame), 70, 30)];
+        m_acceptBtn.layer.cornerRadius = m_acceptBtn.frame.size.height/2;
+        m_acceptBtn.layer.borderColor = UIColorFromRGB(0XCFCFCF).CGColor;
+        m_acceptBtn.layer.borderWidth = 0.5;
         [self addSubview:m_acceptBtn];
 
         m_delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-100, CGRectGetMinY(m_promiseLab.frame), 90, 30)];
-        m_delBtn.layer.cornerRadius = m_delBtn.frame.size.width/2;
-        m_delBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [m_delBtn addTarget:self action:@selector(delBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [m_delBtn setTitle:@"删除" forState:0];
+        [m_delBtn setTitleColor:UIColorFromRGB(0xDB2E4A) forState:0];
+        [m_delBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-100, CGRectGetMinY(m_promiseLab.frame), 70, 30)];
+        m_delBtn.layer.cornerRadius = m_delBtn.frame.size.height/2;
+        m_delBtn.layer.borderColor = UIColorFromRGB(0XCFCFCF).CGColor;
+        m_delBtn.layer.borderWidth = 0.5;
         [self addSubview:m_delBtn];
 
-        
+        m_sep = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+        [m_sep setBackgroundColor:UIColorFromRGB(0xebebeb)];
+        [self addSubview:m_sep];
+
+        self.m_arrImageViews = [NSMutableArray array];
+        m_picview1 = [[EGOImageView alloc]init];
+        m_picview2 = [[EGOImageView alloc]init];
+        m_picview3 = [[EGOImageView alloc]init];
+        m_picview4 = [[EGOImageView alloc]init];
+        m_picview5 = [[EGOImageView alloc]init];
+        m_picview6 = [[EGOImageView alloc]init];
+        [self.m_arrImageViews addObject:m_picview1];
+        [self.m_arrImageViews addObject:m_picview2];
+        [self.m_arrImageViews addObject:m_picview3];
+        [self.m_arrImageViews addObject:m_picview4];
+        [self.m_arrImageViews addObject:m_picview5];
+        [self.m_arrImageViews addObject:m_picview6];
+
     }
     return self;
 }
@@ -96,11 +123,12 @@
     [m_head setImageURL:[NSURL URLWithString:currentData.m_userAvatar]];
     [m_userType setText:currentData.m_userType.integerValue == 1 ? @"个人" : @"商家"];
     [m_nameLab setText:currentData.m_userName];
-    [m_timeLab setText:currentData.m_createTime];
+    [m_timeLab setText:[currentData.m_createTime substringToIndex:10]];
+    [m_contentLab setText:currentData.m_content];
     [m_addressLab setText:[NSString stringWithFormat:@"%@%@%@",currentData.m_provinceName,currentData.m_cityName,currentData.m_countyName]];
 
     CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:m_contentLab.font withWidth:(MAIN_WIDTH-(20+CGRectGetWidth(m_head.frame)))];
-    [m_contentLab setFrame:CGRectMake(CGRectGetMinX(m_head.frame)+10, CGRectGetMaxY(m_addressLab.frame), size.width, size.height)];
+    [m_contentLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_addressLab.frame), size.width, size.height)];
 
     [m_feeLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_contentLab.frame)+10, 200, 18)];
     if(currentData.m_userType.integerValue == 1){
@@ -111,7 +139,7 @@
                            value:[UIColor blackColor]
                            range:NSMakeRange(0, 3)];
         [attrString addAttribute:NSForegroundColorAttributeName
-                           value:KEY_COMMON_CORLOR
+                           value:UIColorFromRGB(0x844c8d)
                            range:NSMakeRange(3, attrString.length-3)];
         [m_feeLab setAttributedText:attrString];
     }else{
@@ -131,22 +159,77 @@
     }
 
     NSString *promis = [NSString stringWithFormat:@"承诺定金:%@元 %@",currentData.m_creditFee,state];
-    [m_promiseLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_promiseLab.frame), 200, 18)];
+    [m_promiseLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_feeLab.frame)+10, 200, 18)];
 
     NSMutableAttributedString *promiseString = [[NSMutableAttributedString alloc]initWithString:promis];
     [promiseString addAttribute:NSForegroundColorAttributeName
                        value:[UIColor blackColor]
                        range:NSMakeRange(0, 4)];
     [promiseString addAttribute:NSForegroundColorAttributeName
-                       value:KEY_COMMON_CORLOR
-                       range:NSMakeRange(4,currentData.m_creditFee.length)];
+                       value:UIColorFromRGB(0x844c8d)
+                       range:NSMakeRange(5,currentData.m_creditFee.length+1)];
     [promiseString addAttribute:NSForegroundColorAttributeName
                           value:[UIColor whiteColor]
                           range:NSMakeRange(promis.length-3,3)];
 
     [promiseString addAttribute:NSBackgroundColorAttributeName
-                          value:[UIColor blueColor]
+                          value:UIColorFromRGB(0x2bcee1)
+                          range:NSMakeRange(promis.length-3,3)];
+    [promiseString addAttribute:NSFontAttributeName
+                          value:[UIFont systemFontOfSize:11]
                           range:NSMakeRange(promis.length-3,3)];
     [m_promiseLab setAttributedText:promiseString];
+
+
+    NSArray *arr = currentData.m_arrPics;
+
+    for(EGOImageView *img in self.m_arrImageViews){
+        img.hidden = YES;
+    }
+
+    if(arr.count == 0){
+        [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(m_promiseLab.frame)+10, MAIN_WIDTH, 0.5)];
+    }
+    
+    for(int i=0;i<arr.count;i++){
+
+        NSInteger sep = 10;
+        NSInteger cell_num = 3;
+        NSInteger width = (MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+sep*(cell_num+1)))/3;
+
+        NSInteger row = i/cell_num;
+        NSInteger coulmn = i%cell_num;
+
+        EGOImageView *img = [self.m_arrImageViews objectAtIndex:i];
+        img.hidden = NO;
+        img.frame= CGRectMake(CGRectGetMaxX(m_head.frame)+sep+(sep+width)*coulmn, CGRectGetMaxY(m_promiseLab.frame)+sep+(sep+width)*row, width, width);
+        img.contentMode = UIViewContentModeScaleAspectFill;
+        img.clipsToBounds = YES;
+        [img setImageURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507288551572&di=b7c180da2f18545698672f74aaf3cee8&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3801213fb80e7beca9004ec5252eb9389b506b38.jpg"]];
+        img.placeholderImage= [UIImage imageNamed:@"leader_add"];
+        [self addSubview:img];
+        [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(img.frame)+10, MAIN_WIDTH, 0.5)];
+
+    }
+
+    m_delBtn.hidden = YES;
+    m_acceptBtn.hidden = YES;
+    if(currentData.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
+        [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-90, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
+        m_delBtn.hidden = NO;
+    }else{
+        [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-90, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
+        m_acceptBtn.hidden = NO;
+    }
+}
+
+- (void)acceptBtnClicked
+{
+    [self.m_delegate onAccept:self.currentData];
+}
+
+- (void)delBtnClicked
+{
+    [self.m_delegate onDelete:self.currentData];
 }
 @end

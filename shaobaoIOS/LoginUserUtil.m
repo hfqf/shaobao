@@ -83,7 +83,7 @@
 + (NSString *)accessToken
 {
     NSDictionary *dic = [self readDictionartFromPlist];
-    return [dic objectForKey:@"token"];
+    return [dic objectForKey:@"accessToken"];
 }
 
 //获得联系人后返回的token,再来创建im

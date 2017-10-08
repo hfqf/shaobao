@@ -60,27 +60,27 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
 
-    
+    [title setText:@"登录少保"];
     
 
     
     
     [self removeBackBtn];
-    [navigationBG setBackgroundColor:[UIColor clearColor]];
+//    [navigationBG setBackgroundColor:[UIColor clearColor]];
  
     
     
-    UIButton *setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [setBtn setFrame:CGRectMake(MAIN_WIDTH-60,30, 40, 40)];
-    [setBtn setImage:[UIImage imageNamed:@"login_set"] forState:UIControlStateNormal];
-    [setBtn setTitleColor:UIColorFromRGB(0x0D7AE3) forState:UIControlStateNormal];
-    [setBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [setBtn addTarget:self action:@selector(setBtnClcikced) forControlEvents:UIControlEventTouchUpInside];
-    [self.view  addSubview:setBtn];
+//    UIButton *setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [setBtn setFrame:CGRectMake(MAIN_WIDTH-60,30, 40, 40)];
+//    [setBtn setImage:[UIImage imageNamed:@"login_set"] forState:UIControlStateNormal];
+//    [setBtn setTitleColor:UIColorFromRGB(0x0D7AE3) forState:UIControlStateNormal];
+//    [setBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+//    [setBtn addTarget:self action:@selector(setBtnClcikced) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view  addSubview:setBtn];
+
     
-    
-    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(setBtn.frame)+50, (MAIN_WIDTH-40), (MAIN_WIDTH-40)/9)];
-//    [icon setImage:[UIImage imageNamed:@"login_icon"]];
+    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake((MAIN_WIDTH-80)/2, CGRectGetMaxY(navigationBG.frame)+50,80, 80)];
+    [icon setImage:[UIImage imageNamed:@"logo"]];
     [self.view addSubview:icon];
     
     LoginScrollerView *scr = [[LoginScrollerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(icon.frame)+50, MAIN_WIDTH, MAIN_HEIGHT-CGRectGetMaxY(icon.frame))];
@@ -153,22 +153,25 @@
     [rememberPwdBtn setBackgroundColor:[UIColor clearColor]];
     rememberPwdBtn.selected = flag;
     [rememberPwdBtn addTarget:self action:@selector(rememberPwdBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rememberPwdBtn setFrame:CGRectMake(MAIN_WIDTH-60, CGRectGetMaxY(m_pwdText.frame)+10, 50, 30)];
+    [rememberPwdBtn setFrame:CGRectMake(MAIN_WIDTH-90, CGRectGetMaxY(m_pwdText.frame)+10, 80, 30)];
     [rememberPwdBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+    [rememberPwdBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [rememberPwdBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [m_bg addSubview:rememberPwdBtn];
 
  
     
     UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginBtn setBackgroundColor:KEY_COMMON_CORLOR];
+    [loginBtn setBackgroundColor:[UIColor clearColor]];
+    [loginBtn setImage:[UIImage imageNamed:@"登录"] forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(loginBtnBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [loginBtn setFrame:CGRectMake(20, CGRectGetMaxY(rememberPwdBtn.frame)+30,(m_bg.frame.size.width-40), 45)];
+    [loginBtn setFrame:CGRectMake(20, CGRectGetMaxY(rememberPwdBtn.frame)+30,(m_bg.frame.size.width-40), 60)];
     [loginBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    loginBtn.layer.cornerRadius = 22.5;
-    loginBtn.layer.borderWidth = 1;
-    loginBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+//    loginBtn.layer.cornerRadius = 22.5;
+//    loginBtn.layer.borderWidth = 1;
+//    loginBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     [m_bg addSubview:loginBtn];
     
     
@@ -176,9 +179,10 @@
     [logoutBtn setBackgroundColor:[UIColor clearColor]];
     [logoutBtn addTarget:self action:@selector(logoutBtnBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [logoutBtn setFrame:CGRectMake((m_bg.frame.size.width-100)/2, CGRectGetMaxY(loginBtn.frame)+30,100, 30)];
-    [logoutBtn.titleLabel setFont:[UIFont systemFontOfSize:20]];
+    [logoutBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [logoutBtn setTitle:@"注册账号" forState:UIControlStateNormal];
     [logoutBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
+    [logoutBtn setImage:[UIImage imageNamed:@"注册箭头"] forState:UIControlStateNormal];
 //    logoutBtn.layer.cornerRadius = 5;
 //    logoutBtn.layer.borderWidth = 1;
 //    logoutBtn.layer.borderColor = [UIColor whiteColor].CGColor;

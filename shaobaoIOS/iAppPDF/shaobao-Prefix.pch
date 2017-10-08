@@ -31,4 +31,7 @@
 #import "MLTableAlert.h"
 #import "SBJson4.h"
 #import "ADTHelpInfo.h"
+#import "UIcolor+Expanded.h"
+#import "ADTChatMessage.h"
+#import "ADTFindItem.h"
 #endif

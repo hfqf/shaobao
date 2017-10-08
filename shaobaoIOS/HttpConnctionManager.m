@@ -2910,6 +2910,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":_id,
                               };
 
@@ -2932,16 +2933,17 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
-                              @"type":type,
-                              @"userType":userType,
-                              @"status":status,
-                              @"provice":provice,
-                              @"county":county,
-                              @"startTime":startTime,
-                              @"endTime":endTime,
-                              @"helpId":helpId,
-                              @"pageSize":pageSize,
-                              @"city":city,
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"type": type == nil ? @"":type,
+                              @"userType": @"",// userType == nil ? @"":userType,
+                              @"status":status == nil ? @"":status,
+                              @"provice":provice == nil ? @"":provice,
+                              @"county":county== nil ? @"":county,
+                              @"startTime":startTime== nil ? @"":startTime,
+                              @"endTime":endTime== nil ? @"":endTime,
+                              @"helpId":helpId== nil ? @"":helpId,
+                              @"pageSize":pageSize== nil ? @"":pageSize,
+                              @"city":city== nil ? @"":city,
 
                               };
 
@@ -2956,6 +2958,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               };
 
@@ -2973,6 +2976,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"groupId":groupId,
                               @"messageId":messageId,
                               @"pageSize":pageSize,
@@ -2989,10 +2993,11 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               };
 
-    [self startNormalPostWith:@"help/getMessagetGroup" paragram:reqDic successedBlock:success failedBolck:failed];
+    [self startNormalPostWith:@"help/getMessageGroup" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
 
@@ -3005,6 +3010,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               @"pageSize":pageSize
                               };
@@ -3020,6 +3026,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               @"pageSize":pageSize
                               };
@@ -3041,6 +3048,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               @"serviceFee":serviceFee,
                               @"serviceFee":serviceFee,
@@ -3072,6 +3080,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"type":type,
                               @"content":content,
                               @"province":province,
@@ -3102,9 +3111,7 @@ successedBlock:(SuccessedBlock)success
                               @"groupId":groupId,
                               @"content":content,
                               @"picUrls":picUrls,
-                              @"accessToken":[LoginUserUtil shaobaoLoginPass]
-
-
+                              @"accessToken":[LoginUserUtil accessToken]
                               };
 
     [self startNormalPostWith:@"help/sendMessage" paragram:reqDic successedBlock:success failedBolck:failed];
@@ -3119,6 +3126,7 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
                               @"helpId":helpId,
                               @"optType":optType,
                               };
@@ -3168,7 +3176,10 @@ successedBlock:(SuccessedBlock)success
 {
 
     [self POST:[NSString stringWithFormat:@"%@/file/save",BJ_SERVER]
-    parameters:nil
+    parameters:@{
+                 @"accessToken":[LoginUserUtil accessToken],
+                 @"subDirName":@"shaobao"
+                 }
 constructingBodyWithBlock:^(id <AFMultipartFormData> formData)
      {
          NSData *data = [NSData dataWithContentsOfFile:filePath];
@@ -3191,4 +3202,95 @@ constructingBodyWithBlock:^(id <AFMultipartFormData> formData)
      }
      ];
 }
+
+#pragma mark - 辣新鲜
+- (void)getBbsList:(NSString *)type
+             bbsId:(NSString *)bbsId
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"bbsId":bbsId,
+                              @"sortType":type,
+                              @"pageSize":@"20",
+                              };
+
+    [self startNormalPostWith:@"bbs/getBbsList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)delBbs:(NSString *)bbsId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"bbsId":bbsId,
+                              };
+
+    [self startNormalPostWith:@"bbs/delete" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+- (void)sendBbs:(NSString *)content
+       withPics:(NSString *)pics
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"content":content,
+                              @"picUrls":pics
+                              };
+
+    [self startNormalPostWith:@"bbs/send" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+- (void)sendBbsComment:(NSString *)bbsId
+       content:(NSString *)content
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"content":content,
+                              @"bbsId":bbsId
+                              };
+
+    [self startNormalPostWith:@"bbs/sendComment" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)uploadShaobaoFileWithPathData:(NSData *)FileData
+                     successBlock:(SuccessedBlock)success
+                      failedBolck:(FailedBlock)failed
+{
+
+    [self POST:[NSString stringWithFormat:@"%@/file/save",BJ_SERVER]
+    parameters:@{
+                 @"accessToken":[LoginUserUtil accessToken],
+                 @"subDirName":@"shaobao"
+                 }
+constructingBodyWithBlock:^(id <AFMultipartFormData> formData)
+     {
+         [formData appendPartWithFileData:FileData name:@"file" fileName:[LocalTimeUtil getCurrentTimstamp] mimeType:@"image/jpeg"];
+     }
+       success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         if(success)
+         {
+             id res  = [operation.responseString objectFromJSONString];
+             success((NSDictionary *)res);
+         }
+     }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         if (failed)
+         {
+             failed(nil, error);
+         }
+     }
+     ];
+}
+
 @end

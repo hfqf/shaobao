@@ -805,4 +805,32 @@ successedBlock:(SuccessedBlock)success
 - (void)uploadShaobaoFileWithPath:(NSString *)filePath
                  successBlock:(SuccessedBlock)success
                   failedBolck:(FailedBlock)failed;
+
+
+
+#pragma mark - 辣新鲜
+- (void)getBbsList:(NSString *)type
+             bbsId:(NSString *)bbsId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)delBbs:(NSString *)bbsId
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed;
+
+- (void)sendBbs:(NSString *)content
+       withPics:(NSString *)pics
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed;
+
+
+- (void)sendBbsComment:(NSString *)bbsId
+               content:(NSString *)content
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+
+- (void)uploadShaobaoFileWithPathData:(NSData *)FileData
+                         successBlock:(SuccessedBlock)success
+                          failedBolck:(FailedBlock)failed;
 @end

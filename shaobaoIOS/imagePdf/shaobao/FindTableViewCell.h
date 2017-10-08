@@ -5,14 +5,15 @@
 //  Created by 皇甫启飞 on 2017/9/28.
 //  Copyright © 2017年 com.kinggrid. All rights reserved.
 //
+#import "ADTFindItem.h"
+
 @protocol FindTableViewCellDelegate<NSObject>
 @required
-- (void)onAccept;
+- (void)onAccept:(ADTFindItem *)data;
 
-- (void)onDelete;
+- (void)onDelete:(ADTFindItem *)data;
 @end
 #import <UIKit/UIKit.h>
-#import "ADTFindItem.h"
 @interface FindTableViewCell : UITableViewCell
 {
     EGOImageView *m_head;
@@ -32,7 +33,9 @@
     EGOImageView *m_picview4;
     EGOImageView *m_picview5;
     EGOImageView *m_picview6;
+    UIView *m_sep;
 }
 @property(nonatomic,weak)id<FindTableViewCellDelegate>m_delegate;
 @property(nonatomic,strong)ADTFindItem *currentData;
+@property(nonatomic,strong)NSMutableArray *m_arrImageViews;
 @end

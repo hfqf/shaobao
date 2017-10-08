@@ -42,6 +42,7 @@ typedef void(^MXClickHandler)(NSInteger index);
     
         [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
         [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        self.imageView.clipsToBounds = YES;
         [self addSubview:self.imageView];
         
         self.blurImageView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];

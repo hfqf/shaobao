@@ -11,6 +11,10 @@
 #import "HomePageViewController.h"
 #import "MXCycleScrollView.h"
 #import "FindTableViewCell.h"
+#import "FindRequureInfoViewController.h"
+#import "FindSenderInfoViewController.h"
+#import "FindCategoryViewController.h"
+#import "WebViewViewController.h"
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
@@ -110,6 +114,26 @@
     return section == 0 ? 1 : self.m_arrData.count+1;
 }
 
+- (CGFloat)highOf:(ADTFindItem *)currentData
+{
+    CGFloat high = 40;
+    CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:[UIFont systemFontOfSize:15] withWidth:(MAIN_WIDTH-(20+70))];
+    high+=size.height;
+    high+=20;
+
+    if(currentData.m_userType.integerValue == 1){
+        high+=20;
+    }
+
+    NSInteger row = ceil(currentData.m_arrPics.count/3.0);
+    NSInteger sep = 10;
+    NSInteger cell_num = 3;
+    NSInteger width = (MAIN_WIDTH-(70+sep*(cell_num+1)))/3;
+    high+= (sep+width)*row;
+    high+=50;
+    return high;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
@@ -118,10 +142,20 @@
         if(indexPath.row == 0){
             return 40;
         }else{
-            return 300;
+            return [self highOf:[self.m_arrData objectAtIndex:indexPath.row-1]];
         }
     }
     return 0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ADTFindItem *data = [self.m_arrData objectAtIndex:indexPath.row-1];
+    if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
+        FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
+        [self.navigationController pushViewController:info animated:YES];
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -185,11 +219,14 @@
             return cell;
         }else{
             NSString *iden1 = @"cell2";
-            FindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:iden1];
-            if(cell == nil){
-                cell = [[FindTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
-            }
+            FindTableViewCell *cell = [[FindTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
+
+//            FindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:iden1];
+//            if(cell == nil){
+//                cell = [[FindTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
+//            }
             cell.currentData= [self.m_arrData objectAtIndex:indexPath.row-1];
+            cell.m_delegate  = self;
             return cell;
         }
     }
@@ -208,25 +245,29 @@
 
 - (void)categoryBtn:(UIButton *)btn
 {
-
+    FindCategoryViewController *vc = [[FindCategoryViewController alloc]initWith:btn.tag];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - MXCycleScrollViewDelegate
 - (void)clickImageIndex:(NSInteger)index {
     NSLog(@"pageViewDidTapIndex %ld",index);
-
-
+    NSDictionary *info = [self.m_arrAds objectAtIndex:index];
+    WebViewViewController *web = [[WebViewViewController alloc]initWith:info[@"linkUrl"] withTitle:info[@"title"]];
+    [self.navigationController pushViewController:web animated:YES];
 }
 
-#pragma mark - FindTableViewCellDelegate
-- (void)onDelete
+
+#pragma mark - FindTableViewCell
+
+- (void)onDelete:(ADTFindItem *)data
 {
 
 }
 
-- (void)onAccept
+- (void)onAccept:(ADTFindItem *)data
 {
-
+    FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
+    [self.navigationController pushViewController:info animated:YES];
 }
-
 @end

@@ -32,6 +32,12 @@
     ret.m_payStatus = [info stringWithFilted:@"payStatus"];
     NSString *pics = [info stringWithFilted:@"picUrls"];
     ret.m_arrPics = [pics componentsSeparatedByString:@","];
+    NSInteger ran = rand()%6;
+    NSMutableArray *arr = [NSMutableArray array];
+    for(NSInteger i=0;i<ran;i++){
+        [arr addObject:@""];
+    }
+    ret.m_arrPics = arr;
     ret.m_province = [info stringWithFilted:@"province"];
     ret.m_provinceName = [info stringWithFilted:@"provinceName"];
     ret.m_serviceFee = [info stringWithFilted:@"serviceFee"];
@@ -45,7 +51,7 @@
     ret.m_userScoreContent = [info stringWithFilted:@"userScoreContent"];
     ret.m_userScoreResult = [info stringWithFilted:@"userScoreResult"];
     ret.m_userType = [info stringWithFilted:@"userType"];
-
+    ret.m_isSender  = ret.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue;
     return ret;
 }
 @end

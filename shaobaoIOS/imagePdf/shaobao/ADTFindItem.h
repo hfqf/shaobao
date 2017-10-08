@@ -40,6 +40,7 @@
 @property(nonatomic,strong) NSString *m_userScoreContent;
 @property(nonatomic,strong) NSString *m_userScoreResult;
 @property(nonatomic,strong) NSString *m_userType;
+@property(assign)BOOL m_isSender;
 
 + (ADTFindItem *)from:(NSDictionary *)info;
 

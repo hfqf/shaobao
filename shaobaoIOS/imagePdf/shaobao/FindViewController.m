@@ -11,6 +11,8 @@
 #import "SelectProviceViewController.h"
 #import "ADTFindItem.h"
 #import "FindTableViewCell.h"
+#import "FindRequureInfoViewController.h"
+#import "FindSenderInfoViewController.h"
 @interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong) FindFilterView *m_filterView;
 @end
@@ -65,10 +67,6 @@
 
 - (void)requestData:(BOOL)isRefresh
 {
-    if(self.m_filterView.m_area == nil){
-        [self reloadDeals];
-        return;
-    }
     [self showWaitingView];
     [HTTP_MANAGER findGetHelpList:self.m_filterView.m_type
                          userType:[LoginUserUtil shaobaoUserType]
@@ -103,10 +101,29 @@
 {
    return self.m_arrData.count;
 }
+- (CGFloat)highOf:(ADTFindItem *)currentData
+{
+    CGFloat high = 40;
+    CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:[UIFont systemFontOfSize:15] withWidth:(MAIN_WIDTH-(20+70))];
+    high+=size.height;
+    high+=20;
+
+    if(currentData.m_userType.integerValue == 1){
+        high+=20;
+    }
+
+    NSInteger row = ceil(currentData.m_arrPics.count/3.0);
+    NSInteger sep = 10;
+    NSInteger cell_num = 3;
+    NSInteger width = (MAIN_WIDTH-(70+sep*(cell_num+1)))/3;
+    high+= (sep+width)*row;
+    high+=50;
+    return high;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 300;
+    return [self highOf:[self.m_arrData objectAtIndex:indexPath.row]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,6 +137,15 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ADTFindItem *data = [self.m_arrData objectAtIndex:indexPath.row];
+    if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
+        FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
+        [self.navigationController pushViewController:info animated:YES];
+    }
+
+}
 
 - (void)onSelectArea
 {
@@ -147,14 +173,16 @@
     [self requestData:YES];
 }
 
-#pragma mark - FindTableViewCellDelegate
-- (void)onAccept
+#pragma mark - FindTableViewCell
+
+- (void)onDelete:(ADTFindItem *)data
 {
 
 }
 
-- (void)onDelete
+- (void)onAccept:(ADTFindItem *)data
 {
-    
+    FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
+    [self.navigationController pushViewController:info animated:YES];
 }
 @end

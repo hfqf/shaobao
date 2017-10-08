@@ -66,16 +66,17 @@
     
     navigationBG = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, MAIN_WIDTH, HEIGHT_NAVIGATION+DISTANCE_TOP)];
     navigationBG.userInteractionEnabled = YES;
-    [navigationBG setBackgroundColor:KEY_COMMON_CORLOR];
+//    [navigationBG setBackgroundColor:KEY_COMMON_CORLOR];
+    [navigationBG setImage:[UIImage imageNamed:@"titlebar"]];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:navigationBG];
     
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0,DISTANCE_TOP,61,44)];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+//    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setBackgroundColor:[UIColor clearColor]];
-    [backBtn setBackgroundImage:[UIImage imageNamed:@"topbar_back_un@2x"] forState:UIControlStateNormal];
-    [backBtn setBackgroundImage:[UIImage imageNamed:@"topbar_back_on@2x"] forState:UIControlStateHighlighted];
+    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(12,25, 12, 25)];
+    [backBtn setImage:[UIImage imageNamed:@"shaobao_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [navigationBG addSubview:backBtn];
     
