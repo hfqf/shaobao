@@ -122,7 +122,6 @@ static const CFTimeInterval kLongPressMinimumDurationSeconds = 0.3;
         [m_timeOutTimer invalidate];
         m_timeOutTimer = nil;
     }
-    
 }
 
 #pragma mark - 超过 SEND_TIMEOUT 秒没有收到算是发送失败
@@ -134,7 +133,6 @@ static const CFTimeInterval kLongPressMinimumDurationSeconds = 0.3;
     }
     self.m_currentMsg.m_messageStatus = ENUM_MESSAGESTATUS_FAILED;
     m_sendFailedIcon.hidden = NO;
-
     
     [m_timeOutTimer invalidate];
     m_timeOutTimer = nil;
