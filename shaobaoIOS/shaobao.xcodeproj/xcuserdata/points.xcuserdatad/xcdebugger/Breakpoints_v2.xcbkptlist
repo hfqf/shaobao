@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.152568"
+            timestampString = "529344766.227141"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1200"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.152706"
+            timestampString = "529344766.227304"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1178"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.152814"
+            timestampString = "529344766.227375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1176"
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.153761"
+            timestampString = "529344766.227877"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1089"
@@ -378,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.153968"
+            timestampString = "529344766.227982"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1561"
@@ -394,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.154062"
+            timestampString = "529344766.228051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "475"
@@ -570,12 +570,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "529171283.167738"
+                  timestampString = "529344766.763236"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
                   endingLineNumber = "1309"
-                  offsetFromSymbolStart = "1174">
+                  offsetFromSymbolStart = "1268">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -585,12 +585,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "529171283.172411"
+                  timestampString = "529344766.765287"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
                   endingLineNumber = "1309"
-                  offsetFromSymbolStart = "90">
+                  offsetFromSymbolStart = "88">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -600,12 +600,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "529171283.175619"
+                  timestampString = "529344766.767124"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
                   endingLineNumber = "1309"
-                  offsetFromSymbolStart = "51">
+                  offsetFromSymbolStart = "64">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -615,12 +615,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "529171283.181501"
+                  timestampString = "529344766.769238"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
                   endingLineNumber = "1309"
-                  offsetFromSymbolStart = "29">
+                  offsetFromSymbolStart = "36">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -630,12 +630,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "529171283.218119"
+                  timestampString = "529344766.771873"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
                   endingLineNumber = "1309"
-                  offsetFromSymbolStart = "16">
+                  offsetFromSymbolStart = "24">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -887,7 +887,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "529171654.155567"
+            timestampString = "529344766.228914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2143"
@@ -1005,6 +1005,102 @@
             startingLineNumber = "64"
             endingLineNumber = "64"
             landmarkName = "-setValueDataWithMsg:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+            timestampString = "529344766.229167"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "-doAlipayPay"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__49-[FindSendConfirmOrderViewController doAlipayPay]_block_invoke_2"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+                  timestampString = "529344766.967619"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "303"
+                  endingLineNumber = "303"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__49-[FindSendConfirmOrderViewController doAlipayPay]_block_invoke_3"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+                  timestampString = "529344766.970955"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "305"
+                  endingLineNumber = "305"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+            timestampString = "529344766.22983"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "-doAlipayPay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+            timestampString = "529344766.230132"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "-doAlipayPay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+            timestampString = "529344766.230437"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "-doAlipayPay"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

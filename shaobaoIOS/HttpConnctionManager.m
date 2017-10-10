@@ -3293,4 +3293,95 @@ constructingBodyWithBlock:^(id <AFMultipartFormData> formData)
      ];
 }
 
+#pragma mark - 支付
+///支付宝支付
+- (void)aliPay:(NSString *)helpId
+    serviceFee:(NSString *)serviceFee
+     creditFee:(NSString *)creditFee
+         total:(NSString *)total
+      netMoney:(NSString *)netMoney
+      relMoney:(NSString *)relMoney
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"helpId":helpId,
+                              @"serviceFee":serviceFee,
+                              @"creditFee":creditFee == nil ? @"" : creditFee,
+                              @"total":total==nil ? @"" : total,
+                              @"netMoney":netMoney,
+                              @"relMoney":relMoney,
+                              };
+    [self startNormalPostWith:@"pay/alipay" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///微信支付
+- (void)wxPay:(NSString *)helpId
+    serviceFee:(NSString *)serviceFee
+     creditFee:(NSString *)creditFee
+         total:(NSString *)total
+      netMoney:(NSString *)netMoney
+      relMoney:(NSString *)relMoney
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"helpId":helpId,
+                              @"serviceFee":serviceFee,
+                              @"creditFee":creditFee == nil ? @"" : creditFee,
+                              @"total":total==nil ? @"" : total,
+                              @"netMoney":netMoney,
+                              @"relMoney":relMoney,
+                              };
+    [self startNormalPostWith:@"pay/wxpay" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///网币支付
+- (void)netMoneyPay:(NSString *)helpId
+   serviceFee:(NSString *)serviceFee
+    creditFee:(NSString *)creditFee
+        total:(NSString *)total
+     netMoney:(NSString *)netMoney
+     relMoney:(NSString *)relMoney
+successedBlock:(SuccessedBlock)success
+  failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"helpId":helpId,
+                              @"serviceFee":serviceFee,
+                              @"creditFee":creditFee == nil ? @"" : creditFee,
+                              @"total":total==nil ? @"" : total,
+                              @"netMoney":netMoney,
+                              @"relMoney":relMoney,
+                              };
+    [self startNormalPostWith:@"pay/yepay" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)payResult:(NSString *)payId
+       resultCode:(NSString *)resultCode
+responseContent:(NSString *)responseContent
+   successedBlock:(SuccessedBlock)success
+      failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"payId":payId,
+                              @"resultCode":resultCode,
+                              @"responseContent":responseContent,
+                              };
+    [self startNormalPostWith:@"pay/payResult" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+#pragma mark - 我的
+///查询我的网币余额
+- (void)getCash:(SuccessedBlock)success
+      failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              };
+    [self startNormalPostWith:@"my/cash" paragram:reqDic successedBlock:success failedBolck:failed];
+}
 @end

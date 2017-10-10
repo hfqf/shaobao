@@ -833,4 +833,49 @@ successedBlock:(SuccessedBlock)success
 - (void)uploadShaobaoFileWithPathData:(NSData *)FileData
                          successBlock:(SuccessedBlock)success
                           failedBolck:(FailedBlock)failed;
+
+
+#pragma mark - 支付 - 如果网币够，可以网币支付 支付宝和微信，都是先调各自的支付接口，然后你拿着返回的信息，去调用支付宝和微信的SDK微信有个预支付的流程，就是要我服务端先调用他接口预支付，然后会返回一个信息给你，你要带着微信返回的信息调用SDK 调用SDK之后成功了，再调用payResult接口告诉我服务端
+///支付宝支付
+- (void)aliPay:(NSString *)helpId
+    serviceFee:(NSString *)serviceFee
+     creditFee:(NSString *)creditFee
+         total:(NSString *)total
+      netMoney:(NSString *)netMoney
+      relMoney:(NSString *)relMoney
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed;
+
+///微信支付
+- (void)wxPay:(NSString *)helpId
+   serviceFee:(NSString *)serviceFee
+    creditFee:(NSString *)creditFee
+        total:(NSString *)total
+     netMoney:(NSString *)netMoney
+     relMoney:(NSString *)relMoney
+successedBlock:(SuccessedBlock)success
+  failedBolck:(FailedBlock)failed;
+
+///网币支付
+- (void)netMoneyPay:(NSString *)helpId
+         serviceFee:(NSString *)serviceFee
+          creditFee:(NSString *)creditFee
+              total:(NSString *)total
+           netMoney:(NSString *)netMoney
+           relMoney:(NSString *)relMoney
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+///返回支付结果
+- (void)payResult:(NSString *)payId
+       resultCode:(NSString *)resultCode
+  responseContent:(NSString *)responseContent
+   successedBlock:(SuccessedBlock)success
+      failedBolck:(FailedBlock)failed;
+
+#pragma mark - 我的
+///查询我的网币余额
+- (void)getCash:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
 @end

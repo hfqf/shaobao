@@ -15,6 +15,7 @@
 #import "FindSenderInfoViewController.h"
 #import "FindCategoryViewController.h"
 #import "WebViewViewController.h"
+#import "FindSendConfirmOrderViewController.h"
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
@@ -152,8 +153,17 @@
 {
     ADTFindItem *data = [self.m_arrData objectAtIndex:indexPath.row-1];
     if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
-        FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
-        [self.navigationController pushViewController:info animated:YES];
+        if(data.m_status.integerValue == 0){
+            FindSendConfirmOrderViewController *order = [[FindSendConfirmOrderViewController alloc]initWith:data];
+            [self.navigationController pushViewController:order animated:YES];
+        }else if(data.m_status.integerValue == 1){
+            FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
+            [self.navigationController pushViewController:info animated:YES];
+        }else if(data.m_status.integerValue == 2){
+            FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
+            [self.navigationController pushViewController:info animated:YES];
+        }
+
     }
 
 }
