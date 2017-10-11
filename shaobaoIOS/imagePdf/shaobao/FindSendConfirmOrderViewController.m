@@ -339,33 +339,40 @@
     if(buttonIndex == 0){
 
         NSString *netMoney = btn.selected?self.m_netMoney : @"0";
+        NSString *relMoney = [NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]-[netMoney floatValue]];
         [HTTP_MANAGER aliPay:self.m_helpInfo.m_id
                        serviceFee:self.m_helpInfo.m_serviceFee
                         creditFee:self.m_helpInfo.m_creditFee
                             total:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]
                          netMoney:netMoney
-                         relMoney:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]-[netMoney floatValue]]
+                         relMoney:relMoney
                    successedBlock:^(NSDictionary *succeedResult) {
 
 
-                       [self doAlipayPay:@""
-                                callback:^(NSDictionary *resultDic) {
-                                    if([resultDic[@"code"]integerValue] == 10000){
+                       if([succeedResult[@"ret"]integerValue] == 0){
 
-                                        [HTTP_MANAGER payResult:@""
-                                                     resultCode:@"SUCCESS"
-                                                responseContent:[resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"]
-                                                 successedBlock:^(NSDictionary *succeedResult) {
+                           NSString *payId = succeedResult[@"data"][@"payId"];
+                           [self doAlipayPay:relMoney
+                                    callback:^(NSDictionary *resultDic) {
+                                        if([resultDic[@"code"]integerValue] == 10000){
 
-                                                 } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+                                            [HTTP_MANAGER payResult:payId
+                                                         resultCode:@"SUCCESS"
+                                                    responseContent:[resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"]
+                                                     successedBlock:^(NSDictionary *succeedResult) {
 
-                                                 }];
+                                                     } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                                                     }];
 
 
-                                    }else{
-                                        [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
-                                    }
-                                }];
+                                        }else{
+                                            [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
+                                        }
+                                    }];
+                       }
+
+
 
 
                    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
