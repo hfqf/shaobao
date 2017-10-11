@@ -34,4 +34,5 @@
 #import "UIcolor+Expanded.h"
 #import "ADTChatMessage.h"
 #import "ADTFindItem.h"
+#import "UIImageView+WebCache.h"
 #endif

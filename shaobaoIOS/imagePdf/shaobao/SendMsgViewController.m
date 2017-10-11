@@ -41,14 +41,14 @@
 - (void)requestData:(BOOL)isRefresh
 {
     if(self.m_findItem.m_isSender){
-        [HTTP_MANAGER findGetMessageGroupList:self.m_findItem.m_id
-                               successedBlock:^(NSDictionary *succeedResult) {
+        [HTTP_MANAGER findGetMessageList:self.m_findItem.m_id
+                               messageId:@"0"
+                                pageSize:@"1000"
+                          successedBlock:^(NSDictionary *succeedResult) {
 
+        } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
 
-                               } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
-
-                               }];
+        }];
     }else{
         [HTTP_MANAGER findGetMessagetGroup:self.m_findItem.m_id
                                successedBlock:^(NSDictionary *succeedResult) {

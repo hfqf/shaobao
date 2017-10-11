@@ -11,7 +11,7 @@
 #import "APAuthV2Info.h"
 #import "RSADataSigner.h"
 #import <AlipaySDK/AlipaySDK.h>
-@interface FindSendConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface FindSendConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 {
     UIButton *btn;
 }
@@ -169,7 +169,43 @@
 
 - (void)sendBtnClicked
 {
-    [self doAlipayPay];
+    if(btn.selected){//有网币抵扣
+
+        float more = 0.0;
+        if([self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]<=[self.m_netMoney floatValue]){
+
+            [HTTP_MANAGER netMoneyPay:self.m_helpInfo.m_id
+                           serviceFee:self.m_helpInfo.m_serviceFee
+                            creditFee:self.m_helpInfo.m_creditFee
+                                total:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]
+                             netMoney:@"0"
+                             relMoney:[NSString stringWithFormat:@"%.2f",more]
+                       successedBlock:^(NSDictionary *succeedResult) {
+
+
+
+                       } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+
+
+                       }];
+
+        }else{//还要通过第三方支付的金额
+
+            UIActionSheet *act =[[UIActionSheet alloc]initWithTitle:@"请选择支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
+            [act showInView:self.view];
+
+        }
+
+
+
+
+    }else{
+
+        UIActionSheet *act =[[UIActionSheet alloc]initWithTitle:@"请选择支付方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
+        [act showInView:self.view];
+    }
+
 }
 
 
@@ -195,7 +231,8 @@
 //
 //选中商品调用支付宝极简支付
 //
-- (void)doAlipayPay
+- (void)doAlipayPay:(NSString *)money   callback:(CompletionBlock)completionBlock;
+
 {
     //重要说明
     //这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
@@ -292,24 +329,59 @@
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             NSLog(@"reslut = %@",resultDic);
             NSDictionary *ret= [resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"];
-            if([ret[@"code"]integerValue] == 10000){
-
-                NSString *out_trade_no = ret[@"out_trade_no"];
-                [HTTP_MANAGER payResult:out_trade_no
-                             resultCode:@"SUCCESS"
-                        responseContent:[resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"]
-                         successedBlock:^(NSDictionary *succeedResult) {
-
-                } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
-                }];
-
-
-            }else{
-                [PubllicMaskViewHelper showTipViewWith:ret[@"msg"] inSuperView:self.view withDuration:1];
-            }
+            completionBlock(ret);
         }];
     }
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0){
+
+        NSString *netMoney = btn.selected?self.m_netMoney : @"0";
+        [HTTP_MANAGER aliPay:self.m_helpInfo.m_id
+                       serviceFee:self.m_helpInfo.m_serviceFee
+                        creditFee:self.m_helpInfo.m_creditFee
+                            total:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]
+                         netMoney:netMoney
+                         relMoney:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]-[netMoney floatValue]]
+                   successedBlock:^(NSDictionary *succeedResult) {
+
+
+                       [self doAlipayPay:@""
+                                callback:^(NSDictionary *resultDic) {
+                                    if([resultDic[@"code"]integerValue] == 10000){
+
+                                        [HTTP_MANAGER payResult:@""
+                                                     resultCode:@"SUCCESS"
+                                                responseContent:[resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"]
+                                                 successedBlock:^(NSDictionary *succeedResult) {
+
+                                                 } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                                                 }];
+
+
+                                    }else{
+                                        [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
+                                    }
+                                }];
+
+
+                   } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+
+
+                   }];
+
+
+
+
+
+    }else if (buttonIndex == 1){
+
+    }else if (buttonIndex == 2){
+
+    }
+}
 @end
