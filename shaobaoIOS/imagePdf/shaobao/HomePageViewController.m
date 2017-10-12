@@ -16,6 +16,7 @@
 #import "FindCategoryViewController.h"
 #import "WebViewViewController.h"
 #import "FindSendConfirmOrderViewController.h"
+#import "FindServiceInfoViewController.h"
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
@@ -124,6 +125,8 @@
 
     if(currentData.m_userType.integerValue == 1){
         high+=20;
+    }else{
+        high+=30;
     }
 
     NSInteger row = ceil(currentData.m_arrPics.count/3.0);
@@ -152,19 +155,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ADTFindItem *data = [self.m_arrData objectAtIndex:indexPath.row-1];
-    if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
-        if(data.m_status.integerValue == 0){
-            FindSendConfirmOrderViewController *order = [[FindSendConfirmOrderViewController alloc]initWith:data];
-            [self.navigationController pushViewController:order animated:YES];
-        }else if(data.m_status.integerValue == 1){
-            FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
-            [self.navigationController pushViewController:info animated:YES];
-        }else if(data.m_status.integerValue == 2){
+    if(data.m_userType.integerValue == 2){
+        FindServiceInfoViewController *vc = [[FindServiceInfoViewController alloc]initWith:data];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
             FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
             [self.navigationController pushViewController:info animated:YES];
         }
-
     }
+
 
 }
 
@@ -201,6 +201,7 @@
             NSInteger index = [arr indexOfObject:info];
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             NSInteger width = MAIN_WIDTH/arr.count;
+            btn.tag = index;
             [btn setFrame:CGRectMake(index*width, 0, width, 100)];
             [btn setImage:[UIImage imageNamed:info[@"icon"]] forState:UIControlStateNormal];
             [btn setImageEdgeInsets:UIEdgeInsetsMake(-10,0, 0, 0)];

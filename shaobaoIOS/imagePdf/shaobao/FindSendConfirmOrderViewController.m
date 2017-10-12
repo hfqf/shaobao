@@ -231,7 +231,7 @@
 //
 //选中商品调用支付宝极简支付
 //
-- (void)doAlipayPay:(NSString *)money   callback:(CompletionBlock)completionBlock;
+- (void)doAlipayPay:(NSString *)money  body:(NSString *)body payId:(NSString *)payId  callback:(CompletionBlock)completionBlock;
 
 {
     //重要说明
@@ -295,11 +295,11 @@
 
     // NOTE: 商品数据
     order.biz_content = [BizContent new];
-    order.biz_content.body = @"我是测试数据";
-    order.biz_content.subject = @"1";
-    order.biz_content.out_trade_no = [self generateTradeNO]; //订单ID（由商家自行制定）
+    order.biz_content.body = body;
+    order.biz_content.subject = body;
+    order.biz_content.out_trade_no = payId; //订单ID（由商家自行制定）
     order.biz_content.timeout_express = @"30m"; //超时时间设置
-    order.biz_content.total_amount = [NSString stringWithFormat:@"%.2f", 0.01]; //商品价格
+    order.biz_content.total_amount = [NSString stringWithFormat:@"%.2f", money.floatValue ]; //商品价格
 
     //将商品信息拼接成字符串
     NSString *orderInfo = [order orderInfoEncoded:NO];
@@ -353,15 +353,29 @@
 
                            NSString *payId = succeedResult[@"data"][@"payId"];
                            [self doAlipayPay:relMoney
+                                        body:self.m_helpInfo.m_content
+                                       payId:payId
                                     callback:^(NSDictionary *resultDic) {
                                         if([resultDic[@"code"]integerValue] == 10000){
 
                                             [HTTP_MANAGER payResult:payId
                                                          resultCode:@"SUCCESS"
-                                                    responseContent:[resultDic[@"result"] objectFromJSONString][@"alipay_trade_app_pay_response"]
-                                                     successedBlock:^(NSDictionary *succeedResult) {
+                                                    responseContent:[resultDic JSONString]
+                                                     successedBlock:^(NSDictionary *succeedResult1) {
+
+
+                                                         if([succeedResult1[@"ret"]integerValue] == 0){
+                                                             [PubllicMaskViewHelper showTipViewWith:succeedResult1[@"msg"] inSuperView:self.view withDuration:1];
+
+                                                             [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                                                         }else{
+                                                             [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+
+                                                         }
 
                                                      } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                                                         [PubllicMaskViewHelper showTipViewWith:@"支付失败" inSuperView:self.view withDuration:1];
 
                                                      }];
 

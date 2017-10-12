@@ -17,5 +17,6 @@
 @property(nonatomic,strong) NSString *m_promise2;
 @property(nonatomic,strong) NSString *m_sender;
 @property(nonatomic,strong) NSString *m_tel;
+@property(nonatomic,strong) NSString *m_email;
 @property(nonatomic,strong) NSMutableArray *m_arrPics;
 @end

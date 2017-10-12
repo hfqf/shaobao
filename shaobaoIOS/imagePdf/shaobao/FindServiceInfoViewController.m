@@ -1,20 +1,18 @@
 //
-//  FindSenderInfoViewController.m
+//  FindServiceInfoViewController.m
 //  shaobao
 //
-//  Created by 皇甫启飞 on 2017/10/8.
+//  Created by 皇甫启飞 on 2017/10/12.
 //  Copyright © 2017年 com.kinggrid. All rights reserved.
 //
 
-#import "FindSenderInfoViewController.h"
-#import "FindAskMessagesViewController.h"
+#import "FindServiceInfoViewController.h"
 #import "SendMsgViewController.h"
-#import "FindSendConfirmOrderViewController.h"
-@interface FindSenderInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate>
+@interface FindServiceInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)ADTFindItem *m_helpInfo;
 @end
 
-@implementation FindSenderInfoViewController
+@implementation FindServiceInfoViewController
 
 - (id)initWith:(ADTFindItem *)findInfo
 {
@@ -28,10 +26,9 @@
         [self requestData:YES];
 
         self.m_arrData = @[
-                           @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
-                           @[@"费用信息",@"服务费用",@"履约定金"],
-                           @[@"联系信息",@"需求人",@"手机号码"],
-                           @[@"承接人",@"承接人",@"手机号码",@"承接时间"],
+                           @[@"服务信息",@"服务类型",@"需求说明",@"服务区域"],
+                           @[@"费用信息",@"费用定金承诺"],
+                           @[@"联系信息",@"发布人",@"手机号码",@"邮箱"],
                            ];
 
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -54,26 +51,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [title setText:@"需求详情"];
+    [title setText:@"服务详情"];
 
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-120,20 , 120, 44)];
-    [rightBtn setTitle:@"咨询消息" forState:0];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:0];
-    [navigationBG addSubview:rightBtn];
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-120, 20, 120, 44)];
+//    [rightBtn setTitle:@"联系需求人" forState:0];
+//    [rightBtn setTitleColor:[UIColor whiteColor] forState:0];
+//    [navigationBG addSubview:rightBtn];
 }
 
 - (void)rightBtnClicked
 {
-    FindAskMessagesViewController *ask = [[FindAskMessagesViewController alloc]initWith:self.m_helpInfo];
-    [self.navigationController pushViewController:ask animated:YES];
+    SendMsgViewController *send =[[SendMsgViewController alloc]initWith:self.m_helpInfo];
+    [self.navigationController pushViewController:send animated:YES];
 }
 
 
 - (void)requestData:(BOOL)isRefresh
 {
-    self.tableView.tableFooterView = [self footerView];
+//    self.tableView.tableFooterView = [self footerView];
     [self reloadDeals];
 }
 
@@ -217,50 +214,8 @@
             [content setTextColor:[UIColor blackColor]];
 
         }
-    }else if (indexPath.section == 3){
-        if(indexPath.row == 0){
-            if(self.m_helpInfo.m_status.integerValue !=0){
-                UIButton * m_acceptBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [m_acceptBtn addTarget:self action:@selector(acceptBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-                [m_acceptBtn setTitle:@"联系承接人" forState:0];
-                [m_acceptBtn setTitleColor:KEY_COMMON_CORLOR forState:0];
-                [m_acceptBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-                [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-130,2, 120,26)];
-                m_acceptBtn.layer.cornerRadius = m_acceptBtn.frame.size.height/2;
-                m_acceptBtn.layer.borderColor = UIColorFromRGB(0XCFCFCF).CGColor;
-                m_acceptBtn.layer.borderWidth = 0.5;
-                [cell addSubview:m_acceptBtn];
-            }
-
-        }else if(indexPath.row == 1){
-            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2, MAIN_WIDTH-160, 20)];
-            [content setTextAlignment:NSTextAlignmentLeft];
-            [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:self.m_helpInfo.m_acceptUserId];
-            [cell addSubview:content];
-            [content setTextColor:[UIColor blackColor]];
-
-        }else if(indexPath.row == 2){
-
-            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
-            content.tag = 10;
-            [content setTextAlignment:NSTextAlignmentLeft];
-            [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:self.m_helpInfo.m_acceptUserPhone];
-            [cell addSubview:content];
-            [content setTextColor:[UIColor blackColor]];
-
-        }else{
-            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
-            content.tag = 10;
-            [content setTextAlignment:NSTextAlignmentLeft];
-            [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:self.m_helpInfo.m_acceptTime];
-            [cell addSubview:content];
-            [content setTextColor:[UIColor blackColor]];
-        }
     }
- 
+
     UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, [self high:indexPath]-0.5, MAIN_WIDTH, 0.5)];
     [sep setBackgroundColor:UIColorFromRGB(0xebebeb)];
     [cell addSubview:sep];
@@ -283,16 +238,35 @@
 
 - (UIView *)footerView
 {
-    UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 70)];
+    UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 110)];
     [bg setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendBtn setFrame:CGRectMake(10, 10, MAIN_WIDTH-20, 50)];
+    [sendBtn setFrame:CGRectMake(10, 50, MAIN_WIDTH-20, 50)];
     [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
     [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [sendBtn setTitle:self.m_helpInfo.m_payStatus.integerValue == 0 ? @"立即支付" : @"确认完成" forState:UIControlStateNormal];
+    [sendBtn setTitle:@"确认承接" forState:UIControlStateNormal];
     [bg addSubview:sendBtn];
+
+
     [sendBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     sendBtn.layer.cornerRadius = 3;
+
+
+
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn addTarget:self action:@selector(sameFeeBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setFrame:CGRectMake(10, 0, 30, 30)];
+    btn.selected = YES;
+    [btn setImage:[UIImage imageNamed:@"find_select_un"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"find_select_on"] forState:UIControlStateSelected];
+    [bg addSubview:btn];
+
+    UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(50,5,MAIN_WIDTH-50, 16)];
+    [content setTextAlignment:NSTextAlignmentLeft];
+    [content setFont:[UIFont systemFontOfSize:14]];
+    [content setText:@"我接受对方等额定金进行履约!"];
+    [bg addSubview:content];
+    [content setTextColor:[UIColor blackColor]];
     return bg;
 }
 
@@ -302,29 +276,15 @@
 
 - (void)sendBtnClicked
 {
-    if(self.m_helpInfo.m_payStatus.integerValue == 0){
+    [HTTP_MANAGER findUpdateStatus:self.m_helpInfo.m_id
+                           optType:@"1"
+                    successedBlock:^(NSDictionary *succeedResult) {
 
-        FindSendConfirmOrderViewController *order = [[FindSendConfirmOrderViewController alloc]initWith:self.m_helpInfo];
-        [self.navigationController pushViewController:order animated:YES];
+                    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
 
-    }else{
-        [HTTP_MANAGER findUpdateStatus:self.m_helpInfo.m_id
-                               optType:@"2"
-                        successedBlock:^(NSDictionary *succeedResult) {
-
-                        } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
-                        }];
-    }
-
+                    }];
 }
 
-
-- (void)acceptBtnClicked
-{
-    SendMsgViewController *send =[[SendMsgViewController alloc]initWith:self.m_helpInfo];
-    [self.navigationController pushViewController:send animated:YES];
-}
 @end
 
 

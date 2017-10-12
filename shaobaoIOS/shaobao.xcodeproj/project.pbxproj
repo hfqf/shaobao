@@ -199,6 +199,8 @@
 		7D7412311B31C3FD00FC01BE /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D74121E1B31C3FD00FC01BE /* UIImageView+HighlightedWebCache.m */; };
 		7D7412321B31C3FD00FC01BE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7412201B31C3FD00FC01BE /* UIImageView+WebCache.m */; };
 		7D7412331B31C3FD00FC01BE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7412221B31C3FD00FC01BE /* UIView+WebCacheOperation.m */; };
+		7D84E4291F8FB12700E40BA0 /* SendServiceeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84E4281F8FB12700E40BA0 /* SendServiceeViewController.m */; };
+		7D84E42C1F8FC08E00E40BA0 /* FindServiceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84E42B1F8FC08E00E40BA0 /* FindServiceInfoViewController.m */; };
 		7D8C6C3A1E49C6FF00478E97 /* HomeStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C6C391E49C6FF00478E97 /* HomeStartViewController.m */; };
 		7D90E13F1AB7CDA300D586B4 /* NewAbsenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D90E13E1AB7CDA300D586B4 /* NewAbsenceViewController.m */; };
 		7D9408A11EADE56B0077B187 /* TodoCommitContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9408A01EADE56B0077B187 /* TodoCommitContactsViewController.m */; };
@@ -743,6 +745,10 @@
 		7D7412201B31C3FD00FC01BE /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		7D7412211B31C3FD00FC01BE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		7D7412221B31C3FD00FC01BE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		7D84E4271F8FB12700E40BA0 /* SendServiceeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendServiceeViewController.h; sourceTree = "<group>"; };
+		7D84E4281F8FB12700E40BA0 /* SendServiceeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendServiceeViewController.m; sourceTree = "<group>"; };
+		7D84E42A1F8FC08E00E40BA0 /* FindServiceInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindServiceInfoViewController.h; sourceTree = "<group>"; };
+		7D84E42B1F8FC08E00E40BA0 /* FindServiceInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindServiceInfoViewController.m; sourceTree = "<group>"; };
 		7D8C6C381E49C6FF00478E97 /* HomeStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeStartViewController.h; path = ../HomeStartViewController.h; sourceTree = "<group>"; };
 		7D8C6C391E49C6FF00478E97 /* HomeStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeStartViewController.m; path = ../HomeStartViewController.m; sourceTree = "<group>"; };
 		7D90E13D1AB7CDA300D586B4 /* NewAbsenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAbsenceViewController.h; sourceTree = "<group>"; };
@@ -1464,6 +1470,8 @@
 				7DCF80AA1F7D50AC009C6ACE /* FindTableViewCell.m */,
 				7D50A45C1F72C40E00ACAA80 /* SendHelpViewController.h */,
 				7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */,
+				7D84E4271F8FB12700E40BA0 /* SendServiceeViewController.h */,
+				7D84E4281F8FB12700E40BA0 /* SendServiceeViewController.m */,
 				7D20449F1F73B1210061D6AD /* SelectProviceViewController.h */,
 				7D2044A01F73B1210061D6AD /* SelectProviceViewController.m */,
 				7D2044A21F73B14C0061D6AD /* SelectCityViewController.h */,
@@ -1476,6 +1484,8 @@
 				7D2044A91F7408EB0061D6AD /* FindFilterView.m */,
 				7D0FEC161F8A160D00C482D0 /* FindRequureInfoViewController.h */,
 				7D0FEC171F8A160D00C482D0 /* FindRequureInfoViewController.m */,
+				7D84E42A1F8FC08E00E40BA0 /* FindServiceInfoViewController.h */,
+				7D84E42B1F8FC08E00E40BA0 /* FindServiceInfoViewController.m */,
 				7D0FEC191F8A4B1E00C482D0 /* FindSenderInfoViewController.h */,
 				7D0FEC1A1F8A4B1E00C482D0 /* FindSenderInfoViewController.m */,
 				7D0FEC1C1F8A4F1000C482D0 /* FindAskMessagesViewController.h */,
@@ -2327,6 +2337,7 @@
 				7D0FEBD21F87B66C00C482D0 /* ADTLxxItemInfo.m in Sources */,
 				7D7411EA1B31C32800FC01BE /* README.mdown in Sources */,
 				7DBB000D1AA5F7CD000F1DCD /* AFURLSessionManager.m in Sources */,
+				7D84E4291F8FB12700E40BA0 /* SendServiceeViewController.m in Sources */,
 				7DEC2E2A1AE74A460031E98F /* SBJson4Writer.m in Sources */,
 				7DBB003E1AA5F857000F1DCD /* UIImage+STExt.m in Sources */,
 				7D74122A1B31C3FD00FC01BE /* SDWebImageDownloaderOperation.m in Sources */,
@@ -2373,6 +2384,7 @@
 				7D7411EC1B31C32800FC01BE /* PSTCollectionView.m in Sources */,
 				7D43B1DC1F089B5500BE2571 /* AddNewFaultViewController.m in Sources */,
 				7DC004D41ABF0101006616B0 /* AdtContacterInfo.m in Sources */,
+				7D84E42C1F8FC08E00E40BA0 /* FindServiceInfoViewController.m in Sources */,
 				7DCC05B51AA899D200C23E3B /* EmailViewController.m in Sources */,
 				7D0FEC3C1F8A62D600C482D0 /* ReceivedImageview.m in Sources */,
 				7D1A65251F8D1FC200DEC9B5 /* RSADataSigner.m in Sources */,

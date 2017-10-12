@@ -3086,12 +3086,12 @@ successedBlock:(SuccessedBlock)success
                               @"province":province,
                               @"city":city,
                               @"county":county,
-                              @"address":address,
-                              @"serviceFee":serviceFee,
-                              @"creditFee":creditFee,
-                              @"phone":phone,
-                              @"weixin":weixin,
-                              @"qq":qq,
+                              @"address":address == nil ? @"" :address,
+                              @"serviceFee":serviceFee == nil ? @"" : serviceFee,
+                              @"creditFee":creditFee==nil?serviceFee:creditFee,
+                              @"phone":phone==nil ? @"":phone,
+                              @"weixin":weixin==nil ? @"":weixin,
+                              @"qq":qq==nil ? @"":qq,
                               @"picUrls":picUrls,
                               @"accessToken":[LoginUserUtil shaobaoAccessToken]
                               };

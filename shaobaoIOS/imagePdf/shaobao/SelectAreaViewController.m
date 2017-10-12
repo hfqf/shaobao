@@ -81,11 +81,12 @@
     [self.m_delegate onSelectedProvice:nil withCity:self.m_info withArea:info];
 
     for(UIViewController *vc in self.navigationController.viewControllers){
-        if([vc isKindOfClass:NSClassFromString(@"SendHelpViewController")] || [vc isKindOfClass:NSClassFromString(@"FindViewController")] ){
+        if([vc isKindOfClass:NSClassFromString(@"SendHelpViewController")] || [vc isKindOfClass:NSClassFromString(@"FindViewController")] || [vc isKindOfClass:NSClassFromString(@"SendServiceeViewController")]){
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
     }
+    [self backBtnClicked];
 }
 
 @end

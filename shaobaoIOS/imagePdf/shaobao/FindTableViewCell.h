@@ -25,6 +25,7 @@
     UILabel *m_feeLab;
     UILabel *m_promiseLab;
     UILabel *m_stateLab;
+    UILabel *m_processStateLab;
     UIButton *m_acceptBtn;
     UIButton *m_delBtn;
     EGOImageView *m_picview1;

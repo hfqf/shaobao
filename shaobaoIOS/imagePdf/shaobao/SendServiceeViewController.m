@@ -1,19 +1,19 @@
 //
-//  SendHelpViewController.m
+//  SendRequireViewController.m
 //  shaobao
 //
-//  Created by 皇甫启飞 on 2017/9/20.
+//  Created by 皇甫启飞 on 2017/10/12.
 //  Copyright © 2017年 com.kinggrid. All rights reserved.
 //
 
-#import "SendHelpViewController.h"
+#import "SendServiceeViewController.h"
 #import "SelectProviceViewController.h"
-@interface SendHelpViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface SendServiceeViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property(nonatomic,strong)ADTHelpInfo *m_helpInfo;
 @property(nonatomic,strong)UITextField *m_currentTextField;
 @end
 
-@implementation SendHelpViewController
+@implementation SendServiceeViewController
 
 - (id)init
 {
@@ -27,9 +27,9 @@
         [self requestData:YES];
 
         self.m_arrData = @[
-                           @[@"需求信息",@"需求类型",@"需求说明",@"需求区域",@"具体地址"],
-                           @[@"费用信息",@"费用承诺",@"定金承诺"],
-                           @[@"联系信息",@"发布人",@"手机号码"],
+                           @[@"服务信息",@"服务类型",@"需求说明",@"服务区域"],
+                           @[@"费用信息",@"费用定金承诺"],
+                           @[@"联系信息",@"发布人",@"手机号码",@"邮箱"],
                            @[@"添加图片",@""],
                            ];
 
@@ -53,7 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [title setText:@"发布需求"];
+    [title setText:@"发布服务"];
 }
 
 
@@ -180,28 +180,14 @@
             content.tag = 6;
             content.delegate = self;
             content.returnKeyType= UIReturnKeyDone;
-            content.placeholder = @"请输入承诺费用";
+            content.placeholder = @"请输入承诺服务定金";
             [content setTextAlignment:NSTextAlignmentRight];
             [content setFont:[UIFont systemFontOfSize:15]];
             [content setText:self.m_helpInfo.m_promise1];
             [cell addSubview:content];
             [content setTextColor:UIColorFromRGB(0xcdcdcd)];
 
-        }else if(indexPath.row == 2){
-
-            UITextField *content = [[UITextField alloc]initWithFrame:CGRectMake(100, ([self high:indexPath]-20)/2,MAIN_WIDTH-110, 20)];
-            content.tag = 7;
-            content.delegate = self;
-            content.returnKeyType= UIReturnKeyDone;
-            content.placeholder = @"请输入承诺定金";
-            [content setTextAlignment:NSTextAlignmentRight];
-            [content setFont:[UIFont systemFontOfSize:15]];
-            [content setText:self.m_helpInfo.m_promise2];
-            [cell addSubview:content];
-            [content setTextColor:UIColorFromRGB(0xcdcdcd)];
-
         }
-
     }else if (indexPath.section == 2){
         if(indexPath.row == 0){
 
@@ -223,6 +209,20 @@
             [content setTextAlignment:NSTextAlignmentRight];
             [content setFont:[UIFont systemFontOfSize:15]];
             [content setText:self.m_helpInfo.m_tel];
+            [cell addSubview:content];
+            [content setTextColor:UIColorFromRGB(0xcdcdcd)];
+
+        }
+        else if(indexPath.row == 3){
+
+            UITextField *content = [[UITextField alloc]initWithFrame:CGRectMake(100, ([self high:indexPath]-20)/2,MAIN_WIDTH-110, 20)];
+            content.tag = 10;
+            content.delegate = self;
+            content.returnKeyType= UIReturnKeyDone;
+            content.placeholder = @"请输入邮箱地址";
+            [content setTextAlignment:NSTextAlignmentRight];
+            [content setFont:[UIFont systemFontOfSize:15]];
+            [content setText:self.m_helpInfo.m_email];
             [cell addSubview:content];
             [content setTextColor:UIColorFromRGB(0xcdcdcd)];
 
@@ -273,9 +273,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
-         if(indexPath.row == 1){ //需求类型
-             UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择类型" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"叫人帮忙",@"律师侦探",@"护卫保镖",@"纠纷债务",@"个性需求", nil];
-             [act showInView:self.view];
+        if(indexPath.row == 1){ //需求类型
+            UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择类型" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"叫人帮忙",@"律师侦探",@"护卫保镖",@"纠纷债务",@"个性需求", nil];
+            [act showInView:self.view];
 
         }else if(indexPath.row == 3){//需求区域
             SelectProviceViewController *select = [[SelectProviceViewController alloc]init];
@@ -343,11 +343,11 @@
                     [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
                 }
 
-    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+            } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
                 [self removeWaitingView];
 
-        
-    }];
+
+            }];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -439,15 +439,16 @@
     NSString *path = [LocalImageHelper saveImage2:image];
     [HTTP_MANAGER uploadShaobaoFileWithPath:path
                                successBlock:^(NSDictionary *succeedResult) {
-                               [self removeWaitingView];
+                                   [self removeWaitingView];
                                    if([succeedResult[@"ret"]integerValue] == 0){
                                        [self.m_helpInfo.m_arrPics insertObject:succeedResult[@"data"][@"fileFullUrl"] atIndex:self.m_helpInfo.m_arrPics.count-1];
                                        [self reloadDeals];
                                    }
 
-    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-            [self removeWaitingView];
-    }];
+                               } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+                                   [self removeWaitingView];
+                               }];
 
 }
 @end
+

@@ -14,6 +14,7 @@
 #import "FindRequureInfoViewController.h"
 #import "FindSenderInfoViewController.h"
 #import "FindSendConfirmOrderViewController.h"
+#import "FindServiceInfoViewController.h"
 @interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate>
 @property(nonatomic,strong) FindFilterView *m_filterView;
 @end
@@ -51,7 +52,11 @@
 
 - (void)rightBtnClicked
 {
-    [self.navigationController pushViewController:[[NSClassFromString(@"SendHelpViewController") alloc]init] animated:YES];
+    if([[LoginUserUtil shaobaoUserType]integerValue] == 1){
+         [self.navigationController pushViewController:[[NSClassFromString(@"SendHelpViewController") alloc]init] animated:YES];
+    }else{
+         [self.navigationController pushViewController:[[NSClassFromString(@"SendServiceeViewController") alloc]init] animated:YES];
+    }
 }
 
 - (void)filterBtnClicked
@@ -111,6 +116,8 @@
 
     if(currentData.m_userType.integerValue == 1){
         high+=20;
+    }else{
+        high+=30;
     }
 
     NSInteger row = ceil(currentData.m_arrPics.count/3.0);
@@ -141,19 +148,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ADTFindItem *data = [self.m_arrData objectAtIndex:indexPath.row];
-    if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
-        if(data.m_status.integerValue == 0){
-            FindSendConfirmOrderViewController *order = [[FindSendConfirmOrderViewController alloc]initWith:data];
-            [self.navigationController pushViewController:order animated:YES];
-        }else if(data.m_status.integerValue == 1){
-            FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
-            [self.navigationController pushViewController:info animated:YES];
-        }else if(data.m_status.integerValue == 2){
+    if(data.m_userType.integerValue == 2){
+        FindServiceInfoViewController *vc = [[FindServiceInfoViewController alloc]initWith:data];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
             FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
             [self.navigationController pushViewController:info animated:YES];
         }
     }
-
 }
 
 - (void)onSelectArea

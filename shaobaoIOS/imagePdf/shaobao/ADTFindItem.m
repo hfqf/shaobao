@@ -27,7 +27,7 @@
     ret.m_county = [info stringWithFilted:@"county"];
     ret.m_countyName = [info stringWithFilted:@"countyName"];
     ret.m_createTime = [info stringWithFilted:@"createTime"];
-    ret.m_creditFee = [info stringWithFilted:@"creditFee"];
+    ret.m_creditFee = [NSString stringWithFormat:@"%@", @([info[@"creditFee"]doubleValue])];
     ret.m_id = [info stringWithFilted:@"id"];
     ret.m_payStatus = [info stringWithFilted:@"payStatus"];
     NSString *pics = [info stringWithFilted:@"picUrls"];
@@ -40,7 +40,7 @@
     ret.m_arrPics = arr;
     ret.m_province = [info stringWithFilted:@"province"];
     ret.m_provinceName = [info stringWithFilted:@"provinceName"];
-    ret.m_serviceFee = [info stringWithFilted:@"serviceFee"];
+    ret.m_serviceFee =[NSString stringWithFormat:@"%@", @([info[@"serviceFee"]doubleValue])];
 
     ret.m_status = [info stringWithFilted:@"status"];
     ret.m_type = [info stringWithFilted:@"type"];

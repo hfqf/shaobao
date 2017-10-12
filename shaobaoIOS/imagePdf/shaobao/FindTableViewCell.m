@@ -54,6 +54,12 @@
         [m_addressLab setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:m_addressLab];
 
+        m_processStateLab = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-120,CGRectGetMaxY(m_nameLab.frame)+20,110, 18)];
+        [m_processStateLab setTextAlignment:NSTextAlignmentRight];
+        [m_processStateLab setTextColor:KEY_COMMON_CORLOR];
+        [m_processStateLab setFont:[UIFont systemFontOfSize:15]];
+        [self addSubview:m_processStateLab];
+
         m_contentLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,CGRectGetMaxY(m_addressLab.frame)+20,(MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+10)), 18)];
         m_contentLab.numberOfLines = 0;
         [m_contentLab setTextAlignment:NSTextAlignmentLeft];
@@ -130,6 +136,8 @@
     CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:m_contentLab.font withWidth:(MAIN_WIDTH-(20+CGRectGetWidth(m_head.frame)))];
     [m_contentLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_addressLab.frame), size.width, size.height)];
 
+    m_processStateLab.frame =  CGRectMake(MAIN_WIDTH-120,CGRectGetMaxY(m_nameLab.frame)+20,110, 18);
+
     [m_feeLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_contentLab.frame)+10, 200, 18)];
     if(currentData.m_userType.integerValue == 1){
         m_feeLab.hidden = NO;
@@ -148,17 +156,15 @@
     }
 
     NSString *state = nil;
-    if(currentData.m_status.integerValue == 0){
+    if(currentData.m_payStatus.integerValue == 0){
         state = @"未支付";
-    }else if (currentData.m_status.integerValue == 1){
+    }else if (currentData.m_payStatus.integerValue == 1){
         state = @"已支付";
-    }else if (currentData.m_status.integerValue == 2){
-        state = @"处理中";
-    }else if (currentData.m_status.integerValue == 3){
-        state = @"已完成";
+    }else{
+        state = @"未支付";
     }
 
-    NSString *promis = [NSString stringWithFormat:@"承诺定金:%@元 %@",currentData.m_creditFee,state];
+    NSString *promis = currentData.m_userType.integerValue == 1 ?   [NSString stringWithFormat:@"承诺定金:%@元 %@",currentData.m_creditFee,state] : [NSString stringWithFormat:@"承诺定金:%@元",currentData.m_creditFee];
     [m_promiseLab setFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10, CGRectGetMaxY(m_feeLab.frame)+10, 200, 18)];
 
     NSMutableAttributedString *promiseString = [[NSMutableAttributedString alloc]initWithString:promis];
@@ -168,16 +174,20 @@
     [promiseString addAttribute:NSForegroundColorAttributeName
                        value:UIColorFromRGB(0x844c8d)
                        range:NSMakeRange(5,currentData.m_creditFee.length+1)];
-    [promiseString addAttribute:NSForegroundColorAttributeName
-                          value:[UIColor whiteColor]
-                          range:NSMakeRange(promis.length-3,3)];
 
-    [promiseString addAttribute:NSBackgroundColorAttributeName
-                          value:UIColorFromRGB(0x2bcee1)
-                          range:NSMakeRange(promis.length-3,3)];
-    [promiseString addAttribute:NSFontAttributeName
-                          value:[UIFont systemFontOfSize:11]
-                          range:NSMakeRange(promis.length-3,3)];
+    if(currentData.m_userType.integerValue == 1){
+        [promiseString addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor whiteColor]
+                              range:NSMakeRange(promis.length-3,3)];
+
+        [promiseString addAttribute:NSBackgroundColorAttributeName
+                              value:UIColorFromRGB(0x2bcee1)
+                              range:NSMakeRange(promis.length-3,3)];
+        [promiseString addAttribute:NSFontAttributeName
+                              value:[UIFont systemFontOfSize:11]
+                              range:NSMakeRange(promis.length-3,3)];
+    }
+
     [m_promiseLab setAttributedText:promiseString];
 
 
@@ -215,11 +225,33 @@
     m_delBtn.hidden = YES;
     m_acceptBtn.hidden = YES;
     if(currentData.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
-        [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-90, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
+        [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-80, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
         m_delBtn.hidden = NO;
     }else{
-        [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-90, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
+        [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-80, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
         m_acceptBtn.hidden = NO;
+        m_acceptBtn.hidden = currentData.m_userType.integerValue == 2;
+    }
+
+    m_acceptBtn.hidden = currentData.m_payStatus.integerValue == 0;
+    ;
+
+    if(currentData.m_status.integerValue == 0){
+        [m_processStateLab setText:@"待承接"];
+    }else if (currentData.m_status.integerValue == 1){
+        [m_processStateLab setText:@"已承接"];
+    }else if (currentData.m_status.integerValue == 2){
+        [m_processStateLab setText:@"承接人已确认"];
+    }else if (currentData.m_status.integerValue == 3){
+        [m_processStateLab setText:@"发布人已确认"];
+    }else if (currentData.m_status.integerValue == 4){
+        [m_processStateLab setText:@"已完成"];
+    }else if (currentData.m_status.integerValue == 5){
+
+    }
+
+    if(currentData.m_userType.integerValue == 2){
+        m_processStateLab.hidden = YES;
     }
 }
 
