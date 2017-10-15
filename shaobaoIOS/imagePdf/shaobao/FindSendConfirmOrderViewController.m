@@ -167,6 +167,15 @@
     [self reloadDeals];
 }
 
+- (void)backToMain
+{
+    NSArray *arr = self.navigationController.viewControllers;
+    for(UIViewController *vc in arr){
+        if([vc isKindOfClass:NSClassFromString(@"MainTabBarViewController")]){
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+}
 - (void)sendBtnClicked
 {
     if(btn.selected){//有网币抵扣
@@ -177,11 +186,18 @@
             [HTTP_MANAGER netMoneyPay:self.m_helpInfo.m_id
                            serviceFee:self.m_helpInfo.m_serviceFee
                             creditFee:self.m_helpInfo.m_creditFee
-                                total:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]
-                             netMoney:@"0"
-                             relMoney:[NSString stringWithFormat:@"%.2f",more]
+                                total:[NSString stringWithFormat:@"%@", @([self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue])]
+                             netMoney:[NSString stringWithFormat:@"%@", @([self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue])]
+                             relMoney:[NSString stringWithFormat:@"%@", @(more)]
                        successedBlock:^(NSDictionary *succeedResult) {
 
+                           if([succeedResult[@"ret"]integerValue] == 0){
+                               [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+
+                               [self performSelector:@selector(backToMain) withObject:nil afterDelay:1];
+                           }else{
+                               [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                           }
 
 
                        } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
@@ -343,9 +359,9 @@
         [HTTP_MANAGER aliPay:self.m_helpInfo.m_id
                        serviceFee:self.m_helpInfo.m_serviceFee
                         creditFee:self.m_helpInfo.m_creditFee
-                            total:[NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]
-                         netMoney:netMoney
-                         relMoney:relMoney
+                            total:[NSString stringWithFormat:@"%@", @([self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue])] 
+                         netMoney:[NSString stringWithFormat:@"%@", @([netMoney doubleValue])]
+                         relMoney:[NSString stringWithFormat:@"%@", @([relMoney doubleValue])]
                    successedBlock:^(NSDictionary *succeedResult) {
 
 
@@ -367,7 +383,7 @@
                                                          if([succeedResult1[@"ret"]integerValue] == 0){
                                                              [PubllicMaskViewHelper showTipViewWith:succeedResult1[@"msg"] inSuperView:self.view withDuration:1];
 
-                                                             [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                                                             [self performSelector:@selector(backToMain) withObject:nil afterDelay:1];
                                                          }else{
                                                              [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
 
@@ -384,6 +400,8 @@
                                             [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
                                         }
                                     }];
+                       }else{
+                           [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
                        }
 
 

@@ -80,6 +80,14 @@ static inline CGSize CGSizeOfString(NSString * text, CGSize maxSize, UIFont * fo
     return fitSize;
 }
 
+static inline NSString *safeValue(id obj) {
+    if (obj == nil) {
+        return @"";
+    }
+    return obj;
+}
+
+
 static inline NSString *StrFromObj(id obj) {
     if (obj == nil) {
         return nil;
@@ -377,7 +385,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define  KEY_SELETED_CLASSID                   @"KEY_SELETED_CLASSID"
 
-#define  KEY_COMMON_CORLOR                    UIColorFromRGB(0x524479)
+#define  KEY_COMMON_CORLOR                    UIColorFromRGB(0x9257b1)
 
 #define KEY_PUSH_DEVICE_TOKEN       @"KEY_PUSH_DEVICE_TOKEN"
 

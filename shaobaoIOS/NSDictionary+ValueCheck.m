@@ -31,3 +31,27 @@
     return obj == nil ? @"" : obj;
 }
 @end
+
+@implementation NSMutableDictionary(valueCheck)
+-(id)stringWithFilted:(NSString *)key
+{
+    if(self == nil)
+    {
+        return  @"";
+    }
+
+    id obj = [self objectForKey:key];
+    if([obj isKindOfClass:[NSNull class]])
+    {
+        obj = @"";
+        return obj;
+    }
+
+    if([obj isKindOfClass:[NSNumber class]])
+    {
+        NSNumber *ret = (NSNumber *)obj;
+        return [NSString stringWithFormat:@"%lld",[ret longLongValue]];
+    }
+    return obj == nil ? @"" : obj;
+}
+@end

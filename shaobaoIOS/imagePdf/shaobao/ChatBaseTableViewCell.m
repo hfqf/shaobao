@@ -89,13 +89,13 @@ static const CFTimeInterval kLongPressMinimumDurationSeconds = 0.3;
     {
         [m_headView setFrame:CGRectMake(MAIN_WIDTH-45, CGRectGetMaxY(m_timeLab.frame)+5 , 40, 40)];
         
-        [m_headView setNewImage:[LoginUserUtil headUrl] WithSpeWith:1 withDefaultImg:@"logo"];
+        [m_headView setNewImage:[LoginUserUtil shaobaoHeadUrl] WithSpeWith:1 withDefaultImg:@"logo"];
         
         CGSize size = [FontSizeUtil sizeOfString:@"  " withFont:m_nameLab.font];
         [m_nameLab setText:@"  "];
         [m_nameLab setFrame:CGRectMake(CGRectGetMinX(m_headView.frame)-size.width-18, m_headView.frame.origin.y, size.width, self.m_currentMsg.m_chatType != ENUM_CHAT_TYPE_SINGLE  ?size.height : 0)];
     }
-    [m_timeLab setTime:msg.m_strTime isHidden:NO];
+    [m_timeLab setTime:msg.m_strTimestamp isHidden:NO];
 }
 
 - (void)reSendSucceed

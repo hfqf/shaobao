@@ -27,7 +27,7 @@
 
 - (id)init
 {
-    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES]){
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES]){
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -48,23 +48,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestData:YES];
+}
+
 - (void)requestData:(BOOL)isRefresh
 {
-
+    ADTFindItem *last = [self.m_arrData lastObject];
     [HTTP_MANAGER findGetHelpList:@""
-                         userType:[LoginUserUtil shaobaoUserType]
+                         userType:@""
                            status:@""
                           provice:@""
                              city:@""
                            county:@""
                         startTime:@""
                           endTime:@""
-                           helpId:@"0"
+                           helpId:isRefresh ? @"0" : last.m_id
                          pageSize:@"20"
                    successedBlock:^(NSDictionary *succeedResult) {
 
                        if([succeedResult[@"ret"]integerValue] == 0){
-                           NSMutableArray *arr = [NSMutableArray array];
+                           NSMutableArray *arr = isRefresh ? [NSMutableArray array] : [NSMutableArray arrayWithArray:self.m_arrData];
                            for(NSDictionary *info in  succeedResult[@"data"]){
                                ADTFindItem *item = [ADTFindItem from:info];
                                [arr addObject:item];
@@ -162,10 +168,11 @@
         if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
             FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
             [self.navigationController pushViewController:info animated:YES];
+        }else{
+            FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
+            [self.navigationController pushViewController:info animated:YES];
         }
     }
-
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -273,6 +280,19 @@
 
 - (void)onDelete:(ADTFindItem *)data
 {
+
+    [HTTP_MANAGER findDeleteOne:data.m_id
+                 successedBlock:^(NSDictionary *succeedResult) {
+                     if([succeedResult[@"ret"]integerValue]==0){
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                         [self requestData:YES];
+                     }else{
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                     }
+
+                 } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                 }];
 
 }
 

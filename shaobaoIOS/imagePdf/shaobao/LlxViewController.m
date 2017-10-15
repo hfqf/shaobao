@@ -10,10 +10,12 @@
 #import "ADTLxxItemInfo.h"
 #import "AddNewLxxViewController.h"
 #import "LxxTableViewCell.h"
-@interface LlxViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface LlxViewController ()<UITableViewDataSource,UITableViewDelegate,LxxTableViewCellDelegate,UITextFieldDelegate>
 {
        UIView *m_tipView;
 }
+@property(nonatomic,strong)ADTLxxItemInfo *m_commentInfo;
+@property(nonatomic,strong)UITextField *m_input;
 
 @end
 
@@ -26,6 +28,22 @@
         self.tableView.delegate = self;
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         self.tableView.tableHeaderView = m_searchBar;
+
+        self.m_input = [[UITextField alloc]initWithFrame:CGRectMake(0,MAIN_HEIGHT, MAIN_WIDTH, 44)];
+        self.m_input.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        self.m_input.layer.borderWidth = 0.5;
+        [self.m_input setBackgroundColor:[UIColor whiteColor]];
+        [self.m_input setPlaceholder:@"请输入评论"];
+        [self.m_input setTextColor:[UIColor blackColor]];
+        self.m_input.delegate = self;
+        self.m_input.returnKeyType = UIReturnKeySend;
+        [self.view addSubview:self.m_input];
+
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+
+        [self createButtons];
+
     }
     return self;
 }
@@ -40,7 +58,6 @@
     [slideBtn setTitle:@"发帖" forState:UIControlStateNormal];
     [slideBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [navigationBG addSubview:slideBtn];
-    [self createButtons];
 }
 
 - (void)addBtnClicked
@@ -62,19 +79,20 @@
     for(int i =0 ;i<self.m_arrCategory.count;i++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setBackgroundColor:[UIColor whiteColor]];
         [btn addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = i;
-        [btn setFrame:CGRectMake(i*(MAIN_WIDTH/self.m_arrCategory.count), CGRectGetMaxY(navigationBG.frame), MAIN_WIDTH/self.m_arrCategory.count, 40)];
+        [btn setFrame:CGRectMake(i*(MAIN_WIDTH/self.m_arrCategory.count), CGRectGetMaxY(navigationBG.frame)-10, MAIN_WIDTH/self.m_arrCategory.count, 36)];
         [btn setTitle:[self.m_arrCategory objectAtIndex:i] forState:UIControlStateNormal];
         [btn setTitleColor:i == 0 ? KEY_COMMON_CORLOR : [UIColor grayColor] forState:UIControlStateNormal];
         [self.view addSubview:btn];
         [arr addObject:btn];
     }
     self.m_arrBtn = arr;
-    m_tipView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBG.frame)+36, MAIN_WIDTH/self.m_arrCategory.count, 4)];
+    m_tipView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBG.frame)+32, MAIN_WIDTH/self.m_arrCategory.count, 4)];
     [self.view addSubview:m_tipView];
     [m_tipView setBackgroundColor:KEY_COMMON_CORLOR];
-    [self.tableView setFrame:CGRectMake(0, CGRectGetMaxY(m_tipView.frame), MAIN_WIDTH,MAIN_HEIGHT-CGRectGetMaxY(m_tipView.frame)-HEIGHT_MAIN_BOTTOM)];
+    [self.tableView setFrame:CGRectMake(0,104, MAIN_WIDTH,MAIN_HEIGHT-104-HEIGHT_MAIN_BOTTOM)];
 }
 
 #pragma mark - private
@@ -149,7 +167,13 @@
     NSInteger cell_num = 3;
     NSInteger width = (MAIN_WIDTH-(70+sep*(cell_num+1)))/3;
     high+= (sep+width)*row;
-    high+=(currentData.m_arrComments.count*40);
+
+
+    for(NSDictionary *info in currentData.m_arrComments){
+        NSString *content = [NSString stringWithFormat:@"%@回复:%@",info[@"userName"], info[@"content"]];
+        CGSize size = [FontSizeUtil sizeOfString:content withFont:[UIFont systemFontOfSize:15] withWidth:MAIN_WIDTH-130];
+        high += (size.height > 40 ? size.height : 40);
+    }
     return high;
 }
 
@@ -177,5 +201,56 @@
     cell.m_delegate = self;
     cell.currentData = [self.m_arrData objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y-kbSize.height-44)];
+    self.m_input.frame = CGRectMake(0, MAIN_HEIGHT-44-kbSize.height, MAIN_WIDTH, 44);
+}
+
+- (void)keyboardWillHidden:(NSNotification *)notification
+{
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y-HEIGHT_MAIN_BOTTOM)];
+    self.m_input.frame = CGRectMake(0, MAIN_HEIGHT, MAIN_WIDTH, 44);
+}
+
+#pragma mark - LxxTableViewCellDelegate
+
+- (void)onLxxTableViewCellDelegateForDel:(ADTLxxItemInfo *)info
+{
+    [HTTP_MANAGER delBbs:info.m_id
+          successedBlock:^(NSDictionary *succeedResult) {
+              if([succeedResult[@"ret"]integerValue]==0){
+                  [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                  [self requestData:YES];
+              }else{
+                  [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+              }
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+    }];
+}
+
+- (void)onLxxTableViewCellDelegateForComment:(ADTLxxItemInfo *)info
+{
+    self.m_commentInfo = info;
+    [self.m_input becomeFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [HTTP_MANAGER sendBbsComment:self.m_commentInfo.m_id
+                         content:textField.text
+                  successedBlock:^(NSDictionary *succeedResult) {
+                      [self requestData:YES];
+                      [self.m_input setText:nil];
+
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+    }];
+    [textField resignFirstResponder];
+    return YES;
 }
 @end

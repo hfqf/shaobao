@@ -127,13 +127,13 @@
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
             NSInteger type = self.m_helpInfo.m_type.integerValue;
-            if(type == 0){
+            if(type == 1){
                 [content setText:@"叫人帮忙"];
-            }else if (type == 1){
-                [content setText:@"律师侦探"];
             }else if (type == 2){
-                [content setText:@"护卫保镖"];
+                [content setText:@"律师侦探"];
             }else if (type == 3){
+                [content setText:@"护卫保镖"];
+            }else if (type ==4){
                 [content setText:@"纠纷债务"];
             }else{
                 [content setText:@"个性需求"];

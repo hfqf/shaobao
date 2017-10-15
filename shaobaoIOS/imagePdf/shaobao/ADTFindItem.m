@@ -31,13 +31,15 @@
     ret.m_id = [info stringWithFilted:@"id"];
     ret.m_payStatus = [info stringWithFilted:@"payStatus"];
     NSString *pics = [info stringWithFilted:@"picUrls"];
-    ret.m_arrPics = [pics componentsSeparatedByString:@","];
-    NSInteger ran = rand()%6;
-    NSMutableArray *arr = [NSMutableArray array];
-    for(NSInteger i=0;i<ran;i++){
-        [arr addObject:@""];
+    if([pics rangeOfString:@","].length > 0){
+        ret.m_arrPics = [pics componentsSeparatedByString:@","];
     }
-    ret.m_arrPics = arr;
+//    NSInteger ran = rand()%6;
+//    NSMutableArray *arr = [NSMutableArray array];
+//    for(NSInteger i=0;i<ran;i++){
+//        [arr addObject:@""];
+//    }
+//    ret.m_arrPics = arr;
     ret.m_province = [info stringWithFilted:@"province"];
     ret.m_provinceName = [info stringWithFilted:@"provinceName"];
     ret.m_serviceFee =[NSString stringWithFormat:@"%@", @([info[@"serviceFee"]doubleValue])];

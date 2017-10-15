@@ -8,6 +8,7 @@
 
 #import "SendHelpViewController.h"
 #import "SelectProviceViewController.h"
+#import "FindSendConfirmOrderViewController.h"
 @interface SendHelpViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property(nonatomic,strong)ADTHelpInfo *m_helpInfo;
 @property(nonatomic,strong)UITextField *m_currentTextField;
@@ -122,13 +123,13 @@
             [content setTextAlignment:NSTextAlignmentRight];
             [content setFont:[UIFont systemFontOfSize:15]];
             NSInteger type = self.m_helpInfo.m_type.integerValue;
-            if(type == 0){
+            if(type == 1){
                 [content setText:@"叫人帮忙"];
-            }else if (type == 1){
-                [content setText:@"律师侦探"];
             }else if (type == 2){
-                [content setText:@"护卫保镖"];
+                [content setText:@"律师侦探"];
             }else if (type == 3){
+                [content setText:@"护卫保镖"];
+            }else if (type == 4){
                 [content setText:@"纠纷债务"];
             }else{
                 [content setText:@"个性需求"];
@@ -321,6 +322,31 @@
             [pics appendFormat:@"%@,",url];
         }
     }
+
+    if(self.m_helpInfo.m_desc.length == 0){
+        [PubllicMaskViewHelper showTipViewWith:@"发布内容不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
+
+    if(self.m_helpInfo.m_area == nil){
+        [PubllicMaskViewHelper showTipViewWith:@"服务区域不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
+
+    if(self.m_helpInfo.m_promise1.length == 0){
+        [PubllicMaskViewHelper showTipViewWith:@"服务费用不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
+
+    if(self.m_helpInfo.m_promise2.length == 0){
+        [PubllicMaskViewHelper showTipViewWith:@"承诺定金不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
+
+    if(self.m_helpInfo.m_tel.length == 0){
+        [PubllicMaskViewHelper showTipViewWith:@"联系人手机号码不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
     [self showWaitingView];
     [HTTP_MANAGER findSend:[NSString stringWithFormat:@"%lu",self.m_helpInfo.m_type.integerValue+1]
                    content:self.m_helpInfo.m_desc
@@ -338,7 +364,15 @@
                 if([succeedResult[@"ret"]integerValue] == 0){
 
                     [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
-                    [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                    ADTFindItem *item = [[ADTFindItem alloc]init];
+                    item.m_id = succeedResult[@"helpId"];
+                    item.m_creditFee = [NSString stringWithFormat:@"%@", @([succeedResult[@"data"][@"creditFee"]doubleValue])];
+                    item.m_serviceFee = [NSString stringWithFormat:@"%@", @([succeedResult[@"data"][@"serviceFee"]doubleValue])];
+
+
+                    FindSendConfirmOrderViewController *add = [[FindSendConfirmOrderViewController alloc]initWith:item];
+                    [self.navigationController pushViewController:add animated:YES];
+                    
                 }else{
                     [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
                 }

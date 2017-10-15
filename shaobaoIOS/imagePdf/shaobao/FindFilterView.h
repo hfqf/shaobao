@@ -22,7 +22,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface FindFilterView : UIView<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
+@interface FindFilterView : UIView<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     UITableView *m_table;
     UITextField *m_startTime;

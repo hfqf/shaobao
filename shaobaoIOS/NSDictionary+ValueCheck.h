@@ -12,3 +12,8 @@
 -(id)stringWithFilted:(NSString *)key;
 
 @end
+
+@interface NSMutableDictionary(valueCheck)
+-(id)stringWithFilted:(NSString *)key;
+
+@end

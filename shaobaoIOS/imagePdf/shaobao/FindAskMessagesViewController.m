@@ -56,7 +56,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,8 +72,7 @@
     m_head.layer.cornerRadius = 30;
     m_head.clipsToBounds = YES;
     [cell addSubview:m_head];
-    [m_head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BJ_SERVER,[info stringWithFilted:@"askUserAvatar"]]] placeholderImage:[UIImage imageNamed:@"logo"]];
-
+    [m_head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",info[@"helpUserAvatar"]]] placeholderImage:[UIImage imageNamed:@"logo"]];
     UILabel *m_userType = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(m_head.frame)+10, 60, 18)];
     [m_userType setTextAlignment:NSTextAlignmentCenter];
     [m_userType setTextColor:[UIColor blackColor]];
@@ -102,6 +101,10 @@
     [m_content setFont:[UIFont systemFontOfSize:15]];
     [cell addSubview:m_content];
     [m_content setText:[NSString stringWithFormat:@"最新回复:%@",[info stringWithFilted:@"lastMessageContent"]]];
+
+    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, 79.5, MAIN_WIDTH, 0.5)];
+    [sep setBackgroundColor:UIColorFromRGB(0xebebeb)];
+    [cell addSubview:sep];
     return cell;
 }
 
@@ -112,6 +115,7 @@
     ADTFindItem *item = [[ADTFindItem alloc]init];
     item.m_id = [info stringWithFilted:@"id"];
     item.m_isSender = YES;
+    item.m_acceptUserName = [info stringWithFilted:@"askUserName"];
     SendMsgViewController *send =[[SendMsgViewController alloc]initWith:item];
     [self.navigationController pushViewController:send animated:YES];
 }

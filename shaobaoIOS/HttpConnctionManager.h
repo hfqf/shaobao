@@ -796,6 +796,11 @@ successedBlock:(SuccessedBlock)success
 - (void)findQueryArea:(NSString *)pid
        successedBlock:(SuccessedBlock)success
           failedBolck:(FailedBlock)failed;
+
+///联系承接人（发布者调用，查询组信息，组不存在自动创建并返回）
+- (void)getAcceptMessageGroup:(NSString *)helpId
+               successedBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed;
 #pragma mark - 广告
 
 - (void)getAds:(NSString *)type
@@ -877,5 +882,54 @@ successedBlock:(SuccessedBlock)success
 ///查询我的网币余额
 - (void)getCash:(SuccessedBlock)success
         failedBolck:(FailedBlock)failed;
+
+///我的各项详细等级
+- (void)getMyGrades:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+///身份验证
+- (void)authentication:(NSString *)userName
+                 phone:(NSString *)phone
+                picUrl:(NSString *)picUrl
+                avatar:(NSString *)avatar
+                 email:(NSString *)email
+                weixin:(NSString *)weixin
+                    qq:(NSString *)qq
+       contactUserName:(NSString *)contactUserName
+      contactUserPhone:(NSString *)contactUserPhone
+     contactUserWeixin:(NSString *)contactUserWeixin
+      contactUserName2:(NSString *)contactUserName2
+     contactUserPhone2:(NSString *)contactUserPhone2
+    contactUserWeixin2:(NSString *)contactUserWeixin2
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+///我要合作
+- (void)join:(NSString *)userName
+       phone:(NSString *)phone
+     address:(NSString *)address
+       email:(NSString *)email
+      weixin:(NSString *)weixin
+          qq:(NSString *)qq
+successedBlock:(SuccessedBlock)success
+ failedBolck:(FailedBlock)failed;
+
+///取现申请
+- (void)outCash:(NSString *)outMoney
+        payType:(NSString *)payType
+     payAccount:(NSString *)payAccount
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed;
+
+///查询我的钱包交易记录
+- (void)myRecord:(NSString *)recordId
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed;
+
+///转赠
+- (void)transferCash:(NSString *)account
+               money:(NSString *)money
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed;
 
 @end

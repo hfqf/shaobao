@@ -52,7 +52,8 @@
 - (void)requestData:(BOOL)isRefresh
 {
 
-    [HTTP_MANAGER findGetHelpList:@""
+    ADTFindItem *item = [self.m_arrData lastObject];
+    [HTTP_MANAGER findGetHelpList:[NSString stringWithFormat:@"%ld",self.m_index+1]
                          userType:[LoginUserUtil shaobaoUserType]
                            status:@""
                           provice:@""
@@ -60,12 +61,12 @@
                            county:@""
                         startTime:@""
                           endTime:@""
-                           helpId:@"0"
-                         pageSize:@"20"
+                           helpId:isRefresh ? @"0" :item.m_id
+                         pageSize: @"20"
                    successedBlock:^(NSDictionary *succeedResult) {
 
                        if([succeedResult[@"ret"]integerValue] == 0){
-                           NSMutableArray *arr = [NSMutableArray array];
+                           NSMutableArray *arr = isRefresh ? [NSMutableArray array] : [NSMutableArray arrayWithArray:self.m_arrData] ;
                            for(NSDictionary *info in  succeedResult[@"data"]){
                                ADTFindItem *item = [ADTFindItem from:info];
                                [arr addObject:item];

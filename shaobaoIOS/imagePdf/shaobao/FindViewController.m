@@ -23,7 +23,7 @@
 
 - (id)init
 {
-    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES]){
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:YES withIsNeedBottobBar:YES]){
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -31,7 +31,11 @@
     return self;
 }
 
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestData:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,9 +65,15 @@
 
 - (void)filterBtnClicked
 {
-    self.m_filterView = [[FindFilterView alloc]initWithFrame:MAIN_FRAME];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
-    self.m_filterView.m_delegate = self;
+    if(self.m_filterView == nil){
+        self.m_filterView = [[FindFilterView alloc]initWithFrame:MAIN_FRAME];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
+        self.m_filterView.m_delegate = self;
+    }else{
+        self.m_filterView.hidden = NO;
+        [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,20 +84,21 @@
 - (void)requestData:(BOOL)isRefresh
 {
     [self showWaitingView];
+    ADTFindItem *last = [self.m_arrData lastObject];
     [HTTP_MANAGER findGetHelpList:self.m_filterView.m_type
-                         userType:[LoginUserUtil shaobaoUserType]
+                         userType:self.m_filterView.m_isSaller ? @"2" : @"1"
                            status:self.m_filterView.m_state
                           provice:self.m_filterView.m_area[@"provice"][@"id"]
                              city:self.m_filterView.m_area[@"city"][@"id"]
                            county:self.m_filterView.m_area[@"area"][@"id"]
                         startTime:self.m_filterView.m_startTime
                           endTime:self.m_filterView.m_endTime
-                           helpId:@"0"
+                           helpId:isRefresh ? @"0" : last.m_id
                          pageSize:@"20"
                    successedBlock:^(NSDictionary *succeedResult) {
                        [self removeWaitingView];
                        if([succeedResult[@"ret"]integerValue] == 0){
-                           NSMutableArray *arr = [NSMutableArray array];
+                           NSMutableArray *arr =isRefresh ? [NSMutableArray array] : [NSMutableArray arrayWithArray:self.m_arrData] ;
                            for(NSDictionary *info in  succeedResult[@"data"]){
                                ADTFindItem *item = [ADTFindItem from:info];
                                [arr addObject:item];
@@ -155,6 +166,9 @@
         if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
             FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
             [self.navigationController pushViewController:info animated:YES];
+        }else{
+            FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
+            [self.navigationController pushViewController:info animated:YES];
         }
     }
 }
@@ -181,6 +195,7 @@
 
 - (void)onFindFilterViewDelegateSelected:(BOOL)isSaller withArea:(NSDictionary *)area withType:(NSString *)type withStartTime:(NSString *)startTime withEndTime:(NSString *)endTime withState:(NSString *)state
 {
+
     self.m_filterView.hidden= YES;
     [self requestData:YES];
 }
@@ -189,7 +204,18 @@
 
 - (void)onDelete:(ADTFindItem *)data
 {
+    [HTTP_MANAGER findDeleteOne:data.m_id
+                 successedBlock:^(NSDictionary *succeedResult) {
+                     if([succeedResult[@"ret"]integerValue]==0){
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                         [self requestData:YES];
+                     }else{
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                     }
 
+                 } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                 }];
 }
 
 - (void)onAccept:(ADTFindItem *)data

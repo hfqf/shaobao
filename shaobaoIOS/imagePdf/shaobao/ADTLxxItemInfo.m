@@ -17,10 +17,11 @@
     ret.m_createTime = [info stringWithFilted:@"createTime"];
     ret.m_content = [info stringWithFilted:@"content"];
     ret.m_arrPics = [[info stringWithFilted:@"imageUrl"]componentsSeparatedByString:@","];
-    ret.m_userAvatar = [NSString stringWithFormat:@"%@%@",BJ_SERVER, [info stringWithFilted:@"userAvatar"]];
+    ret.m_userAvatar = [info stringWithFilted:@"userAvatar"];
     ret.m_userId = [info stringWithFilted:@"userId"];
     ret.m_userName = [info stringWithFilted:@"userName"];
     ret.m_userType = [info stringWithFilted:@"userType"];
+    ret.m_arrComments = [info stringWithFilted:@"commentList"];
     return ret;
 }
 @end

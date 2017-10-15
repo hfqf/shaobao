@@ -130,13 +130,13 @@
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
             NSInteger type = self.m_helpInfo.m_type.integerValue;
-            if(type == 0){
+            if(type == 1){
                 [content setText:@"叫人帮忙"];
-            }else if (type == 1){
-                [content setText:@"律师侦探"];
             }else if (type == 2){
-                [content setText:@"护卫保镖"];
+                [content setText:@"律师侦探"];
             }else if (type == 3){
+                [content setText:@"护卫保镖"];
+            }else if (type == 4){
                 [content setText:@"纠纷债务"];
             }else{
                 [content setText:@"个性需求"];
@@ -288,8 +288,23 @@
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendBtn setFrame:CGRectMake(10, 10, MAIN_WIDTH-20, 50)];
     [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
-    [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [sendBtn setTitle:self.m_helpInfo.m_payStatus.integerValue == 0 ? @"立即支付" : @"确认完成" forState:UIControlStateNormal];
+    if(self.m_helpInfo.m_payStatus.integerValue == 0){
+        [sendBtn setTitle: @"立即支付" forState:UIControlStateNormal];
+        [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        if(self.m_helpInfo.m_status.integerValue == 0){
+            [sendBtn setTitle: @"需求待承接" forState:UIControlStateNormal];
+        }else if(self.m_helpInfo.m_status.integerValue == 1){
+            [sendBtn setTitle: @"需求已承接" forState:UIControlStateNormal];
+        }else if(self.m_helpInfo.m_status.integerValue == 2){
+            [sendBtn setTitle: @"需求已完成" forState:UIControlStateNormal];
+            [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        }else if(self.m_helpInfo.m_status.integerValue == 3){
+            [sendBtn setTitle: @"确认完成" forState:UIControlStateNormal];
+            [bg setBackgroundColor:[UIColor clearColor]];
+            sendBtn.hidden = YES;
+        }
+    }
     [bg addSubview:sendBtn];
     [sendBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     sendBtn.layer.cornerRadius = 3;
@@ -308,12 +323,18 @@
         [self.navigationController pushViewController:order animated:YES];
 
     }else{
+        [self showWaitingView];
         [HTTP_MANAGER findUpdateStatus:self.m_helpInfo.m_id
-                               optType:@"2"
+                               optType:@"3"
                         successedBlock:^(NSDictionary *succeedResult) {
+                            [self removeWaitingView];
+                            [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view  withDuration:1];
+                            if([succeedResult[@"ret"]integerValue] == 1){
+                                [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                            }
 
                         } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
+                            [PubllicMaskViewHelper showTipViewWith:@"操作失败" inSuperView:self.view  withDuration:1];
                         }];
     }
 
@@ -322,8 +343,26 @@
 
 - (void)acceptBtnClicked
 {
-    SendMsgViewController *send =[[SendMsgViewController alloc]initWith:self.m_helpInfo];
-    [self.navigationController pushViewController:send animated:YES];
+    [HTTP_MANAGER getAcceptMessageGroup:self.m_helpInfo.m_id
+                         successedBlock:^(NSDictionary *succeedResult) {
+
+                             if([succeedResult[@"ret"]integerValue] == 0){
+
+                                 NSDictionary *info = succeedResult[@"data"];
+                                 ADTFindItem *item = [[ADTFindItem alloc]init];
+                                 item.m_id = [info stringWithFilted:@"id"];
+                                 item.m_isSender = YES;
+                                 item.m_acceptUserName = [info stringWithFilted:@"askUserName"];
+                                 SendMsgViewController *send =[[SendMsgViewController alloc]initWith:item];
+                                 [self.navigationController pushViewController:send animated:YES];
+                             }else{
+                                 [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                             }
+
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+        
+
+    }];
 }
 @end
 

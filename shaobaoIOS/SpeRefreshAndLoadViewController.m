@@ -43,7 +43,7 @@ withIsNeedBottobBar:(BOOL)isNeedBottom
     self = [super init];
     if(self)
     {
-        SpeCommonTableView * table =  [[SpeCommonTableView alloc]initWithFrame:CGRectMake(0, DISTANCE_TOP+HEIGHT_NAVIGATION, MAIN_WIDTH, MAIN_HEIGHT-DISTANCE_TOP-HEIGHT_NAVIGATION-(isNeedBottom?(OS_ABOVE_IOS7?HEIGHT_MAIN_BOTTOM:HEIGHT_MAIN_BOTTOM+20):OS_ABOVE_IOS7 ? 0:20)) Style:style withIsNeedPullDown:isNeedPullDownRefresh withIsNeedPullUpLoadMore:isNeesLoadMore withIsNeedBottobBar:isNeedBottom  withViewController:self];
+        SpeCommonTableView * table =  [[SpeCommonTableView alloc]initWithFrame:CGRectMake(0, 64, MAIN_WIDTH, MAIN_HEIGHT-64-(isNeedBottom?HEIGHT_MAIN_BOTTOM:0)) Style:style withIsNeedPullDown:isNeedPullDownRefresh withIsNeedPullUpLoadMore:isNeesLoadMore withIsNeedBottobBar:isNeedBottom  withViewController:self];
         table.separatorStyle = UITableViewCellSeparatorStyleNone;
         
 //        UIView *bg = [[UIView alloc]initWithFrame:table.bounds];

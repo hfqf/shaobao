@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "对话框1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "对话框2.png",
       "scale" : "2x"
     },
     {

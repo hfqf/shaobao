@@ -10,12 +10,14 @@
 #import "SendMsgViewController.h"
 @interface FindRequureInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)ADTFindItem *m_helpInfo;
+@property(assign)BOOL m_isAcceptProtocol;
 @end
 
 @implementation FindRequureInfoViewController
 
 - (id)initWith:(ADTFindItem *)findInfo
 {
+    self.m_isAcceptProtocol = NO;
     self.m_helpInfo = findInfo;
     if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO]){
         self.tableView.delegate = self;
@@ -127,13 +129,13 @@
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
             NSInteger type = self.m_helpInfo.m_type.integerValue;
-            if(type == 0){
+            if(type == 1){
                 [content setText:@"叫人帮忙"];
-            }else if (type == 1){
-                [content setText:@"律师侦探"];
             }else if (type == 2){
-                [content setText:@"护卫保镖"];
+                [content setText:@"律师侦探"];
             }else if (type == 3){
+                [content setText:@"护卫保镖"];
+            }else if (type == 4){
                 [content setText:@"纠纷债务"];
             }else{
                 [content setText:@"个性需求"];
@@ -199,7 +201,7 @@
             UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2, MAIN_WIDTH-160, 20)];
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[LoginUserUtil shaobaoUserName]];
+            [content setText:self.m_helpInfo.m_userName];
             [cell addSubview:content];
             [content setTextColor:[UIColor blackColor]];
 
@@ -243,8 +245,24 @@
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendBtn setFrame:CGRectMake(10, 50, MAIN_WIDTH-20, 50)];
     [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
-    [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [sendBtn setTitle:@"确认承接" forState:UIControlStateNormal];
+    if(self.m_helpInfo.m_status.integerValue == 0){
+        if(self.m_isAcceptProtocol){
+            [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
+            sendBtn.userInteractionEnabled = YES;
+        }else{
+            [sendBtn setBackgroundColor:[UIColor lightGrayColor]];
+            sendBtn.userInteractionEnabled = NO;
+        }
+        [sendBtn setTitle:@"确认承接" forState:UIControlStateNormal];
+        [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    }else if (self.m_helpInfo.m_status.integerValue == 1){
+        [sendBtn setTitle:@"承接已完成" forState:UIControlStateNormal];
+        [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    }else if (self.m_helpInfo.m_status.integerValue == 2){
+        [sendBtn setTitle:@"等待对方确认" forState:UIControlStateNormal];
+    }else if (self.m_helpInfo.m_status.integerValue == 3){
+        [sendBtn setTitle:@"对方确认已完成" forState:UIControlStateNormal];
+    }
     [bg addSubview:sendBtn];
     
 
@@ -256,7 +274,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn addTarget:self action:@selector(sameFeeBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [btn setFrame:CGRectMake(10, 0, 30, 30)];
-    btn.selected = YES;
+    btn.selected = self.m_isAcceptProtocol;
     [btn setImage:[UIImage imageNamed:@"find_select_un"] forState:UIControlStateNormal];
     [btn setImage:[UIImage imageNamed:@"find_select_on"] forState:UIControlStateSelected];
     [bg addSubview:btn];
@@ -272,16 +290,26 @@
 
 - (void)sameFeeBtnClicked:(UIButton *)btn{
     btn.selected = !btn.selected;
+    self.m_isAcceptProtocol = btn.selected;
+    self.tableView.tableFooterView = [self footerView];
+
 }
 
 - (void)sendBtnClicked
 {
+    [self showWaitingView];
     [HTTP_MANAGER findUpdateStatus:self.m_helpInfo.m_id
-                           optType:@"1"
+                           optType:[NSString stringWithFormat:@"%ld",self.m_helpInfo.m_status.integerValue+1]
                     successedBlock:^(NSDictionary *succeedResult) {
+                        [self removeWaitingView];
+                        [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view  withDuration:1];
+                        if([succeedResult[@"ret"]integerValue] == 1){
+                            [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                        }
 
     } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
+        [self removeWaitingView];
+        [PubllicMaskViewHelper showTipViewWith:@"操作失败" inSuperView:self.view  withDuration:1];
     }];
 }
 

@@ -42,19 +42,23 @@
         [m_commentBtn addTarget:self action:@selector(commentBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         [m_commentBtn setFrame:CGRectMake(MAIN_WIDTH-140, CGRectGetMaxY(m_contentLab.frame)+20, 50, 30)];
         [m_commentBtn setTitle:@"回复" forState:0];
+        [m_commentBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
         [m_commentBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
         [self addSubview:m_commentBtn];
 
         m_delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [m_commentBtn addTarget:self action:@selector(delBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [m_delBtn addTarget:self action:@selector(delBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         [m_delBtn setFrame:CGRectMake(MAIN_WIDTH-70, CGRectGetMaxY(m_contentLab.frame)+20, 50, 30)];
         [m_delBtn setTitle:@"删除" forState:0];
+        [m_delBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
         [m_delBtn setTitleColor:KEY_COMMON_CORLOR forState:UIControlStateNormal];
         [self addSubview:m_delBtn];
 
         m_table = [[UITableView alloc]initWithFrame:CGRectNull style:UITableViewStylePlain];
         m_table.dataSource = self;
+        m_table.scrollEnabled = NO;
         m_table.delegate = self;
+        [m_table setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [self addSubview:m_table];
 
         m_sep = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -92,7 +96,7 @@
 - (void)setCurrentData:(ADTLxxItemInfo *)currentData
 {
     _currentData = currentData;
-    [m_head sd_setImageWithURL:[NSURL URLWithString:currentData.m_userAvatar] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [m_head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",currentData.m_userAvatar]] placeholderImage:[UIImage imageNamed:@"logo"]];
     [m_nameLab setText:currentData.m_userName];
     [m_timeLab setText:[currentData.m_createTime substringToIndex:10]];
     CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:m_contentLab.font withWidth:(MAIN_WIDTH-(20+CGRectGetWidth(m_head.frame)))];
@@ -111,6 +115,10 @@
 
     for(int i=0;i<arr.count;i++){
 
+        NSString *url = [arr objectAtIndex:i];
+        if(url.length == 0){
+            continue;
+        }
         NSInteger sep = 10;
         NSInteger cell_num = 3;
         NSInteger width = (MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+sep*(cell_num+1)))/3;
@@ -123,22 +131,29 @@
         img.frame= CGRectMake(CGRectGetMaxX(m_head.frame)+sep+(sep+width)*coulmn, CGRectGetMaxY(m_contentLab.frame)+sep+(sep+width)*row, width, width);
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.clipsToBounds = YES;
-        [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BJ_SERVER,[arr objectAtIndex:i]]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",[arr objectAtIndex:i]]] placeholderImage:[UIImage imageNamed:@"logo"]];
         [self addSubview:img];
         [m_commentBtn setFrame:CGRectMake(m_commentBtn.frame.origin.x, CGRectGetMaxY(img.frame)+10, m_commentBtn.frame.size.width, m_commentBtn.frame.size.height)];
         [m_delBtn setFrame:CGRectMake(m_delBtn.frame.origin.x, CGRectGetMaxY(img.frame)+10, m_delBtn.frame.size.width, m_delBtn.frame.size.height)];
-        [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(m_delBtn.frame)+10, MAIN_WIDTH, 0.5)];
     }
+
+    NSInteger high=0;
+    for(NSDictionary *info in currentData.m_arrComments){
+        NSString *content = [NSString stringWithFormat:@"%@回复:%@",info[@"userName"], info[@"content"]];
+        CGSize size = [FontSizeUtil sizeOfString:content withFont:[UIFont systemFontOfSize:15] withWidth:MAIN_WIDTH-130];
+        high += (size.height > 40 ? size.height : 40);
+    }
+    [m_table setFrame:CGRectMake(0, CGRectGetMaxY(m_delBtn.frame)+10, MAIN_WIDTH,high)];
+    [m_table reloadData];
+    [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(m_table.frame), MAIN_WIDTH, 0.5)];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
+    NSDictionary *info = [self.currentData.m_arrComments objectAtIndex:indexPath.row];
+    NSString *content = [NSString stringWithFormat:@"%@回复:%@",info[@"userName"], info[@"content"]];
+    CGSize size = [FontSizeUtil sizeOfString:content withFont:[UIFont systemFontOfSize:15] withWidth:MAIN_WIDTH-130];
+    return size.height > 40 ? size.height : 40;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -150,6 +165,27 @@
 {
     static NSString * identify = @"spe";
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    NSDictionary *info = [self.currentData.m_arrComments objectAtIndex:indexPath.row];
+
+    NSString *content = [NSString stringWithFormat:@"%@回复:%@",info[@"userName"], info[@"content"]];
+    CGSize size = [FontSizeUtil sizeOfString:content withFont:[UIFont systemFontOfSize:15] withWidth:MAIN_WIDTH-130];
+
+    EGOImageView  * m_head = [[EGOImageView alloc]initWithFrame:CGRectMake(80,(size.height>40 ? size.height :40-30)/2, 30, 30)];
+    [m_head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",info[@"avatar"]]] placeholderImage:[UIImage imageNamed:@"logo"]];
+    m_head.layer.cornerRadius = 15;
+    m_head.clipsToBounds = YES;
+    [cell addSubview:m_head];
+
+    UILabel  *m_contentLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,size.height>40 ? 0 : (40-size.height)/2,size.width,size.height)];
+    [m_contentLab setTextAlignment:NSTextAlignmentLeft];
+    m_contentLab.numberOfLines = 0;
+    [m_contentLab setTextColor:UIColorFromRGB(0x333333)];
+    [m_contentLab setFont:[UIFont systemFontOfSize:15]];
+    [cell addSubview:m_contentLab];
+    [m_contentLab setText:content];
+
     return cell;
 }
 

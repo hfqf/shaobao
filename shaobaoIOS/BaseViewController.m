@@ -80,15 +80,15 @@
     [backBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [navigationBG addSubview:backBtn];
     
-    title= [[UILabel alloc]initWithFrame:CGRectMake(100, DISTANCE_TOP+5, 120, 34)];
+    title= [[UILabel alloc]initWithFrame:CGRectMake(100, 5, 120, 34)];
     [title setFrame:CGRectMake(50,5+DISTANCE_TOP,MAIN_WIDTH-100, title.frame.size.height)];
-    [title setFont:[UIFont boldSystemFontOfSize:19]];
+    [title setFont:[UIFont systemFontOfSize:18]];
     [title setBackgroundColor:[UIColor clearColor]];
     title.hidden = NO;
     [title setText:self.title];
     [title setTextAlignment:NSTextAlignmentCenter];
     [title setTextColor:[UIColor whiteColor]];
-    [self.view addSubview:title];
+    [navigationBG addSubview:title];
 }
 
 - (void)resetBackBtnImage;

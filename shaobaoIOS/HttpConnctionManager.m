@@ -2935,14 +2935,14 @@ successedBlock:(SuccessedBlock)success
     NSDictionary *reqDic =  @{
                               @"accessToken":[LoginUserUtil accessToken],
                               @"type": type == nil ? @"":type,
-                              @"userType": @"",// userType == nil ? @"":userType,
+                              @"userType": userType,// userType == nil ? @"":userType,
                               @"status":status == nil ? @"":status,
                               @"provice":provice == nil ? @"":provice,
                               @"county":county== nil ? @"":county,
                               @"startTime":startTime== nil ? @"":startTime,
                               @"endTime":endTime== nil ? @"":endTime,
                               @"helpId":helpId== nil ? @"":helpId,
-                              @"pageSize":pageSize== nil ? @"":pageSize,
+                              @"pageSize":pageSize== nil ? @"20":pageSize,
                               @"city":city== nil ? @"":city,
 
                               };
@@ -3110,7 +3110,7 @@ successedBlock:(SuccessedBlock)success
     NSDictionary *reqDic =  @{
                               @"groupId":groupId,
                               @"content":content,
-                              @"picUrls":picUrls,
+                              @"imageUrl":picUrls,
                               @"accessToken":[LoginUserUtil accessToken]
                               };
 
@@ -3153,6 +3153,20 @@ successedBlock:(SuccessedBlock)success
                               };
 
     [self startNormalPostWith:@"getArea" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///联系承接人（发布者调用，查询组信息，组不存在自动创建并返回）
+- (void)getAcceptMessageGroup:(NSString *)helpId
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"helpId":helpId,
+                              };
+
+    [self startNormalPostWith:@"help/getAcceptMessageGroup" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
 #pragma mark - 广告
@@ -3383,5 +3397,114 @@ responseContent:(NSString *)responseContent
                               @"accessToken":[LoginUserUtil accessToken],
                               };
     [self startNormalPostWith:@"my/cash" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///我的各项详细等级
+- (void)getMyGrades:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              };
+    [self startNormalPostWith:@"my/getGrades" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///身份验证
+- (void)authentication:(NSString *)userName
+                 phone:(NSString *)phone
+                picUrl:(NSString *)picUrl
+                avatar:(NSString *)avatar
+                email:(NSString *)email
+                weixin:(NSString *)weixin
+                qq:(NSString *)qq
+                contactUserName:(NSString *)contactUserName
+                contactUserPhone:(NSString *)contactUserPhone
+                contactUserWeixin:(NSString *)contactUserWeixin
+                contactUserName2:(NSString *)contactUserName2
+                contactUserPhone2:(NSString *)contactUserPhone2
+                contactUserWeixin2:(NSString *)contactUserWeixin2
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed
+{
+    
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"phone":safeValue(phone),
+                              @"picUrl":safeValue(picUrl),
+                              @"userName":safeValue(userName),
+                              @"avatar":safeValue(avatar),
+                              @"email":safeValue(email),
+                              @"weixin":safeValue(weixin),
+                              @"qq":safeValue(qq),
+                              @"contactUserName":safeValue(contactUserName),
+                              @"contactUserPhone":safeValue(contactUserPhone),
+                              @"contactUserWeixin":safeValue(contactUserWeixin),
+                              @"contactUserName2":safeValue(contactUserName2),
+                              @"contactUserPhone2":safeValue(contactUserPhone2),
+                              @"contactUserWeixin2":safeValue(contactUserWeixin2),
+
+                              };
+    [self startNormalPostWith:@"my/authentication" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+///我要合作
+- (void)join:(NSString *)userName
+       phone:(NSString *)phone
+      address:(NSString *)address
+       email:(NSString *)email
+      weixin:(NSString *)weixin
+          qq:(NSString *)qq
+successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"phone":safeValue(phone),
+                              @"address":safeValue(address),
+                              @"userName":safeValue(userName),
+                              @"email":safeValue(email),
+                              @"weixin":safeValue(weixin),
+                              @"qq":safeValue(qq),
+                              };
+    [self startNormalPostWith:@"my/join" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///取现申请
+- (void)outCash:(NSString *)outMoney
+       payType:(NSString *)payType
+     payAccount:(NSString *)payAccount
+successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"outMoney":safeValue(outMoney),
+                              @"payType":safeValue(payType),
+                              @"payAccount":safeValue(payAccount),
+                              };
+    [self startNormalPostWith:@"my/outCash" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///查询我的钱包交易记录
+- (void)myRecord:(NSString *)recordId
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"recordId":safeValue(recordId),
+                              @"pageSize":@"20",
+                              };
+    [self startNormalPostWith:@"my/record" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+///转赠
+- (void)transferCash:(NSString *)account
+             money:(NSString *)money
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"account":safeValue(account),
+                              @"money":money,
+                              };
+    [self startNormalPostWith:@"my/record" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 @end

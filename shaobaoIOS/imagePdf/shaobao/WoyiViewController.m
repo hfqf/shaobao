@@ -76,6 +76,7 @@
     [btn1 setImageEdgeInsets:UIEdgeInsetsMake(0, (MAIN_WIDTH/2-19)/2, 0, (MAIN_WIDTH/2-19)/2)];
     [btn1 setFrame:CGRectMake(0, CGRectGetMaxY(name.frame)+20, MAIN_WIDTH/2, 50)];
     [btn1 setTitle:@"发布的订单" forState:0];
+    [btn1 addTarget:self action:@selector(sentBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [btn1 setTitleEdgeInsets:UIEdgeInsetsMake(40, -20, 0, 0)];
     [btn1.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [bg addSubview:btn1];
@@ -87,6 +88,7 @@
     UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn2.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [btn2 setTitleEdgeInsets:UIEdgeInsetsMake(40, 0, 0, 0)];
+    [btn2 addTarget:self action:@selector(receiveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [btn2 setImageEdgeInsets:UIEdgeInsetsMake(0, (MAIN_WIDTH/2-19)/2, 0, (MAIN_WIDTH/2-19)/2)];
     [btn2 setImage:[UIImage imageNamed:@"set_received"] forState:0];
     [btn2 setFrame:CGRectMake(MAIN_WIDTH/2+1, CGRectGetMaxY(name.frame)+20, MAIN_WIDTH/2, 50)];
@@ -196,10 +198,12 @@
     if(indexPath.section == 0){
         if(indexPath.row == 0){
 
+            [self.navigationController pushViewController:[[NSClassFromString(@"InAndOutMoneyViewController") alloc]init] animated:YES];
+
         }else if (indexPath.row == 1){
-
+            [self.navigationController pushViewController:[[NSClassFromString(@"MyGradeViewController") alloc]init] animated:YES];
         }else{
-
+            [self.navigationController pushViewController:[[NSClassFromString(@"AuthenticationViewController") alloc]init] animated:YES];
         }
     }else if (indexPath.section == 1){
         if(indexPath.row == 0){
@@ -213,6 +217,8 @@
             [self.navigationController pushViewController:web animated:YES];
         }else{
 
+            [self.navigationController pushViewController:[[NSClassFromString(@"WantWorkViewController") alloc]init] animated:YES];
+
         }
 
     }else{
@@ -223,11 +229,12 @@
 
 - (void)sentBtnClicked
 {
-
+    [self.navigationController pushViewController:[[NSClassFromString(@"PunishedOrdersViewController") alloc]init] animated:YES];
 }
 
 - (void)receiveBtnClicked
 {
+    [self.navigationController pushViewController:[[NSClassFromString(@"AcceptedOrdersViewController") alloc]init] animated:YES];
 
 }
 

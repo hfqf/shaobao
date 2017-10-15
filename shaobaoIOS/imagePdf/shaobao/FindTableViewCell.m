@@ -126,7 +126,7 @@
 
 - (void)setCurrentData:(ADTFindItem *)currentData{
     _currentData = currentData;
-    [m_head setImageURL:[NSURL URLWithString:currentData.m_userAvatar]];
+    [m_head sd_setImageWithURL:[NSURL URLWithString:currentData.m_userAvatar] placeholderImage:[UIImage imageNamed:@"logo"]];
     [m_userType setText:currentData.m_userType.integerValue == 1 ? @"个人" : @"商家"];
     [m_nameLab setText:currentData.m_userName];
     [m_timeLab setText:[currentData.m_createTime substringToIndex:10]];
@@ -203,6 +203,10 @@
     
     for(int i=0;i<arr.count;i++){
 
+        NSString *url = [arr objectAtIndex:i];
+        if(url.length == 0){
+            continue;
+        }
         NSInteger sep = 10;
         NSInteger cell_num = 3;
         NSInteger width = (MAIN_WIDTH-(CGRectGetMaxX(m_head.frame)+sep*(cell_num+1)))/3;
@@ -215,7 +219,7 @@
         img.frame= CGRectMake(CGRectGetMaxX(m_head.frame)+sep+(sep+width)*coulmn, CGRectGetMaxY(m_promiseLab.frame)+sep+(sep+width)*row, width, width);
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.clipsToBounds = YES;
-        [img setImageURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507288551572&di=b7c180da2f18545698672f74aaf3cee8&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3801213fb80e7beca9004ec5252eb9389b506b38.jpg"]];
+        [img setImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",[arr objectAtIndex:i]]]];
         img.placeholderImage= [UIImage imageNamed:@"leader_add"];
         [self addSubview:img];
         [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(img.frame)+10, MAIN_WIDTH, 0.5)];
@@ -229,12 +233,8 @@
         m_delBtn.hidden = NO;
     }else{
         [m_acceptBtn setFrame:CGRectMake(MAIN_WIDTH-80, CGRectGetMinY(m_promiseLab.frame)-10, 70, 30)];
-        m_acceptBtn.hidden = NO;
-        m_acceptBtn.hidden = currentData.m_userType.integerValue == 2;
+        m_acceptBtn.hidden = currentData.m_payStatus.integerValue == 0;
     }
-
-    m_acceptBtn.hidden = currentData.m_payStatus.integerValue == 0;
-    ;
 
     if(currentData.m_status.integerValue == 0){
         [m_processStateLab setText:@"待承接"];
@@ -243,9 +243,9 @@
     }else if (currentData.m_status.integerValue == 2){
         [m_processStateLab setText:@"承接人已确认"];
     }else if (currentData.m_status.integerValue == 3){
-        [m_processStateLab setText:@"发布人已确认"];
-    }else if (currentData.m_status.integerValue == 4){
         [m_processStateLab setText:@"已完成"];
+    }else if (currentData.m_status.integerValue == 4){
+
     }else if (currentData.m_status.integerValue == 5){
 
     }
@@ -253,6 +253,8 @@
     if(currentData.m_userType.integerValue == 2){
         m_processStateLab.hidden = YES;
     }
+
+    m_acceptBtn.hidden = YES;
 }
 
 - (void)acceptBtnClicked

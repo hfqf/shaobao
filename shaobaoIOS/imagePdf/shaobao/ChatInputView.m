@@ -19,10 +19,12 @@
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn1 addTarget:self action:@selector(btn1Clicked) forControlEvents:UIControlEventTouchUpInside];
         [btn1 setFrame:CGRectMake(0, 0, 40, 50)];
+        [btn1 setImageEdgeInsets:UIEdgeInsetsMake(10, 5, 10, 5)];
         [btn1 setImage:[UIImage imageNamed:@"chat_library"] forState:UIControlStateNormal];
         [self addSubview:btn1];
 
         UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn2 setImageEdgeInsets:UIEdgeInsetsMake(10, 5, 10, 5)];
         [btn2 addTarget:self action:@selector(btn2Clicked) forControlEvents:UIControlEventTouchUpInside];
         [btn2 setFrame:CGRectMake(40, 0, 40, 50)];
         [btn2 setImage:[UIImage imageNamed:@"chat_photo"] forState:UIControlStateNormal];
@@ -52,7 +54,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
     [self.m_delegate onChatInputViewDelegateSendText:textField.text];
+    [textField setText:nil];
     return YES;
 }
 

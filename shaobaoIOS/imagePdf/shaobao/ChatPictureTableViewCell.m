@@ -57,61 +57,23 @@
 - (void)setValueDataWithMsg:(ADTChatMessage *)msg
 {
     [super setValueDataWithMsg:msg];
+    m_imageView.clipsToBounds = YES;
+    m_imageView.contentMode = UIViewContentModeScaleAspectFill;
+    CGSize bubbleSize = CGSizeMake(200, 100);
 
-    
-    // 先判断路径
-    NSString *urlStr = [NSString stringWithFormat:@"%@/upload/%@", [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],msg.m_isFromSelf == ENUM_MESSAGEFROM_SELF ?  msg.m_strMediaPath :  msg.m_strMessageBody];
-    //NSString *urlStr = msg.m_strMessageBody;//[LocalImageHelper getFinalPath:msg.m_strMediaPath With:YES];
-    
-    //UIImage *image = [UIImage imageNamed:urlStr];
-    UIImage *image = [self getImageWithUrl:urlStr];
-    
-    BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:urlStr];
-    
-    if (exist) {
-        CGSize bubbleSize;
-        m_imageView.isLocationSnap = NO;
-        
-        CGSize size = image.size;//[image imageConstrainedToSize:CGSizeMake(MAIN_WIDTH - 120, MAIN_HEIGHT/2.0)];
-        bubbleSize = size;
-        
-        
-        [m_imageView setImage:image];
-        m_imageView.m_origianPicturePath = urlStr;
-//        m_imageView.m_origianPicturePath = [LocalImageHelper getFinalPath:msg.m_strMediaPath With:YES];
-        
         if(msg.m_isFromSelf != ENUM_MESSAGEFROM_SELF)
         {
             [m_bubbleBackGroundView setImage:[[UIImage imageNamed:@"chat_sx_in"]stretchableImageWithLeftCapWidth:17 topCapHeight:26]];
             [m_bubbleBackGroundView setFrame:CGRectMake(60,msg.m_chatType == ENUM_CHAT_TYPE_GROUP ?CGRectGetMaxY(m_nameLab.frame) : m_headView.frame.origin.y, bubbleSize.width+10+4, bubbleSize.height+8)];
-            
             [m_imageView setNewFrame:CGRectMake(9.5,4, bubbleSize.width, bubbleSize.height)];
-                        
         }
         else
         {
             [m_bubbleBackGroundView setImage:[[UIImage imageNamed:@"chat_sx_out"] stretchableImageWithLeftCapWidth:13 topCapHeight:26]];
             [m_bubbleBackGroundView setFrame:CGRectMake(MAIN_WIDTH-bubbleSize.width-75,m_headView.frame.origin.y, bubbleSize.width+10+10, bubbleSize.height+10)];
             [m_imageView setNewFrame:CGRectMake(3.5,4, bubbleSize.width+6.5, bubbleSize.height+2)];
-            
-            //如果发送失败
-            [m_sendFailedIcon setFrame:CGRectMake(CGRectGetMinX(m_bubbleBackGroundView.frame)-22, CGRectGetMaxY(m_nameLab.frame)+3, 20, 20)];
-            if(msg.m_messageStatus == ENUM_MESSAGESTATUS_SENDING)
-            {
-                m_sendFailedIcon.hidden = YES;
-                
-            }
-            if (msg.m_messageStatus == ENUM_MESSAGESTATUS_FAILED )
-            {
-                m_sendFailedIcon.hidden = NO;
-            }
-            if (msg.m_messageStatus == ENUM_MESSAGESTATUS_SUCCEED )
-            {
-                m_sendFailedIcon.hidden = YES;
-            }
-            
         }
-    }
+    [m_imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",msg.m_strMediaPath]] placeholderImage:[UIImage imageNamed:@"logo"]];
 }
 
 - (UIImage *)getImageWithUrl:(NSString *)path
