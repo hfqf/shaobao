@@ -115,4 +115,8 @@
 +(NSString *)shaobaoUserType;
 
 +(NSString *)shaobaoUserName;
+
++(BOOL)isLogined;
+
++ (BOOL)clearCache;
 @end

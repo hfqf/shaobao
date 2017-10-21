@@ -110,10 +110,10 @@
     NSArray *arr = [self.m_arrData objectAtIndex:indexPath.section];
     UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(5, ([self high:indexPath]-20)/2, 120, 20)];
     [tip setTextAlignment:NSTextAlignmentLeft];
-    [tip setFont:[UIFont systemFontOfSize:16]];
+    [tip setFont:[UIFont systemFontOfSize:15]];
     [tip setText:[arr objectAtIndex:indexPath.row]];
     [cell addSubview:tip];
-    [tip setTextColor:UIColorFromRGB(0x8c8c8c)];
+    [tip setTextColor:UIColorFromRGB(0x333333)];
 
     if(indexPath.section == 0){
         if(indexPath.row == 0){
@@ -245,7 +245,7 @@
                 img.tag = index;
                 img.userInteractionEnabled = YES;
                 [img addGestureRecognizer:tap];
-                [img setImageForAllSDK:[NSURL URLWithString:url] withDefaultImage:[UIImage imageNamed:@"find_add"]];
+                [img setImageForAllSDK:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",url]] withDefaultImage:[UIImage imageNamed:@"find_add"]];
                 [cell addSubview:img];
             }
 
@@ -348,7 +348,7 @@
         return;
     }
     [self showWaitingView];
-    [HTTP_MANAGER findSend:[NSString stringWithFormat:@"%lu",self.m_helpInfo.m_type.integerValue+1]
+    [HTTP_MANAGER findSend:[NSString stringWithFormat:@"%lu",self.m_helpInfo.m_type.integerValue]
                    content:self.m_helpInfo.m_desc
                   province:self.m_helpInfo.m_area[@"provice"][@"id"] city:self.m_helpInfo.m_area[@"city"][@"id"]
                     county:self.m_helpInfo.m_area[@"area"][@"id"]
@@ -365,7 +365,7 @@
 
                     [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
                     ADTFindItem *item = [[ADTFindItem alloc]init];
-                    item.m_id = succeedResult[@"helpId"];
+                    item.m_id = [NSString stringWithFormat:@"%ld",[succeedResult[@"data"][@"helpId"]integerValue]];
                     item.m_creditFee = [NSString stringWithFormat:@"%@", @([succeedResult[@"data"][@"creditFee"]doubleValue])];
                     item.m_serviceFee = [NSString stringWithFormat:@"%@", @([succeedResult[@"data"][@"serviceFee"]doubleValue])];
 
@@ -451,7 +451,7 @@
 
         }
     }else{
-        self.m_helpInfo.m_type = @(buttonIndex);
+        self.m_helpInfo.m_type = @(buttonIndex+1);
         [self reloadDeals];
     }
 }
@@ -475,7 +475,7 @@
                                successBlock:^(NSDictionary *succeedResult) {
                                [self removeWaitingView];
                                    if([succeedResult[@"ret"]integerValue] == 0){
-                                       [self.m_helpInfo.m_arrPics insertObject:succeedResult[@"data"][@"fileFullUrl"] atIndex:self.m_helpInfo.m_arrPics.count-1];
+                                       [self.m_helpInfo.m_arrPics insertObject:succeedResult[@"data"][@"fileUrl"] atIndex:self.m_helpInfo.m_arrPics.count-1];
                                        [self reloadDeals];
                                    }
 

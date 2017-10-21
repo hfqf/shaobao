@@ -8,6 +8,7 @@
 
 #import "AuthenticationViewController.h"
 #import "UIButton+AFNetworking.h"
+#import "EGOImageButton.h"
 @interface AuthenticationViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSMutableDictionary *m_authInfo;
 @property(nonatomic,strong)NSString *m_pic1;
@@ -73,7 +74,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [title setText:@"身份验证"];
+    [title setText:@"身份认证"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -185,7 +186,7 @@
         }else if (indexPath.row == 2){
             UITextField *input = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-150, ([self high:indexPath]-20)/2, 140, 20)];
             [input setFont:[UIFont systemFontOfSize:14]];
-            [input setPlaceholder:@"请输入真实姓名"];
+            [input setPlaceholder:@"请输入身份证号码"];
             [input setText:value];
             input.delegate = self;
             input.tag = indexPath.section*arr.count+indexPath.row;
@@ -194,7 +195,7 @@
         }else if (indexPath.row == 3){
             UITextField *input = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-150, ([self high:indexPath]-20)/2, 140, 20)];
             [input setFont:[UIFont systemFontOfSize:14]];
-            [input setPlaceholder:@"请输入真实姓名"];
+            [input setPlaceholder:@"请输入手机号码"];
             [input setText:value];
             input.delegate = self;
             input.tag = indexPath.section*arr.count+indexPath.row;
@@ -203,7 +204,7 @@
         }else if (indexPath.row == 4){
             UITextField *input = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-150, ([self high:indexPath]-20)/2, 140, 20)];
             [input setFont:[UIFont systemFontOfSize:14]];
-            [input setPlaceholder:@"请输入真实姓名"];
+            [input setPlaceholder:@"请输入邮箱"];
             [input setText:value];
             input.delegate = self;
             input.tag = indexPath.section*arr.count+indexPath.row;
@@ -212,7 +213,7 @@
         }else if (indexPath.row == 5){
             UITextField *input = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-150, ([self high:indexPath]-20)/2, 140, 20)];
             [input setFont:[UIFont systemFontOfSize:14]];
-            [input setPlaceholder:@"请输入真实姓名"];
+            [input setPlaceholder:@"请输入微信账号"];
             [input setText:value];
             input.delegate = self;
             input.tag = indexPath.section*arr.count+indexPath.row;
@@ -220,16 +221,35 @@
 
         }else if (indexPath.row == 6){
 
-            UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(sfzWihtHandBtnClicked)];
+            [tip setFrame:CGRectMake(10, 10, 200, 20)];
+
+            UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10,30, MAIN_WIDTH/2-10, [self high:indexPath]-30)];
+            [tip2 setTextAlignment:NSTextAlignmentLeft];
+            [tip2 setTextColor:[UIColor lightGrayColor]];
+            [tip2 setFont:[UIFont systemFontOfSize:12]];
+            [cell addSubview:tip2];
+            tip2.numberOfLines = 0;
+            [tip2 setText:@"拍照上传，本人手持身份证上半身清晰照+身份证正面清晰照，共2张"];
 
              UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(sfzBtnClicked)];
 
-            EGOImageView *btn1 = [[EGOImageView alloc]init];
+            EGOImageButton *btn1 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"find_add"]];
             btn1.userInteractionEnabled = YES;
             [btn1 setFrame:CGRectMake(MAIN_WIDTH-180, 10, 80, 80)];
             [cell addSubview:btn1];
-            [btn1 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",self.m_pic1]] placeholderImage:[UIImage imageNamed:@"find_add"]];
-            [btn1 addGestureRecognizer:tap1];
+            [btn1 setImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",self.m_pic1]]];
+            [btn1 addTarget:self action:@selector(sfzWihtHandBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+            [btn1 setTitleColor:[UIColor blackColor] forState:0];
+
+            if(self.m_pic1.length == 0){
+                UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-180,63,80, 25)];
+                [tip3 setTextAlignment:NSTextAlignmentCenter];
+                [tip3 setTextColor:[UIColor lightGrayColor]];
+                [tip3 setFont:[UIFont systemFontOfSize:12]];
+                [cell addSubview:tip3];
+                [tip3 setText:@"手持正面"];
+            }
+
 
             EGOImageView *btn2 = [[EGOImageView alloc]init];
             btn2.userInteractionEnabled = YES;
@@ -237,6 +257,15 @@
             [cell addSubview:btn2];
             [btn2 sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",self.m_pic2]] placeholderImage:[UIImage imageNamed:@"find_add"]];
             [btn2 addGestureRecognizer:tap2];
+
+            if(self.m_pic2.length == 0){
+                UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-90,63,80, 25)];
+                [tip3 setTextAlignment:NSTextAlignmentCenter];
+                [tip3 setTextColor:[UIColor lightGrayColor]];
+                [tip3 setFont:[UIFont systemFontOfSize:12]];
+                [cell addSubview:tip3];
+                [tip3 setText:@"正面"];
+            }
 
         }
 

@@ -11,12 +11,16 @@
 #import "APAuthV2Info.h"
 #import "RSADataSigner.h"
 #import <AlipaySDK/AlipaySDK.h>
-@interface FindSendConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+#import "WXApi.h"
+#import "WXApiObject.h"
+@interface FindSendConfirmOrderViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,WXApiDelegate>
 {
     UIButton *btn;
 }
 @property(nonatomic,strong)ADTFindItem *m_helpInfo;
 @property(nonatomic,strong)NSString *m_netMoney;
+@property(nonatomic,strong)NSString *m_weixnPayId;
+
 
 @end
 
@@ -37,6 +41,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [title setText:@"确认订单"];
+
+    [[NSNotificationCenter defaultCenter]addObserverForName:kWeixinPay object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+
+        PayResp *resp = note.object;
+
+        [HTTP_MANAGER payResult:self.m_weixnPayId
+                     resultCode:@"SUCCESS"
+                responseContent:@""
+                 successedBlock:^(NSDictionary *succeedResult1) {
+
+                     if([succeedResult1[@"ret"]integerValue] == 0){
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult1[@"msg"] inSuperView:self.view withDuration:1];
+                         [self performSelector:@selector(backToMain) withObject:nil afterDelay:1];
+                     }else{
+                         [PubllicMaskViewHelper showTipViewWith:succeedResult1[@"msg"] inSuperView:self.view withDuration:1];
+
+                     }
+
+                 } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                     [PubllicMaskViewHelper showTipViewWith:@"支付失败" inSuperView:self.view withDuration:1];
+
+                 }];
+
+    }];
 }
 
 - (void)requestData:(BOOL)isRefresh
@@ -81,14 +110,14 @@
 
     UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 120, 20)];
     [tip setTextAlignment:NSTextAlignmentLeft];
-    [tip setTextColor:UIColorFromRGB(0x33333)];
+    [tip setTextColor:UIColorFromRGB(0x333333)];
     [tip setFont:[UIFont systemFontOfSize:15]];
     [bg addSubview:tip];
 
 
     UILabel *value = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-200, 15, 170, 20)];
     [value setTextAlignment:NSTextAlignmentRight];
-    [value setTextColor:UIColorFromRGB(0x33333)];
+    [value setTextColor:UIColorFromRGB(0x333333)];
     [value setFont:[UIFont systemFontOfSize:15]];
     [bg addSubview:value];
 
@@ -247,7 +276,7 @@
 //
 //选中商品调用支付宝极简支付
 //
-- (void)doAlipayPay:(NSString *)money  body:(NSString *)body payId:(NSString *)payId  callback:(CompletionBlock)completionBlock;
+- (void)doAlipayPay:(NSString *)money  body:(NSString *)body payId:(NSString *)payId  callback:(CompletionBlock)completionBlock
 
 {
     //重要说明
@@ -350,6 +379,40 @@
     }
 }
 
+#pragma mark 微信支付方法
+- (void)WXPay:(NSDictionary *)payInfo body:(NSString *)body payId:(NSString *)payId  callback:(CompletionBlock)completionBlock; {
+
+    //需要创建这个支付对象
+    PayReq *req   = [[PayReq alloc] init];
+    //由用户微信号和AppID组成的唯一标识，用于校验微信用户
+    req.openID = @"wxc508d5fdc6898b52";
+
+    // 商家id，在注册的时候给的
+    req.partnerId = payInfo[@"partnerid"];
+
+    // 预支付订单这个是后台跟微信服务器交互后，微信服务器传给你们服务器的，你们服务器再传给你
+    req.prepayId  = payInfo[@"prepayid"];
+
+    // 根据财付通文档填写的数据和签名
+    //这个比较特殊，是固定的，只能是即req.package = Sign=WXPay
+    req.package   = @"Sign=WXPay";
+
+    // 随机编码，为了防止重复的，在后台生成
+    req.nonceStr  = payInfo[@"noncestr"];
+
+    // 这个是时间戳，也是在后台生成的，为了验证支付的
+    NSString * stamp = payInfo[@"timestamp"];
+    req.timeStamp = stamp.intValue;
+
+    // 这个签名也是后台做的
+    req.sign = payInfo[@"sign"];
+
+    //发送请求到微信，等待微信返回onResp
+    BOOL ret = [WXApi sendReq:req];
+
+
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 0){
@@ -419,8 +482,80 @@
 
     }else if (buttonIndex == 1){
 
+        NSString *netMoney = btn.selected?self.m_netMoney : @"0";
+        NSString *relMoney = [NSString stringWithFormat:@"%.2f",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]-[netMoney floatValue]];
+        [HTTP_MANAGER wxPay:self.m_helpInfo.m_id
+                  serviceFee:self.m_helpInfo.m_serviceFee
+                   creditFee:self.m_helpInfo.m_creditFee
+                       total:[NSString stringWithFormat:@"%@", @([self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue])]
+                    netMoney:[NSString stringWithFormat:@"%@", @([netMoney doubleValue])]
+                    relMoney:[NSString stringWithFormat:@"%@", @([relMoney doubleValue])]
+              successedBlock:^(NSDictionary *succeedResult) {
+
+
+                  if([succeedResult[@"ret"]integerValue] == 0){
+
+                      NSString *payId = succeedResult[@"data"][@"payId"];
+                      self.m_weixnPayId = payId;
+                      [self WXPay:succeedResult[@"data"]
+                                   body:self.m_helpInfo.m_content
+                                  payId:payId
+                               callback:^(NSDictionary *resultDic) {
+                                   if([resultDic[@"code"]integerValue] == 10000){
+
+
+
+
+                                   }else{
+                                       [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
+                                   }
+                               }];
+                  }else{
+                      [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                  }
+
+
+
+
+              } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+
+
+              }];
+
+
+
+
+
     }else if (buttonIndex == 2){
 
     }
 }
+
+//微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法,显示支付结果的
+-(void) onResp:(BaseResp*)resp
+{
+    //启动微信支付的response
+    NSString *payResoult = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+    if([resp isKindOfClass:[PayResp class]]){
+        //支付返回结果，实际支付结果需要去微信服务器端查询
+        switch (resp.errCode) {
+            case 0:
+                payResoult = @"支付结果：成功";
+                break;
+            case -1:
+                payResoult = @"支付结果：失败";
+                break;
+            case -2:
+                payResoult = @"用户已经退出支付";
+                break;
+            default:
+                payResoult = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
+                break;
+        }
+    }
+}
+
+
+
 @end

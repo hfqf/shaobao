@@ -66,21 +66,41 @@
         [self addSubview:m_sep];
 
         self.m_arrImageViews = [NSMutableArray array];
-        m_picview1 = [[EGOImageView alloc]init];
-        m_picview2 = [[EGOImageView alloc]init];
-        m_picview3 = [[EGOImageView alloc]init];
-        m_picview4 = [[EGOImageView alloc]init];
-        m_picview5 = [[EGOImageView alloc]init];
-        m_picview6 = [[EGOImageView alloc]init];
+        m_picview1 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
+        m_picview2 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
+        m_picview3 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
+        m_picview4 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
+        m_picview5 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
+        m_picview6 = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"logo"]];
         [self.m_arrImageViews addObject:m_picview1];
         [self.m_arrImageViews addObject:m_picview2];
         [self.m_arrImageViews addObject:m_picview3];
         [self.m_arrImageViews addObject:m_picview4];
         [self.m_arrImageViews addObject:m_picview5];
         [self.m_arrImageViews addObject:m_picview6];
+
+        [m_picview1 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        [m_picview2 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        [m_picview3 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        [m_picview4 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        [m_picview5 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        [m_picview6 addTarget:self action:@selector(imgTap:) forControlEvents:UIControlEventTouchUpInside];
+        m_picview1.tag = 1;
+        m_picview2.tag = 2;
+        m_picview3.tag = 3;
+        m_picview4.tag = 4;
+        m_picview5.tag = 5;
+        m_picview6.tag = 6;
+
     }
     return self;
 }
+
+- (void)imgTap:(UIButton *)btn
+{
+    [self.m_delegate onTap:btn.tag-1 with:_currentData.m_arrPics];
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -126,12 +146,12 @@
         NSInteger row = i/cell_num;
         NSInteger coulmn = i%cell_num;
 
-        EGOImageView *img = [self.m_arrImageViews objectAtIndex:i];
+        EGOImageButton *img = [self.m_arrImageViews objectAtIndex:i];
         img.hidden = NO;
         img.frame= CGRectMake(CGRectGetMaxX(m_head.frame)+sep+(sep+width)*coulmn, CGRectGetMaxY(m_contentLab.frame)+sep+(sep+width)*row, width, width);
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.clipsToBounds = YES;
-        [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",[arr objectAtIndex:i]]] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [img setImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",@"http://121.196.222.155:8800/files",[arr objectAtIndex:i]]]];
         [self addSubview:img];
         [m_commentBtn setFrame:CGRectMake(m_commentBtn.frame.origin.x, CGRectGetMaxY(img.frame)+10, m_commentBtn.frame.size.width, m_commentBtn.frame.size.height)];
         [m_delBtn setFrame:CGRectMake(m_delBtn.frame.origin.x, CGRectGetMaxY(img.frame)+10, m_delBtn.frame.size.width, m_delBtn.frame.size.height)];

@@ -78,6 +78,9 @@
 {
     NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
     SelectCityViewController *select = [[SelectCityViewController alloc]initWith:self.m_delegate withParentInfo:info];
+    if([self.m_delegate isKindOfClass:NSClassFromString(@"FindViewController")]){
+        [self.m_delegate onSelectedProvice:info withCity:nil withArea:nil];
+    }
     [self.navigationController pushViewController:select animated:YES];
 }
 

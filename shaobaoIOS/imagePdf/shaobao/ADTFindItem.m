@@ -31,15 +31,24 @@
     ret.m_id = [info stringWithFilted:@"id"];
     ret.m_payStatus = [info stringWithFilted:@"payStatus"];
     NSString *pics = [info stringWithFilted:@"picUrls"];
-    if([pics rangeOfString:@","].length > 0){
-        ret.m_arrPics = [pics componentsSeparatedByString:@","];
+    NSMutableArray *arrPic = [NSMutableArray array];
+    if(pics.length > 0){
+        if([pics rangeOfString:@","].length > 0){
+            [arrPic addObjectsFromArray:[pics componentsSeparatedByString:@","]];
+        }else{
+            [arrPic addObject:pics];
+        }
+        ret.m_arrPics = arrPic;
     }
+
+
 //    NSInteger ran = rand()%6;
 //    NSMutableArray *arr = [NSMutableArray array];
 //    for(NSInteger i=0;i<ran;i++){
 //        [arr addObject:@""];
 //    }
-//    ret.m_arrPics = arr;
+//    [arrPic addObject:@"/shaobao/2017/31/19/b8d9487d-4a81-44d6-94de-34ec1e57d7c3"];
+    ret.m_arrPics = arrPic;
     ret.m_province = [info stringWithFilted:@"province"];
     ret.m_provinceName = [info stringWithFilted:@"provinceName"];
     ret.m_serviceFee =[NSString stringWithFormat:@"%@", @([info[@"serviceFee"]doubleValue])];
@@ -54,6 +63,8 @@
     ret.m_userScoreResult = [info stringWithFilted:@"userScoreResult"];
     ret.m_userType = [info stringWithFilted:@"userType"];
     ret.m_isSender  = ret.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue;
+    ret.m_acceptScoreStatus = [info stringWithFilted:@"acceptScoreStatus"];
+    ret.m_userScoreStatus = [info stringWithFilted:@"userScoreStatus"];
     return ret;
 }
 @end

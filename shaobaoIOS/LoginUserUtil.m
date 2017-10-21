@@ -83,7 +83,7 @@
 + (NSString *)accessToken
 {
     NSDictionary *dic = [self readDictionartFromPlist];
-    return [dic objectForKey:@"accessToken"];
+    return [dic stringWithFilted:@"accessToken"];
 }
 
 //获得联系人后返回的token,再来创建im
@@ -210,6 +210,10 @@
     NSString * path = [self pathOfCurrentLoginer];
     NSDictionary * dic = [self checkValueValid:protalsDic];
     return  [dic writeToFile:path atomically:YES];
+}
++ (BOOL)clearCache{
+    NSString * path = [self pathOfCurrentLoginer];
+    return [[NSFileManager defaultManager]removeItemAtPath:path error:nil];
 }
 
 + (NSDictionary *)readDictionartFromPlist
@@ -840,4 +844,8 @@
     return [dic stringWithFilted:@"userName"];
 }
 
++(BOOL)isLogined
+{
+    return [self shaobaoToken].length > 0;
+}
 @end

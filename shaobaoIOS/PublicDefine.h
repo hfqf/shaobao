@@ -491,3 +491,5 @@ extern NSString  *NotiAddNewClassSuccess ;   ///< 加入新的班级成功
 #define  KEY_SSO_IS_NEED_LOGIN      @"KEY_SSO_IS_NEED_LOGIN"
 #define  KEY_USER_RESOURCEID        @"KEY_USER_RESOURCEID"
 #define IsStrEmpty(_ref)    (((_ref) == nil) || ([(_ref) isEqual:[NSNull null]]) ||([(_ref)isEqualToString:@""]))
+
+#define  kWeixinPay                 @"kWeixinPay"

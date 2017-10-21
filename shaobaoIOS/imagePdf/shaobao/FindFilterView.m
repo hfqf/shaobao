@@ -21,7 +21,9 @@
         m_table.dataSource = self;
         m_table.delegate = self;
         [m_table reloadData];
-        self.m_type = @"1";
+        self.m_type = @"";
+        self.m_state = @"";
+        self.m_firstType = @"";
         [self addSubview:m_table];
         UIButton *resetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [resetBtn setBackgroundColor:UIColorFromRGB(0x53cfec)];
@@ -71,21 +73,21 @@
     [cell setBackgroundColor:[UIColor whiteColor]];
     UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10,18, 120, 18)];
     [tip setTextColor:[UIColor blackColor]];
-    [tip setFont:[UIFont systemFontOfSize:16]];
+    [tip setFont:[UIFont systemFontOfSize:14]];
     [tip setTextAlignment:NSTextAlignmentLeft];
     [cell addSubview:tip];
 
     if(indexPath.row == 0){
         [tip setText:@"类型"];
-        NSInteger widht = 100;
+        NSInteger widht = 80;
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn1 addTarget:self action:@selector(sellerBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         [btn1 setFrame:CGRectMake(MAIN_WIDTH-widht*2-20-60, 10, widht, [self high:indexPath]-20)];
         [btn1 setTitle:@"商家服务" forState:UIControlStateNormal];
         [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn1 setTitleColor:self.m_isSaller ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        [btn1 setTitleColor:self.m_firstType.integerValue ==2 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
         btn1.layer.cornerRadius = 2;
-        btn1.layer.borderColor= self.m_isSaller ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        btn1.layer.borderColor= self.m_firstType.integerValue ==2 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn1.layer.borderWidth = 0.5;
         [cell addSubview:btn1];
 
@@ -94,8 +96,8 @@
         [btn2 setFrame:CGRectMake(MAIN_WIDTH-widht-10-60, 10, widht, [self high:indexPath]-20)];
         [btn2 setTitle:@"个人需求" forState:UIControlStateNormal];
         [btn2.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn2 setTitleColor:!self.m_isSaller ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
-        btn2.layer.borderColor= !self.m_isSaller ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        [btn2 setTitleColor:self.m_firstType.integerValue ==1 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        btn2.layer.borderColor= self.m_firstType.integerValue ==1 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn2.layer.borderWidth = 0.5;
         [cell addSubview:btn2];
 
@@ -129,8 +131,10 @@
             [content setText:@"护卫保镖"];
         }else if (type == 4){
             [content setText:@"纠纷债务"];
-        }else{
+        }else if (type == 5){
             [content setText:@"个性需求"];
+        }else{
+            [content setText:@"选择分类"];
         }
         [cell addSubview:content];
         [content setTextColor:UIColorFromRGB(0xcdcdcd)];
@@ -158,51 +162,51 @@
     }else if(indexPath.row == 5){
         [tip setText:@"状态"];
 
-        NSInteger width = (MAIN_WIDTH-60-100-40)/3;
+        NSInteger width = (MAIN_WIDTH-60-70-40)/3;
 
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn1.tag = 0;
+        btn1.tag = 1;
         [btn1 addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [btn1 setFrame:CGRectMake(110, 10, width,30)];
+        [btn1 setFrame:CGRectMake(80, 10, width,30)];
         [btn1 setTitle:@"未支付" forState:UIControlStateNormal];
-        [btn1.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn1 setTitleColor:self.m_state.integerValue == 0 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        [btn1.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [btn1 setTitleColor:self.m_state.integerValue == 1 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
         btn1.layer.cornerRadius = 2;
-        btn1.layer.borderColor= self.m_state.integerValue == 0 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        btn1.layer.borderColor= self.m_state.integerValue == 1 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn1.layer.borderWidth = 0.5;
         [cell addSubview:btn1];
 
         UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn2.tag = 1;
+        btn2.tag = 2;
         [btn2 addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [btn2 setFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+10, 10, width,30)];
         [btn2 setTitle:@"已支付" forState:UIControlStateNormal];
-        [btn2.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn2 setTitleColor:self.m_state.integerValue == 1 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
-        btn2.layer.borderColor= self.m_state.integerValue == 1 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        [btn2.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [btn2 setTitleColor:self.m_state.integerValue == 2 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        btn2.layer.borderColor= self.m_state.integerValue == 2 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn2.layer.borderWidth = 0.5;
         [cell addSubview:btn2];
 
         UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn3.tag = 2;
+        btn3.tag = 3;
         [btn3 addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [btn3 setFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+10, 10, width,30)];
         [btn3 setTitle:@"处理中" forState:UIControlStateNormal];
-        [btn3.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn3 setTitleColor:self.m_state.integerValue == 2 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
-        btn3.layer.borderColor= self.m_state.integerValue == 2 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        [btn3.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [btn3 setTitleColor:self.m_state.integerValue == 3 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        btn3.layer.borderColor= self.m_state.integerValue == 3 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn3.layer.borderWidth = 0.5;
         [cell addSubview:btn3];
 
         UIButton *btn4 = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn4.tag = 3;
+        btn4.tag = 4;
         [btn4 addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [btn4 setFrame:CGRectMake(110, 50, width,30)];
+        [btn4 setFrame:CGRectMake(80, 50, width,30)];
         [btn4 setTitle:@"已完成" forState:UIControlStateNormal];
         [btn4.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [btn4 setTitleColor:self.m_state.integerValue == 3 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
+        [btn4 setTitleColor:self.m_state.integerValue == 4 ? KEY_COMMON_CORLOR : UIColorFromRGB(0xcfcfcf) forState:UIControlStateNormal];
         btn4.layer.cornerRadius = 2;
-        btn4.layer.borderColor= self.m_state.integerValue == 3 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
+        btn4.layer.borderColor= self.m_state.integerValue == 4 ? KEY_COMMON_CORLOR.CGColor : UIColorFromRGB(0xcfcfcf).CGColor;
         btn4.layer.borderWidth = 0.5;
         [cell addSubview:btn4];
     }
@@ -222,10 +226,6 @@
     }else if (indexPath.row == 1){
         [self.m_delegate onSelectArea];
     }else if (indexPath.row == 2){
-//        UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择类型" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"叫人帮忙",@"律师侦探",@"护卫保镖",@"纠纷债务",@"个性需求", nil];
-//        UIViewController *delegate = (UIViewController *)self.m_delegate;
-//        [act showInView:delegate.view];
-
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"选择类型" delegate:self cancelButtonTitle:nil otherButtonTitles:@"叫人帮忙",@"律师侦探",@"护卫保镖",@"纠纷债务",@"个性需求", nil];
         [alert show];
     }
@@ -234,13 +234,6 @@
 {
     self.m_type = [NSString stringWithFormat:@"%ld",buttonIndex+1];
     [m_table reloadData];
-}
-
-//UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-        self.m_type = @(buttonIndex);
-        [m_table reloadData];
 }
 
 
@@ -274,13 +267,12 @@
 
 - (void)cancelBtnClicked:(UITextField *)input
 {
-    [input resignFirstResponder];
+    [m_startTime resignFirstResponder];
+    [m_endTime resignFirstResponder];
 }
 
 - (void)confirmBtnClicked:(UITextField *)input
 {
-    [input resignFirstResponder];
-
     UIView *bg = input.superview;
     for(UIView *vi in bg.subviews)
     {
@@ -347,30 +339,38 @@
 - (void)resetBtnClicked
 {
     self.m_type = @"";
+    self.m_state = @"";
+    self.m_firstType = @"";
     self.m_area = nil;
     self.m_startTime = nil;
     self.m_endTime = nil;
-    self.m_state = @"";
-    self.m_isSaller = NO;
     [m_table reloadData];
+    [self.m_delegate onFindFilterViewDelegateSelected:self.m_firstType
+                                             withArea:self.m_area
+                                             withType:self.m_type
+                                        withStartTime:self.m_startTime
+                                          withEndTime:self.m_endTime
+                                            withState:self.m_state];
 }
 
 - (void)okBtnClicked
 {
-    self.m_state = self.m_state == nil ? @"" : self.m_state;
-    self.m_type = self.m_type == nil ? @"" : self.m_type;
-
-    [self.m_delegate onFindFilterViewDelegateSelected:self.m_isSaller withArea:self.m_area withType:self.m_type == nil ? @"0" :  self.m_type withStartTime:self.m_startTime withEndTime:self.m_endTime withState:self.m_state == nil ? @"0" : self.m_state];
+    [self.m_delegate onFindFilterViewDelegateSelected:self.m_firstType
+                                             withArea:self.m_area
+                                             withType:self.m_type
+                                        withStartTime:self.m_startTime
+                                          withEndTime:self.m_endTime
+                                            withState:self.m_state];
 }
 
 - (void)sellerBtnClicked
 {
-    self.m_isSaller = YES;
+    self.m_firstType = @"2";
     [m_table reloadData];
 }
 - (void)sinalBtnClicked
 {
-    self.m_isSaller = NO;
+    self.m_firstType = @"1";
     [m_table reloadData];
 }
 

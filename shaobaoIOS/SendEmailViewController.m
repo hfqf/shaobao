@@ -1053,9 +1053,6 @@
                                          browser.delayToHideElements = 0;
                                          browser.enableSwipeToDismiss = YES;
                                          [browser setCurrentPhotoIndex:0];
-                                         browser.isPresent = YES;
-                                         browser.isMyself = YES;
-                                         browser.isQXPhoto = YES;
                                          // 添加动画
                                          browser.view.layer.opacity = .2;
                                          [CATransaction begin];

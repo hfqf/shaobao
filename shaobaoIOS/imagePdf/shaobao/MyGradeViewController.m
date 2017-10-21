@@ -47,7 +47,8 @@
 {
     [HTTP_MANAGER getMyGrades:^(NSDictionary *succeedResult) {
 
-        self.m_info = succeedResult[@"data"];
+        NSDictionary *ret = succeedResult[@"data"];
+        self.m_info = [ret isKindOfClass:[NSNull class]] ? nil : ret;
         [self reloadDeals];
 
     } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {

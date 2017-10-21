@@ -124,6 +124,16 @@
 
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0){
+        _itemWH = (self.view.tz_width - 3 * _margin - 4) / 4 - _margin;
+        _layout.itemSize = CGSizeMake(_itemWH, _itemWH);
+        return _layout.itemSize;
+    }
+    return CGSizeMake(MAIN_WIDTH, 50);
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 
@@ -136,7 +146,7 @@
 
 - (void)addBtnClicked
 {
-    if(self.m_input.text.length == 0){
+    if(self.m_input.text.length == 0 ||  [self.m_input.text isEqualToString:@"最多200字"]){
         [PubllicMaskViewHelper showTipViewWith:@"发布内容不能为空" inSuperView:self.view withDuration:1];
         return;
     }
@@ -144,11 +154,11 @@
     __block NSInteger count=0;
     [self showWaitingView];
     for(UIImage *img in self.selectedPhotos){
-        [HTTP_MANAGER uploadShaobaoFileWithPathData:UIImageJPEGRepresentation(img, 1)
+        [HTTP_MANAGER uploadShaobaoFileWithPathData:UIImageJPEGRepresentation(img,0.1)
                                     successBlock:^(NSDictionary *succeedResult) {
                                         [self.m_arrFilePics addObject:succeedResult[@"data"][@"fileUrl"]];
                                         count++;
-                                        if(count == self.selectedPhotos.count-1){
+                                        if(count == self.selectedPhotos.count){
 
                                             NSMutableString *str =[NSMutableString string];
                                             for(NSString *url in self.m_arrFilePics){
@@ -184,6 +194,7 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 2;
 }
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if(section == 0){

@@ -50,6 +50,14 @@
     [self initViewControllers];
     //第一次进来默认是选互动对话
     [self.m_tabbar refreshWithCurrentSelected:0];
+
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"find_category"
+                                                     object:nil
+                                                      queue:[NSOperationQueue currentQueue]
+                                                 usingBlock:^(NSNotification * _Nonnull note) {
+                                                     NSNumber *index = note.object;
+                                                     [self selectWithIndex:1];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

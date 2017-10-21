@@ -44,6 +44,22 @@
 
     [self.view bringSubviewToFront:navigationBG];
 
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y-kbSize.height)];
+}
+
+- (void)keyboardWillHidden:(NSNotification *)notification
+{
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y)];
 }
 
 - (void)rightBtnClicked
@@ -87,7 +103,7 @@
     [bg addSubview:tip1];
 
     UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+44, MAIN_WIDTH-20, 50)];
-    [tip2 setText:[NSString stringWithFormat:@"%ld",self.m_netMoney.integerValue]];
+    [tip2 setText:[NSString stringWithFormat:@"%.2f",self.m_netMoney.floatValue]];
     [tip2 setFont:[UIFont boldSystemFontOfSize:50]];
     [tip2 setTextAlignment:NSTextAlignmentLeft];
     [tip2 setTextColor:[UIColor whiteColor]];
@@ -132,7 +148,7 @@
         m_input1 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-200, 20, 190, 20)];
         m_input1.delegate  = self;
         m_input1.returnKeyType = UIReturnKeyDone;
-        m_input1.keyboardType = UIKeyboardTypeNumberPad;
+        m_input1.keyboardType = UIKeyboardTypeDecimalPad;
         [m_input1 setTextColor:UIColorFromRGB(0x333333)];
         [m_input1 setPlaceholder:@"请输入提现金额"];
         [cell addSubview:m_input1];
@@ -150,7 +166,7 @@
         m_input3 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-200, 20, 190, 20)];
         m_input3.delegate  = self;
         m_input3.returnKeyType = UIReturnKeyDone;
-        m_input3.keyboardType = UIKeyboardTypeNumberPad;
+//        m_input3.keyboardType = UIKeyboardTypeNumberPad;
         [m_input3 setTextColor:UIColorFromRGB(0x333333)];
         [m_input3 setPlaceholder:@"请输入提现账号"];
         [cell addSubview:m_input3];

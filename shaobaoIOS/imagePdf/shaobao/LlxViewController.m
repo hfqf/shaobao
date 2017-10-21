@@ -10,12 +10,14 @@
 #import "ADTLxxItemInfo.h"
 #import "AddNewLxxViewController.h"
 #import "LxxTableViewCell.h"
-@interface LlxViewController ()<UITableViewDataSource,UITableViewDelegate,LxxTableViewCellDelegate,UITextFieldDelegate>
+#import "MWPhotoBrowser.h"
+@interface LlxViewController ()<UITableViewDataSource,UITableViewDelegate,LxxTableViewCellDelegate,UITextFieldDelegate,MWPhotoBrowserDelegate>
 {
        UIView *m_tipView;
 }
 @property(nonatomic,strong)ADTLxxItemInfo *m_commentInfo;
 @property(nonatomic,strong)UITextField *m_input;
+@property(nonatomic,strong) NSMutableArray *m_arrPhoto;
 
 @end
 
@@ -32,11 +34,12 @@
         self.m_input = [[UITextField alloc]initWithFrame:CGRectMake(0,MAIN_HEIGHT, MAIN_WIDTH, 44)];
         self.m_input.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
         self.m_input.layer.borderWidth = 0.5;
+        [self.m_input setClearButtonMode:UITextFieldViewModeAlways];
         [self.m_input setBackgroundColor:[UIColor whiteColor]];
         [self.m_input setPlaceholder:@"请输入评论"];
         [self.m_input setTextColor:[UIColor blackColor]];
         self.m_input.delegate = self;
-        self.m_input.returnKeyType = UIReturnKeySend;
+        self.m_input.returnKeyType = UIReturnKeyDone;
         [self.view addSubview:self.m_input];
 
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -62,8 +65,13 @@
 
 - (void)addBtnClicked
 {
-    AddNewLxxViewController *add = [[AddNewLxxViewController alloc]init];
-    [self.navigationController pushViewController:add animated:YES];
+    if([LoginUserUtil isLogined]){
+        AddNewLxxViewController *add = [[AddNewLxxViewController alloc]init];
+        [self.navigationController pushViewController:add animated:YES];
+    }else{
+        [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -221,24 +229,35 @@
 
 - (void)onLxxTableViewCellDelegateForDel:(ADTLxxItemInfo *)info
 {
-    [HTTP_MANAGER delBbs:info.m_id
-          successedBlock:^(NSDictionary *succeedResult) {
-              if([succeedResult[@"ret"]integerValue]==0){
-                  [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
-                  [self requestData:YES];
-              }else{
-                  [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
-              }
-    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
 
-    }];
+    if([LoginUserUtil isLogined]){
+        [HTTP_MANAGER delBbs:info.m_id
+              successedBlock:^(NSDictionary *succeedResult) {
+                  if([succeedResult[@"ret"]integerValue]==0){
+                      [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                      [self requestData:YES];
+                  }else{
+                      [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                  }
+              } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+              }];
+    }else{
+        [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+    }
+
 }
 
 - (void)onLxxTableViewCellDelegateForComment:(ADTLxxItemInfo *)info
 {
-    self.m_commentInfo = info;
-    [self.m_input becomeFirstResponder];
+    if([LoginUserUtil isLogined]){
+        self.m_commentInfo = info;
+        [self.m_input becomeFirstResponder];
+    }else{
+        [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+    }
 }
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [HTTP_MANAGER sendBbsComment:self.m_commentInfo.m_id
@@ -253,4 +272,56 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)onTap:(NSInteger)index with:(NSArray *)arrUrl
+{
+
+    NSMutableArray *arr = [NSMutableArray array];
+    for(NSString *url in arrUrl){
+        if(url.length > 0){
+            [arr addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://121.196.222.155:8800/files",url ]]]];
+        }
+    }
+    self.m_arrPhoto = arr;
+
+
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+
+    // Set options
+    browser.displayActionButton = YES; // Show action button to allow sharing, copying, etc (defaults to YES)
+    browser.displayNavArrows = NO; // Whether to display left and right nav arrows on toolbar (defaults to NO)
+    browser.displaySelectionButtons = NO; // Whether selection buttons are shown on each image (defaults to NO)
+    browser.zoomPhotosToFill = YES; // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+    browser.alwaysShowControls = NO; // Allows to control whether the bars and controls are always visible or whether they fade away to show the photo full (defaults to NO)
+    browser.enableGrid = YES; // Whether to allow the viewing of all the photo thumbnails on a grid (defaults to YES)
+    browser.startOnGrid = NO; // Whether to start on the grid of thumbnails instead of the first photo (defaults to NO)
+
+    // Optionally set the current visible photo before displaying
+    [browser setCurrentPhotoIndex:index];
+
+    // Present
+    [self.navigationController pushViewController:browser animated:YES];
+
+    // Manipulate
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.m_arrPhoto.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.m_arrPhoto.count) {
+        return [self.m_arrPhoto objectAtIndex:index];
+    }
+    return nil;
+}
 @end
+

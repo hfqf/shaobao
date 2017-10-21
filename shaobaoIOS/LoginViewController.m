@@ -65,8 +65,8 @@
     UIScrollView *scroller = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, MAIN_WIDTH, MAIN_HEIGHT-64)];
     [self.view addSubview:scroller];
     
-    [self removeBackBtn];
-    
+//    [self removeBackBtn];
+
     UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake((MAIN_WIDTH-150)/2,50,150, 60)];
     [icon setImage:[UIImage imageNamed:@"login_logo"]];
     [scroller addSubview:icon];
@@ -96,7 +96,7 @@
     {
 //        [m_nameText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_ACCOUTN]];
 #if DEBUG
-        [m_nameText setText:@"test"];
+//        [m_nameText setText:@"test"];
 #endif
     }
     [m_nameText setTextColor:[UIColor blackColor]];
@@ -115,7 +115,7 @@
     {
 //        [m_pwdText setText:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD]];
 #if DEBUG
-        [m_pwdText setText:@"1234"];
+//        [m_pwdText setText:@"1234"];
 #endif
     }
     UIImageView *leftPwd = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 44, 18)];
@@ -270,8 +270,7 @@
         //创建存放图片和音频的文件夹
         [LocalImageHelper createUploadFileInDocument];
         
-        MainTabBarViewController *mainVC  = [[MainTabBarViewController alloc]init];
-        [self.navigationController pushViewController:mainVC animated:YES];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[XTNavigationController alloc]initWithRootViewController:[[NSClassFromString(@"MainTabBarViewController") alloc]init]];
         
         BOOL flag = [[[NSUserDefaults standardUserDefaults]objectForKey:KEY_AUTO_SAVE]isEqualToString:@"1"];
         if(!flag){

@@ -12,8 +12,11 @@
 - (void)onAccept:(ADTFindItem *)data;
 
 - (void)onDelete:(ADTFindItem *)data;
+
+- (void)onTap:(NSInteger)index with:(NSArray *)arrUrl;
 @end
 #import <UIKit/UIKit.h>
+#import "EGOImageButton.h"
 @interface FindTableViewCell : UITableViewCell
 {
     EGOImageView *m_head;
@@ -28,12 +31,12 @@
     UILabel *m_processStateLab;
     UIButton *m_acceptBtn;
     UIButton *m_delBtn;
-    EGOImageView *m_picview1;
-    EGOImageView *m_picview2;
-    EGOImageView *m_picview3;
-    EGOImageView *m_picview4;
-    EGOImageView *m_picview5;
-    EGOImageView *m_picview6;
+    EGOImageButton *m_picview1;
+    EGOImageButton *m_picview2;
+    EGOImageButton *m_picview3;
+    EGOImageButton *m_picview4;
+    EGOImageButton *m_picview5;
+    EGOImageButton *m_picview6;
     UIView *m_sep;
 }
 @property(nonatomic,weak)id<FindTableViewCellDelegate>m_delegate;

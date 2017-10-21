@@ -27,7 +27,7 @@
 @property(nonatomic,strong) NSString *m_creditFee;
 @property(nonatomic,strong) NSString *m_id;
 @property(nonatomic,strong) NSString *m_payStatus;
-@property(nonatomic,strong) NSArray  *m_arrPics;
+@property(nonatomic,strong) NSMutableArray  *m_arrPics;
 @property(nonatomic,strong) NSString *m_province;
 @property(nonatomic,strong) NSString *m_provinceName;
 @property(nonatomic,strong) NSString *m_serviceFee;
@@ -40,7 +40,9 @@
 @property(nonatomic,strong) NSString *m_userScoreContent;
 @property(nonatomic,strong) NSString *m_userScoreResult;
 @property(nonatomic,strong) NSString *m_userType;
+@property(nonatomic,strong) NSString *m_acceptScoreStatus;
 @property(nonatomic,strong) NSString *m_email;
+@property(nonatomic,strong) NSString *m_userScoreStatus;
 @property(assign)BOOL m_isSender;
 
 + (ADTFindItem *)from:(NSDictionary *)info;

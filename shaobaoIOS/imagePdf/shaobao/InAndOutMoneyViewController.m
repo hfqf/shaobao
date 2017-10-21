@@ -87,7 +87,7 @@
     [bg addSubview:tip1];
 
     UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+44, MAIN_WIDTH-20, 50)];
-    [tip2 setText:[NSString stringWithFormat:@"%ld",self.m_netMoney.integerValue]];
+    [tip2 setText:[NSString stringWithFormat:@"%.2f",self.m_netMoney.floatValue]];
     [tip2 setFont:[UIFont boldSystemFontOfSize:50]];
     [tip2 setTextAlignment:NSTextAlignmentLeft];
     [tip2 setTextColor:[UIColor whiteColor]];

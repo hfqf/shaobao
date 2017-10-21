@@ -230,11 +230,11 @@
 	// Super
     [super viewDidLoad];
     
-    if(_isPresent) {
-        navigationBG.hidden = YES;
+//    if(_isPresent) {
+//        navigationBG.hidden = YES;
         title.hidden = YES;
         self.view.backgroundColor = [UIColor blackColor];
-    }
+//    }
 }
 
 

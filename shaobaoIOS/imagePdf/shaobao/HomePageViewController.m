@@ -17,9 +17,12 @@
 #import "WebViewViewController.h"
 #import "FindSendConfirmOrderViewController.h"
 #import "FindServiceInfoViewController.h"
-@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate>
+#import "MWPhotoBrowser.h"
+
+@interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate,MWPhotoBrowserDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
+@property(nonatomic,strong) NSMutableArray *m_arrPhoto;
 
 @end
 
@@ -263,8 +266,7 @@
 
 - (void)categoryBtn:(UIButton *)btn
 {
-    FindCategoryViewController *vc = [[FindCategoryViewController alloc]initWith:btn.tag];
-    [self.navigationController pushViewController:vc animated:YES];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"find_category" object:@(btn.tag)];
 }
 
 #pragma mark - MXCycleScrollViewDelegate
@@ -301,4 +303,49 @@
     FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
     [self.navigationController pushViewController:info animated:YES];
 }
+
+
+- (void)onTap:(NSInteger)index with:(NSArray *)arrUrl
+{
+
+    NSMutableArray *arr = [NSMutableArray array];
+    for(NSString *url in arrUrl){
+        [arr addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"",url ]]]];
+    }
+    self.m_arrPhoto = arr;
+
+
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+
+    // Set options
+    browser.displayActionButton = YES; // Show action button to allow sharing, copying, etc (defaults to YES)
+    browser.displayNavArrows = NO; // Whether to display left and right nav arrows on toolbar (defaults to NO)
+    browser.displaySelectionButtons = NO; // Whether selection buttons are shown on each image (defaults to NO)
+    browser.zoomPhotosToFill = YES; // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+    browser.alwaysShowControls = NO; // Allows to control whether the bars and controls are always visible or whether they fade away to show the photo full (defaults to NO)
+    browser.enableGrid = YES; // Whether to allow the viewing of all the photo thumbnails on a grid (defaults to YES)
+    browser.startOnGrid = NO; // Whether to start on the grid of thumbnails instead of the first photo (defaults to NO)
+
+    // Optionally set the current visible photo before displaying
+    [browser setCurrentPhotoIndex:index-1];
+
+    // Present
+    [self.navigationController pushViewController:browser animated:YES];
+
+    // Manipulate
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.m_arrPhoto.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.m_arrPhoto.count) {
+        return [self.m_arrPhoto objectAtIndex:index];
+    }
+    return nil;
+}
 @end
+

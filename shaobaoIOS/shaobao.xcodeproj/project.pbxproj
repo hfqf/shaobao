@@ -98,6 +98,7 @@
 		7D2044A41F73B14C0061D6AD /* SelectCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */; };
 		7D2044A71F73B1590061D6AD /* SelectAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */; };
 		7D2044AA1F7408EB0061D6AD /* FindFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A91F7408EB0061D6AD /* FindFilterView.m */; };
+		7D2D2A221F96496600D4DE28 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */; };
 		7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */; };
 		7D3722B41AAC9A1F001F8914 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B31AAC9A1F001F8914 /* MessageTableViewCell.m */; };
 		7D3722BC1AAC9D9F001F8914 /* SideslipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B71AAC9D9F001F8914 /* SideslipView.m */; };
@@ -357,8 +358,8 @@
 		18E21A8019751F9A0029EC1F /* shaobao-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "shaobao-Info.plist"; sourceTree = "<group>"; };
 		18E21A8419751F9A0029EC1F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18E21A8619751F9A0029EC1F /* shaobao-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shaobao-Prefix.pch"; sourceTree = "<group>"; };
-		18E21A8719751F9A0029EC1F /* iAppPDFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iAppPDFAppDelegate.h; path = iAppPDF/iAppPDFAppDelegate.h; sourceTree = "<group>"; };
-		18E21A8819751F9A0029EC1F /* iAppPDFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = iAppPDFAppDelegate.m; path = iAppPDF/iAppPDFAppDelegate.m; sourceTree = "<group>"; };
+		18E21A8719751F9A0029EC1F /* iAppPDFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iAppPDFAppDelegate.h; sourceTree = "<group>"; };
+		18E21A8819751F9A0029EC1F /* iAppPDFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iAppPDFAppDelegate.m; sourceTree = "<group>"; };
 		18E21A8A19751F9A0029EC1F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iAppPDF/Images.xcassets; sourceTree = "<group>"; };
 		18E21BB2197520080029EC1F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7D04066F1E4D574D00036FE6 /* MeetingManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingManagerViewController.h; sourceTree = "<group>"; };
@@ -585,6 +586,11 @@
 		7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectAreaViewController.m; sourceTree = "<group>"; };
 		7D2044A81F7408EB0061D6AD /* FindFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindFilterView.h; sourceTree = "<group>"; };
 		7D2044A91F7408EB0061D6AD /* FindFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindFilterView.m; sourceTree = "<group>"; };
+		7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		7D2D2A1E1F96486A00D4DE28 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		7D2D2A1F1F96486A00D4DE28 /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		7D2D2A201F96486A00D4DE28 /* WXApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		7D2D2A211F96486A00D4DE28 /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		7D30CE981AB076A500088A6E /* ADTGovermentFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTGovermentFileInfo.h; sourceTree = "<group>"; };
 		7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTGovermentFileInfo.m; sourceTree = "<group>"; };
 		7D3722B21AAC9A1F001F8914 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
@@ -1046,6 +1052,7 @@
 				7DAC57E41A7F89BD004C6F1F /* libz.dylib in Frameworks */,
 				7D1A65C51F8D238A00DEC9B5 /* AlipaySDK.framework in Frameworks */,
 				18E21BB3197520080029EC1F /* libxml2.dylib in Frameworks */,
+				7D2D2A221F96496600D4DE28 /* libWeChatSDK.a in Frameworks */,
 				18E1D90019D3BFFA0050B775 /* AVFoundation.framework in Frameworks */,
 				18E1D8FE19D3BFF40050B775 /* AudioToolbox.framework in Frameworks */,
 				18E21A7B19751F9A0029EC1F /* CoreGraphics.framework in Frameworks */,
@@ -1061,6 +1068,10 @@
 		18E21A6C19751F9A0029EC1F = {
 			isa = PBXGroup;
 			children = (
+				7DBBFFC61AA5F6C4000F1DCD /* PublicDefine.h */,
+				18E21A8719751F9A0029EC1F /* iAppPDFAppDelegate.h */,
+				18E21A8819751F9A0029EC1F /* iAppPDFAppDelegate.m */,
+				7D2D2A1C1F96486A00D4DE28 /* OpenSDK1.8.0 */,
 				7D1A65C71F8D23C800DEC9B5 /* libcrypto.a */,
 				7D1A65C81F8D23C800DEC9B5 /* libssl.a */,
 				7D1A65771F8D207300DEC9B5 /* openssl */,
@@ -1346,6 +1357,18 @@
 			path = openssl;
 			sourceTree = SOURCE_ROOT;
 		};
+		7D2D2A1C1F96486A00D4DE28 /* OpenSDK1.8.0 */ = {
+			isa = PBXGroup;
+			children = (
+				7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */,
+				7D2D2A1E1F96486A00D4DE28 /* README.txt */,
+				7D2D2A1F1F96486A00D4DE28 /* WechatAuthSDK.h */,
+				7D2D2A201F96486A00D4DE28 /* WXApi.h */,
+				7D2D2A211F96486A00D4DE28 /* WXApiObject.h */,
+			);
+			path = OpenSDK1.8.0;
+			sourceTree = "<group>";
+		};
 		7D30CE971AB0761500088A6E /* ADT */ = {
 			isa = PBXGroup;
 			children = (
@@ -1457,8 +1480,6 @@
 				7D4D2D881B03A33000A88CAF /* RegexKitLite.m */,
 				7D458B011ADD61AC00BCACAB /* OpenUDID.h */,
 				7D458B021ADD61AC00BCACAB /* OpenUDID.m */,
-				18E21A8719751F9A0029EC1F /* iAppPDFAppDelegate.h */,
-				18E21A8819751F9A0029EC1F /* iAppPDFAppDelegate.m */,
 				7DBB00691AA5F9A2000F1DCD /* PublicADT.h */,
 				7DBBFFC71AA5F6C4000F1DCD /* SpeLog.h */,
 				7DBB00561AA5F8B1000F1DCD /* SpeRefreshAndLoadViewController.h */,
@@ -1899,7 +1920,6 @@
 		7DBBFFC51AA5F6A5000F1DCD /* officeMobile */ = {
 			isa = PBXGroup;
 			children = (
-				7DBBFFC61AA5F6C4000F1DCD /* PublicDefine.h */,
 				7D5FA6261B3E632B001B2503 /* COMMON */,
 				7D7411FC1B31C3FD00FC01BE /* SDImage */,
 				7D7411A41B31C32800FC01BE /* MWPhotoBrowser */,
@@ -2776,9 +2796,13 @@
 					"$(PROJECT_DIR)/imagePdf/shaobao",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/shaobao",
+					"$(PROJECT_DIR)/OpenSDK1.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxml2";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
 				PROVISIONING_PROFILE = "d1d14c58-be16-4b0b-8045-ca0acc93d43f";
@@ -2821,13 +2845,17 @@
 					"$(PROJECT_DIR)/imagePdf/shaobao",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/shaobao",
+					"$(PROJECT_DIR)/OpenSDK1.8.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxml2";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
-				PROVISIONING_PROFILE = "35980758-a0da-4748-89c8-5fcf8668c067";
-				PROVISIONING_PROFILE_SPECIFIER = shaobao_adhoc;
+				PROVISIONING_PROFILE = "33b5b779-99d0-450e-b9d7-fd2c5e8a90ac";
+				PROVISIONING_PROFILE_SPECIFIER = shaobaoAppStore;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;

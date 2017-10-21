@@ -8,6 +8,7 @@
 
 #import "FindServiceInfoViewController.h"
 #import "SendMsgViewController.h"
+#import "FindSendConfirmOrderViewController.h"
 @interface FindServiceInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)ADTFindItem *m_helpInfo;
 @end
@@ -26,7 +27,7 @@
         [self requestData:YES];
 
         self.m_arrData = @[
-                           @[@"服务信息",@"服务类型",@"需求说明",@"服务区域"],
+                           @[@"服务信息",@"服务类型",@"服务说明",@"服务区域"],
                            @[@"费用信息",@"费用定金承诺"],
                            @[@"联系信息",@"发布人",@"手机号码",@"邮箱"],
                            ];
@@ -70,7 +71,9 @@
 
 - (void)requestData:(BOOL)isRefresh
 {
-//    self.tableView.tableFooterView = [self footerView];
+    if(self.m_helpInfo.m_payStatus.integerValue == 0){
+        self.tableView.tableFooterView = [self footerView];
+    }
     [self reloadDeals];
 }
 
@@ -238,40 +241,43 @@
 
 - (UIView *)footerView
 {
-    UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 110)];
+    UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 60)];
     [bg setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendBtn setFrame:CGRectMake(10, 50, MAIN_WIDTH-20, 50)];
+    [sendBtn setFrame:CGRectMake(10, 0, MAIN_WIDTH-20, 50)];
     [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
-    [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [sendBtn setTitle:@"确认承接" forState:UIControlStateNormal];
+    [sendBtn addTarget:self action:@selector(payBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [sendBtn setTitle:@"立即支付" forState:UIControlStateNormal];
     [bg addSubview:sendBtn];
-
 
     [sendBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     sendBtn.layer.cornerRadius = 3;
 
 
-
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn addTarget:self action:@selector(sameFeeBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setFrame:CGRectMake(10, 0, 30, 30)];
-    btn.selected = YES;
-    [btn setImage:[UIImage imageNamed:@"find_select_un"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"find_select_on"] forState:UIControlStateSelected];
-    [bg addSubview:btn];
-
-    UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(50,5,MAIN_WIDTH-50, 16)];
-    [content setTextAlignment:NSTextAlignmentLeft];
-    [content setFont:[UIFont systemFontOfSize:14]];
-    [content setText:@"我接受对方等额定金进行履约!"];
-    [bg addSubview:content];
-    [content setTextColor:[UIColor blackColor]];
+//
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn addTarget:self action:@selector(sameFeeBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [btn setFrame:CGRectMake(10, 0, 30, 30)];
+//    btn.selected = YES;
+//    [btn setImage:[UIImage imageNamed:@"find_select_un"] forState:UIControlStateNormal];
+//    [btn setImage:[UIImage imageNamed:@"find_select_on"] forState:UIControlStateSelected];
+//    [bg addSubview:btn];
+//
+//    UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(50,5,MAIN_WIDTH-50, 16)];
+//    [content setTextAlignment:NSTextAlignmentLeft];
+//    [content setFont:[UIFont systemFontOfSize:14]];
+//    [content setText:@"我接受对方等额定金进行履约!"];
+//    [bg addSubview:content];
+//    [content setTextColor:[UIColor blackColor]];
     return bg;
 }
 
-- (void)sameFeeBtnClicked:(UIButton *)btn{
-    btn.selected = !btn.selected;
+- (void)payBtnClicked{
+
+    self.m_helpInfo.m_serviceFee = @"0";
+    FindSendConfirmOrderViewController *order = [[FindSendConfirmOrderViewController alloc]initWith:self.m_helpInfo];
+    [self.navigationController pushViewController:order animated:YES];
+    
 }
 
 - (void)sendBtnClicked

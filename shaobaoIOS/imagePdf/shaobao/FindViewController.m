@@ -15,8 +15,10 @@
 #import "FindSenderInfoViewController.h"
 #import "FindSendConfirmOrderViewController.h"
 #import "FindServiceInfoViewController.h"
-@interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate>
+#import "MWPhotoBrowser.h"
+@interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate,MWPhotoBrowserDelegate>
 @property(nonatomic,strong) FindFilterView *m_filterView;
+@property(nonatomic,strong) NSMutableArray *m_arrPhoto;
 @end
 
 @implementation FindViewController
@@ -34,6 +36,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self filterBtnClicked];
+    self.m_filterView.hidden = YES;
     [self requestData:YES];
 }
 
@@ -46,33 +50,52 @@
     [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, 20, 60, 44)];
     [rightBtn setTitle:@"发布" forState:UIControlStateNormal];
     [navigationBG addSubview:rightBtn];
-
+    navigationBG.userInteractionEnabled = YES;
     UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [filterBtn addTarget:self action:@selector(filterBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [filterBtn setFrame:CGRectMake(0, 20, 60, 44)];
     [filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [navigationBG addSubview:filterBtn];
+
+
+
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"find_category"
+                                                     object:nil
+                                                      queue:[NSOperationQueue currentQueue]
+                                                 usingBlock:^(NSNotification * _Nonnull note) {
+                                                     NSNumber *index = note.object;
+                                                     self.m_filterView.m_type = [NSString stringWithFormat:@"%ld",index.integerValue];
+                                                     [self requestData:YES];
+                                                 }];
 }
 
 - (void)rightBtnClicked
 {
-    if([[LoginUserUtil shaobaoUserType]integerValue] == 1){
-         [self.navigationController pushViewController:[[NSClassFromString(@"SendHelpViewController") alloc]init] animated:YES];
+    if([LoginUserUtil isLogined]){
+        if([[LoginUserUtil shaobaoUserType]integerValue]==1){
+              [self.navigationController pushViewController:[[NSClassFromString(@"SendHelpViewController") alloc]init] animated:YES];
+        }else{
+              [self.navigationController pushViewController:[[NSClassFromString(@"SendServiceeViewController") alloc]init] animated:YES];
+        }
+
     }else{
-         [self.navigationController pushViewController:[[NSClassFromString(@"SendServiceeViewController") alloc]init] animated:YES];
+         [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
     }
 }
 
+
+
 - (void)filterBtnClicked
 {
-    if(self.m_filterView == nil){
-        self.m_filterView = [[FindFilterView alloc]initWithFrame:MAIN_FRAME];
-        [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
-        self.m_filterView.m_delegate = self;
-    }else{
-        self.m_filterView.hidden = NO;
-        [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
-    }
+
+        if(self.m_filterView == nil){
+            self.m_filterView = [[FindFilterView alloc]initWithFrame:MAIN_FRAME];
+            [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
+            self.m_filterView.m_delegate = self;
+        }else{
+            self.m_filterView.hidden = NO;
+            [[UIApplication sharedApplication].keyWindow addSubview:self.m_filterView];
+        }
 
 }
 
@@ -83,10 +106,9 @@
 
 - (void)requestData:(BOOL)isRefresh
 {
-    [self showWaitingView];
     ADTFindItem *last = [self.m_arrData lastObject];
     [HTTP_MANAGER findGetHelpList:self.m_filterView.m_type
-                         userType:self.m_filterView.m_isSaller ? @"2" : @"1"
+                         userType:self.m_filterView.m_firstType
                            status:self.m_filterView.m_state
                           provice:self.m_filterView.m_area[@"provice"][@"id"]
                              city:self.m_filterView.m_area[@"city"][@"id"]
@@ -184,16 +206,35 @@
 #pragma mark -
 - (void)onSelectedProvice:(NSDictionary *)pInfo withCity:(NSDictionary *)cInfo withArea:(NSDictionary *)aInfo
 {
-    self.m_filterView.hidden= NO;
     NSMutableDictionary *area = [NSMutableDictionary dictionary];
-    [area setObject:pInfo forKey:@"provice"];
-    [area setObject:cInfo forKey:@"city"];
-    [area setObject:aInfo forKey:@"area"];
+    if(pInfo){
+        [area setObject:pInfo forKey:@"provice"];
+    }else{
+        [area setObject:@{@"id":@"",@"name":@""} forKey:@"provice"];
+    }
+    if(pInfo){
+        [area setObject:pInfo forKey:@"provice"];
+    }else{
+        [area setObject:@{@"id":@"",@"name":@""} forKey:@"provice"];
+    }
+
+    if(cInfo){
+        [area setObject:cInfo forKey:@"city"];
+    }else{
+        [area setObject:@{@"id":@"",@"name":@""} forKey:@"city"];
+    }
+
+    if(aInfo){
+        [area setObject:aInfo forKey:@"area"];
+    }else{
+        [area setObject:@{@"id":@"",@"name":@""} forKey:@"area"];
+    }
+
     self.m_filterView.m_area = area;
     [self reloadDeals];
 }
 
-- (void)onFindFilterViewDelegateSelected:(BOOL)isSaller withArea:(NSDictionary *)area withType:(NSString *)type withStartTime:(NSString *)startTime withEndTime:(NSString *)endTime withState:(NSString *)state
+- (void)onFindFilterViewDelegateSelected:(NSString *)firstType withArea:(NSDictionary *)area withType:(NSString *)type withStartTime:(NSString *)startTime withEndTime:(NSString *)endTime withState:(NSString *)state
 {
 
     self.m_filterView.hidden= YES;
@@ -222,5 +263,48 @@
 {
     FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
     [self.navigationController pushViewController:info animated:YES];
+}
+
+- (void)onTap:(NSInteger)index with:(NSArray *)arrUrl
+{
+
+    NSMutableArray *arr = [NSMutableArray array];
+    for(NSString *url in arrUrl){
+        [arr addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"",url ]]]];
+    }
+    self.m_arrPhoto = arr;
+
+
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+
+    // Set options
+    browser.displayActionButton = YES; // Show action button to allow sharing, copying, etc (defaults to YES)
+    browser.displayNavArrows = NO; // Whether to display left and right nav arrows on toolbar (defaults to NO)
+    browser.displaySelectionButtons = NO; // Whether selection buttons are shown on each image (defaults to NO)
+    browser.zoomPhotosToFill = YES; // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+    browser.alwaysShowControls = NO; // Allows to control whether the bars and controls are always visible or whether they fade away to show the photo full (defaults to NO)
+    browser.enableGrid = YES; // Whether to allow the viewing of all the photo thumbnails on a grid (defaults to YES)
+    browser.startOnGrid = NO; // Whether to start on the grid of thumbnails instead of the first photo (defaults to NO)
+
+    // Optionally set the current visible photo before displaying
+    [browser setCurrentPhotoIndex:1];
+
+    // Present
+    [self.navigationController pushViewController:browser animated:YES];
+
+    // Manipulate
+    [browser showNextPhotoAnimated:YES];
+    [browser showPreviousPhotoAnimated:YES];
+}
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.m_arrPhoto.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.m_arrPhoto.count) {
+        return [self.m_arrPhoto objectAtIndex:index];
+    }
+    return nil;
 }
 @end

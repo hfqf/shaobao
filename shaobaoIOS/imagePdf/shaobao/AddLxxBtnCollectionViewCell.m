@@ -14,7 +14,7 @@
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_addBtn setFrame:CGRectMake(0,5, MAIN_WIDTH-20, 50)];
+        [_addBtn setFrame:CGRectMake(10,5, MAIN_WIDTH-20, 50)];
         [_addBtn setBackgroundColor:KEY_COMMON_CORLOR];
         [_addBtn setTitle:@"提交" forState:0];
         _addBtn.layer.cornerRadius = 4;

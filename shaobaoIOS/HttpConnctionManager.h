@@ -691,6 +691,8 @@ successedBlock:(SuccessedBlock)success
     successedBlock:(SuccessedBlock)success
        failedBolck:(FailedBlock)failed;
 
+- (void)shaobaoLogout:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
 
 #pragma mark - 发现
 ///删除我的发布
@@ -801,6 +803,13 @@ successedBlock:(SuccessedBlock)success
 - (void)getAcceptMessageGroup:(NSString *)helpId
                successedBlock:(SuccessedBlock)success
                   failedBolck:(FailedBlock)failed;
+
+- (void)score:(NSString *)helpId
+  scoreResult:(NSString *)scoreResult
+ scoreContent:(NSString *)scoreContent
+      optType:(NSString *)optType
+successedBlock:(SuccessedBlock)success
+  failedBolck:(FailedBlock)failed;
 #pragma mark - 广告
 
 - (void)getAds:(NSString *)type

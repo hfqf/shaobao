@@ -9,7 +9,7 @@
 #import "WoyiViewController.h"
 #import "UIImageView+WebCache.h"
 #import "WebViewViewController.h"
-@interface WoyiViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface WoyiViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 @end
 
@@ -64,12 +64,20 @@
     [head sd_setImageWithURL:[NSURL URLWithString:[LoginUserUtil shaobaoHeadUrl]] placeholderImage:[UIImage imageNamed:@"logo"]];
     [bg addSubview:head];
 
-    UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(head.frame)+10, MAIN_WIDTH, 20)];
-    [name setText:[LoginUserUtil shaobaoUserName]];
-    [name setTextAlignment:NSTextAlignmentCenter];
-    [name setTextColor:UIColorFromRGB(0xffffff)];
-    [name setFont:[UIFont systemFontOfSize:20]];
+    UIButton *name= [UIButton buttonWithType:UIButtonTypeCustom];
+    if([LoginUserUtil shaobaoUserName].length == 0){
+        [name addTarget:self action:@selector(loginBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
+    [name setFrame:CGRectMake((MAIN_WIDTH-200)/2, CGRectGetMaxY(head.frame)+10, 200, 30)];
+    [name setTitle:[LoginUserUtil shaobaoUserName].length == 0 ?@"登录":[LoginUserUtil shaobaoUserName] forState:0];
+    [name setTitleColor:UIColorFromRGB(0xffffff) forState:0];
     [bg addSubview:name];
+//    UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(head.frame)+10, MAIN_WIDTH, 20)];
+//    [name setText:[LoginUserUtil shaobaoUserName]];
+//    [name setTextAlignment:NSTextAlignmentCenter];
+//    [name setTextColor:UIColorFromRGB(0xffffff)];
+//    [name setFont:[UIFont systemFontOfSize:20]];
+//    [bg addSubview:name];
 
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn1 setImage:[UIImage imageNamed:@"set_sent"] forState:0];
@@ -99,11 +107,16 @@
 
 }
 
+- (void)loginBtnClicked
+{
+    [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self reloadDeals];
+
     self.tableView.tableHeaderView = [self headerView];
 
 }
@@ -121,7 +134,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.m_arrData.count+1;
+    return self.m_arrData.count+( [LoginUserUtil isLogined]? 1:0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -196,6 +209,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
+
+        if(![LoginUserUtil isLogined]){
+            [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+            return;
+        }
+
         if(indexPath.row == 0){
 
             [self.navigationController pushViewController:[[NSClassFromString(@"InAndOutMoneyViewController") alloc]init] animated:YES];
@@ -229,17 +248,42 @@
 
 - (void)sentBtnClicked
 {
-    [self.navigationController pushViewController:[[NSClassFromString(@"PunishedOrdersViewController") alloc]init] animated:YES];
+    if([LoginUserUtil isLogined]){
+        [self.navigationController pushViewController:[[NSClassFromString(@"PunishedOrdersViewController") alloc]init] animated:YES];
+    }else{
+        [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+    }
 }
 
 - (void)receiveBtnClicked
 {
-    [self.navigationController pushViewController:[[NSClassFromString(@"AcceptedOrdersViewController") alloc]init] animated:YES];
-
+    if([LoginUserUtil isLogined]){
+        [self.navigationController pushViewController:[[NSClassFromString(@"AcceptedOrdersViewController") alloc]init] animated:YES];
+    }else{
+        [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+    }
 }
 
 - (void)logoutBtnClicked
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认退出?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
+    [alert show];
+
+
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        [HTTP_MANAGER shaobaoLogout:^(NSDictionary *succeedResult) {
+            [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+            [LoginUserUtil clearCache];
+        } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+        }];
+    }else{
+
+    }
+}
+
 @end

@@ -36,13 +36,28 @@
                            @"QQ",
                            ];
         [self addFooterView];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     }
     return self;
 }
 
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y-kbSize.height)];
+}
+
+- (void)keyboardWillHidden:(NSNotification *)notification
+{
+    [self.tableView setFrame:CGRectMake(0, self.tableView.frame.origin.y, MAIN_WIDTH,MAIN_HEIGHT-self.tableView.frame.origin.y)];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [title setText:@"狩智酷"];
+    [title setText:@"我要合作"];
 }
 
 - (void)didReceiveMemoryWarning {

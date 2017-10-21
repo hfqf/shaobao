@@ -79,8 +79,11 @@
 {
     NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
     SelectAreaViewController *select = [[SelectAreaViewController alloc]initWith:self withParentInfo:info];
+    BaseViewController *delegate = (BaseViewController *)self.m_delegate;
+    if([delegate.m_delegate isKindOfClass:NSClassFromString(@"FindViewController")]){
+        [self.m_delegate onSelectedProvice:self.m_info withCity:info withArea:nil];
+    }
     [self.navigationController pushViewController:select animated:YES];
-
 }
 
 - (void)onSelectedProvice:(NSDictionary *)pInfo withCity:(NSDictionary *)cInfo withArea:(NSDictionary *)aInfo

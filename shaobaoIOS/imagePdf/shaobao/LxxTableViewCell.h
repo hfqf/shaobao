@@ -12,9 +12,12 @@
 - (void)onLxxTableViewCellDelegateForDel:(ADTLxxItemInfo *)info;
 
 - (void)onLxxTableViewCellDelegateForComment:(ADTLxxItemInfo *)info;
+
+- (void)onTap:(NSInteger)index with:(NSArray *)arrUrl;
+
 @end
 #import <UIKit/UIKit.h>
-
+#import "EGOImageButton.h"
 @interface LxxTableViewCell : UITableViewCell<UITableViewDelegate,UITableViewDataSource>
 {
     EGOImageView *m_head;
@@ -28,12 +31,12 @@
     UIButton *m_delBtn;
     UIButton *m_commentBtn;
 
-    EGOImageView *m_picview1;
-    EGOImageView *m_picview2;
-    EGOImageView *m_picview3;
-    EGOImageView *m_picview4;
-    EGOImageView *m_picview5;
-    EGOImageView *m_picview6;
+    EGOImageButton *m_picview1;
+    EGOImageButton *m_picview2;
+    EGOImageButton *m_picview3;
+    EGOImageButton *m_picview4;
+    EGOImageButton *m_picview5;
+    EGOImageButton *m_picview6;
     UIView *m_sep;
 }
 @property(nonatomic,weak)id<LxxTableViewCellDelegate>m_delegate;

@@ -141,6 +141,9 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         if(data.m_userId.longLongValue == [LoginUserUtil shaobaoUserId].longLongValue){
+            FindSenderInfoViewController *info = [[FindSenderInfoViewController alloc]initWith:data];
+            [self.navigationController pushViewController:info animated:YES];
+        }else{
             FindRequureInfoViewController *info = [[FindRequureInfoViewController alloc]initWith:data];
             [self.navigationController pushViewController:info animated:YES];
         }

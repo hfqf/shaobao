@@ -10,7 +10,11 @@
 #import "FindAskMessagesViewController.h"
 #import "SendMsgViewController.h"
 #import "FindSendConfirmOrderViewController.h"
-@interface FindSenderInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate>
+@interface FindSenderInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
+{
+    UITextView *commentTextView;
+}
+@property(assign)NSInteger m_commentIndex;
 @property(nonatomic,strong)ADTFindItem *m_helpInfo;
 @end
 
@@ -23,16 +27,21 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        NSMutableArray *arr = [NSMutableArray arrayWithArray:@[@""]];
-        self.m_helpInfo.m_arrPics = arr;
         [self requestData:YES];
 
-        self.m_arrData = @[
+        self.m_arrData = findInfo.m_arrPics.count == 0 ? @[
                            @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
                            @[@"费用信息",@"服务费用",@"履约定金"],
                            @[@"联系信息",@"需求人",@"手机号码"],
                            @[@"承接人",@"承接人",@"手机号码",@"承接时间"],
-                           ];
+                           ]:
+        @[
+          @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
+          @[@"费用信息",@"服务费用",@"履约定金"],
+          @[@"联系信息",@"需求人",@"手机号码"],
+          @[@"承接人",@"承接人",@"手机号码",@"承接时间"],
+          @[@"图片信息",@""],
+          ];
 
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -98,7 +107,15 @@
     if(path.row == 0){
         return 30;
     }else{
-        return 50;
+        if(self.m_helpInfo.m_arrPics.count>0 && path.section == 4){
+            NSInteger sep = 10;
+            NSInteger num = 4.0;
+            NSInteger width = (MAIN_WIDTH-(num+1)*sep)/num;
+            NSInteger row = ceil((self.m_helpInfo.m_arrPics.count*1.0)/num);
+            return row *(width+sep*2);
+        }else{
+            return 50;
+        }
     }
 }
 
@@ -117,10 +134,10 @@
     NSArray *arr = [self.m_arrData objectAtIndex:indexPath.section];
     UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10, ([self high:indexPath]-20)/2, 100, 20)];
     [tip setTextAlignment:NSTextAlignmentLeft];
-    [tip setFont:[UIFont systemFontOfSize:13]];
+    [tip setFont:[UIFont systemFontOfSize:15]];
     [tip setText:[arr objectAtIndex:indexPath.row]];
     [cell addSubview:tip];
-    [tip setTextColor:[UIColor blackColor]];
+    [tip setTextColor:UIColorFromRGB(0x333333)];
 
     if(indexPath.section == 0){
         if(indexPath.row == 0){
@@ -259,6 +276,24 @@
             [cell addSubview:content];
             [content setTextColor:[UIColor blackColor]];
         }
+    }else if (indexPath.section == 4){
+        if(indexPath.row == 0){
+
+        }else{
+            for(NSString *url in self.m_helpInfo.m_arrPics){
+                NSInteger sep = 10;
+                NSInteger num = 4;
+                NSInteger index = [self.m_helpInfo.m_arrPics indexOfObject:url];
+                NSInteger row = index/num;
+                NSInteger coulmn = index%num;
+                NSInteger width = (MAIN_WIDTH-(num+1)*sep)/num;
+                EGOImageView *img = [[EGOImageView alloc]initWithFrame:CGRectMake(sep+(sep+width)*coulmn, sep+(sep+width)*row, width, width)];
+                img.tag = index;
+                img.userInteractionEnabled = YES;
+                [img setImageForAllSDK:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"",url]] withDefaultImage:[UIImage imageNamed:@"logo"]];
+                [cell addSubview:img];
+            }
+        }
     }
  
     UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, [self high:indexPath]-0.5, MAIN_WIDTH, 0.5)];
@@ -283,32 +318,130 @@
 
 - (UIView *)footerView
 {
-    UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 70)];
-    [bg setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
-    UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendBtn setFrame:CGRectMake(10, 10, MAIN_WIDTH-20, 50)];
-    [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
-    if(self.m_helpInfo.m_payStatus.integerValue == 0){
-        [sendBtn setTitle: @"立即支付" forState:UIControlStateNormal];
-        [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        if(self.m_helpInfo.m_status.integerValue == 0){
-            [sendBtn setTitle: @"需求待承接" forState:UIControlStateNormal];
-        }else if(self.m_helpInfo.m_status.integerValue == 1){
-            [sendBtn setTitle: @"需求已承接" forState:UIControlStateNormal];
-        }else if(self.m_helpInfo.m_status.integerValue == 2){
-            [sendBtn setTitle: @"需求已完成" forState:UIControlStateNormal];
-            [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        }else if(self.m_helpInfo.m_status.integerValue == 3){
-            [sendBtn setTitle: @"确认完成" forState:UIControlStateNormal];
-            [bg setBackgroundColor:[UIColor clearColor]];
-            sendBtn.hidden = YES;
+    if(self.m_helpInfo.m_userScoreStatus.integerValue == 0 && self.m_helpInfo.m_status.integerValue == 3){
+
+        UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 280)];
+        [bg setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
+
+        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(10,0,200, 20)];
+        [lab setText:@"填写交易评价"];
+        [lab setFont:[UIFont systemFontOfSize:15]];
+        [lab setTextColor:UIColorFromRGB(0x333333)];
+        [lab setTextAlignment:NSTextAlignmentLeft];
+        [bg addSubview:lab];
+
+
+        UIButton *sendBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [sendBtn1 addTarget:self action:@selector(selectLevelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [sendBtn1 setFrame:CGRectMake(10, 25, 80, 30)];
+        [bg addSubview:sendBtn1];
+        sendBtn1.tag = 0;
+        [sendBtn1.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        sendBtn1.layer.cornerRadius = 3;
+        sendBtn1.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        sendBtn1.layer.borderWidth = 0.5;
+        [sendBtn1 setTitle:@"好评" forState:0];
+        [sendBtn1 setBackgroundColor:self.m_commentIndex == 0 ? KEY_COMMON_CORLOR : [UIColor lightGrayColor]];
+
+        UIButton *sendBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        sendBtn2.tag = 1;
+        [sendBtn2 addTarget:self action:@selector(selectLevelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [sendBtn2 setFrame:CGRectMake(100, 25, 80, 30)];
+        [bg addSubview:sendBtn2];
+        [sendBtn2.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        sendBtn2.layer.cornerRadius = 3;
+        sendBtn2.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        sendBtn2.layer.borderWidth = 0.5;
+        [sendBtn2 setTitle:@"中评" forState:0];
+        [sendBtn2 setBackgroundColor:self.m_commentIndex == 1 ? KEY_COMMON_CORLOR : [UIColor lightGrayColor]];
+
+        UIButton *sendBtn3 = [UIButton buttonWithType:UIButtonTypeCustom];
+        sendBtn3.tag = 2;
+        [sendBtn3 addTarget:self action:@selector(selectLevelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [sendBtn3 setFrame:CGRectMake(190,25, 80, 30)];
+        [bg addSubview:sendBtn3];
+        [sendBtn3.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        sendBtn3.layer.cornerRadius = 3;
+        sendBtn3.layer.borderColor = KEY_COMMON_CORLOR.CGColor;
+        sendBtn3.layer.borderWidth = 0.5;
+        [sendBtn3 setTitle:@"差评" forState:0];
+        [sendBtn3 setBackgroundColor:self.m_commentIndex == 2 ? KEY_COMMON_CORLOR : [UIColor lightGrayColor]];
+
+        if(commentTextView==nil){
+            commentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 70, MAIN_WIDTH-20, 150)];
         }
+        [commentTextView setText:@"输入评价内容"];
+        commentTextView.delegate = self;
+        commentTextView.layer.cornerRadius = 4;
+        [bg addSubview:commentTextView];
+
+        UIButton *sendCommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [sendCommentBtn addTarget:self action:@selector(sendCommentBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [sendCommentBtn setFrame:CGRectMake(10, 230, MAIN_WIDTH-20, 40)];
+        [bg addSubview:sendCommentBtn];
+        [sendCommentBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        sendCommentBtn.layer.cornerRadius = 3;
+        [sendCommentBtn setBackgroundColor:KEY_COMMON_CORLOR];
+        [sendCommentBtn setTitle:@"保存评价" forState:0];
+        return bg;
+
+    }else{
+
+        UIView *bg = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 70)];
+        [bg setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
+        UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [sendBtn setFrame:CGRectMake(10, 10, MAIN_WIDTH-20, 50)];
+        [sendBtn setBackgroundColor:KEY_COMMON_CORLOR];
+        if(self.m_helpInfo.m_payStatus.integerValue == 0){
+            [sendBtn setTitle: @"立即支付" forState:UIControlStateNormal];
+            [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            if(self.m_helpInfo.m_status.integerValue == 0){
+                sendBtn.hidden = YES;
+            }else if(self.m_helpInfo.m_status.integerValue == 1){
+                sendBtn.hidden = YES;
+
+            }else if(self.m_helpInfo.m_status.integerValue == 2){
+                [sendBtn setTitle: @"确认已完成" forState:UIControlStateNormal];
+                [sendBtn addTarget:self action:@selector(sendBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+            }else if(self.m_helpInfo.m_status.integerValue == 3){
+                [bg setBackgroundColor:[UIColor clearColor]];
+                sendBtn.hidden = YES;
+
+            }
+        }
+        [bg addSubview:sendBtn];
+        [sendBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        sendBtn.layer.cornerRadius = 3;
+        return bg;
     }
-    [bg addSubview:sendBtn];
-    [sendBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    sendBtn.layer.cornerRadius = 3;
-    return bg;
+
+    return [[UIView alloc]init];
+}
+
+- (void)sendCommentBtnClicked
+{
+
+    [HTTP_MANAGER score:self.m_helpInfo.m_id
+            scoreResult:[NSString stringWithFormat:@"%ld",self.m_commentIndex]
+           scoreContent:commentTextView.text
+                optType:@"1"
+         successedBlock:^(NSDictionary *succeedResult) {
+             [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+             if([succeedResult[@"ret"]integerValue] == 0){
+                 [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+             }
+
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+
+    }];
+}
+
+- (void)selectLevelBtnClicked:(UIButton *)btn
+{
+    self.m_commentIndex = btn.tag;
+    self.tableView.tableFooterView = [self footerView];
 }
 
 - (void)sameFeeBtnClicked:(UIButton *)btn{
@@ -363,6 +496,14 @@
         
 
     }];
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    if([textView.text isEqualToString:@"输入评价内容"]){
+        textView.text = @"";
+    }
+    return YES;
 }
 @end
 

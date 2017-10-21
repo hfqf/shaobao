@@ -9,7 +9,7 @@
 @protocol FindFilterViewDelegate
 
 @required
-- (void)onFindFilterViewDelegateSelected:(BOOL)isSaller
+- (void)onFindFilterViewDelegateSelected:(NSString *)firstType
                                 withArea:(NSDictionary *)area
                                 withType:(NSString *)type
                            withStartTime:(NSString *)startTime
@@ -30,10 +30,10 @@
 }
 @property(weak)id<FindFilterViewDelegate>m_delegate;
 
-@property (assign) BOOL m_isSaller;
 @property (nonatomic,strong) NSMutableDictionary *m_area;
 @property (nonatomic,strong)NSString *m_type;
 @property (nonatomic,strong)NSString *m_startTime;
 @property (nonatomic,strong)NSString *m_endTime;
 @property (nonatomic,strong)NSString *m_state;
+@property (nonatomic,strong)NSString *m_firstType;
 @end

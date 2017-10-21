@@ -2902,6 +2902,17 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:@"login" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
+- (void)shaobaoLogout:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              };
+
+    [self startNormalPostWith:@"logout" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 
 #pragma mark - 发现
 - (void)findDeleteOne:(NSString *)_id
@@ -2933,11 +2944,10 @@ successedBlock:(SuccessedBlock)success
 {
 
     NSDictionary *reqDic =  @{
-                              @"accessToken":[LoginUserUtil accessToken],
                               @"type": type == nil ? @"":type,
-                              @"userType": userType,// userType == nil ? @"":userType,
+                              @"userType": safeValue(userType),// userType == nil ? @"":userType,
                               @"status":status == nil ? @"":status,
-                              @"provice":provice == nil ? @"":provice,
+                              @"province":provice == nil ? @"":provice,
                               @"county":county== nil ? @"":county,
                               @"startTime":startTime== nil ? @"":startTime,
                               @"endTime":endTime== nil ? @"":endTime,
@@ -3087,8 +3097,8 @@ successedBlock:(SuccessedBlock)success
                               @"city":city,
                               @"county":county,
                               @"address":address == nil ? @"" :address,
-                              @"serviceFee":serviceFee == nil ? @"" : serviceFee,
-                              @"creditFee":creditFee==nil?serviceFee:creditFee,
+                              @"serviceFee":serviceFee == nil ? @"0" : serviceFee,
+                              @"creditFee":creditFee==nil?@"0":creditFee,
                               @"phone":phone==nil ? @"":phone,
                               @"weixin":weixin==nil ? @"":weixin,
                               @"qq":qq==nil ? @"":qq,
@@ -3168,6 +3178,27 @@ successedBlock:(SuccessedBlock)success
 
     [self startNormalPostWith:@"help/getAcceptMessageGroup" paragram:reqDic successedBlock:success failedBolck:failed];
 }
+
+- (void)score:(NSString *)helpId
+  scoreResult:(NSString *)scoreResult
+ scoreContent:(NSString *)scoreContent
+      optType:(NSString *)optType
+               successedBlock:(SuccessedBlock)success
+                  failedBolck:(FailedBlock)failed
+{
+
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"helpId":helpId,
+                              @"scoreResult":scoreResult,
+                              @"scoreContent":scoreContent,
+                              @"optType":optType,
+
+                              };
+
+    [self startNormalPostWith:@"help/score" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 
 #pragma mark - 广告
 
