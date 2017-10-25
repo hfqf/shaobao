@@ -98,6 +98,7 @@
 		7D2044A41F73B14C0061D6AD /* SelectCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */; };
 		7D2044A71F73B1590061D6AD /* SelectAreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */; };
 		7D2044AA1F7408EB0061D6AD /* FindFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A91F7408EB0061D6AD /* FindFilterView.m */; };
+		7D221BB01F9EE012002C7CA4 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D221BAF1F9EE012002C7CA4 /* UserInfoViewController.m */; };
 		7D2D2A221F96496600D4DE28 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */; };
 		7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */; };
 		7D3722B41AAC9A1F001F8914 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B31AAC9A1F001F8914 /* MessageTableViewCell.m */; };
@@ -586,6 +587,8 @@
 		7D2044A61F73B1590061D6AD /* SelectAreaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectAreaViewController.m; sourceTree = "<group>"; };
 		7D2044A81F7408EB0061D6AD /* FindFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindFilterView.h; sourceTree = "<group>"; };
 		7D2044A91F7408EB0061D6AD /* FindFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindFilterView.m; sourceTree = "<group>"; };
+		7D221BAE1F9EE012002C7CA4 /* UserInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
+		7D221BAF1F9EE012002C7CA4 /* UserInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		7D2D2A1E1F96486A00D4DE28 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		7D2D2A1F1F96486A00D4DE28 /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -1594,6 +1597,8 @@
 				7D84E44D1F91A88E00E40BA0 /* AcceptedOrdersViewController.m */,
 				7D84E44F1F91AA1E00E40BA0 /* MyGradeViewController.h */,
 				7D84E4501F91AA1E00E40BA0 /* MyGradeViewController.m */,
+				7D221BAE1F9EE012002C7CA4 /* UserInfoViewController.h */,
+				7D221BAF1F9EE012002C7CA4 /* UserInfoViewController.m */,
 				7D84E4631F91CC8500E40BA0 /* InAndOutMoneyViewController.h */,
 				7D84E4641F91CC8500E40BA0 /* InAndOutMoneyViewController.m */,
 				7D84E4661F920BD300E40BA0 /* TradeHistoryViewController.h */,
@@ -2622,6 +2627,7 @@
 				7D1A651E1F8D1FC200DEC9B5 /* APAuthV2Info.m in Sources */,
 				7D84E4651F91CC8500E40BA0 /* InAndOutMoneyViewController.m in Sources */,
 				7DEC2E261AE74A460031E98F /* SBJson4StreamParserState.m in Sources */,
+				7D221BB01F9EE012002C7CA4 /* UserInfoViewController.m in Sources */,
 				7DCC05C11AA89A0A00C23E3B /* LeaveViewController.m in Sources */,
 				7D0406741E4D577000036FE6 /* ObserveManagerViewController.m in Sources */,
 				7DBB00471AA5F857000F1DCD /* PubllicMaskViewHelper.m in Sources */,

@@ -143,7 +143,7 @@
 
         if(btn == nil){
             btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.selected = YES;
+            btn.selected = NO;
         }
         [btn addTarget:self action:@selector(sameFeeBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [btn setFrame:CGRectMake(MAIN_WIDTH-120,5, 30, 30)];
@@ -192,8 +192,12 @@
 
 - (void)sameFeeBtnClicked:(UIButton *)_btn
 {
-    _btn.selected = !_btn.selected;
-    [self reloadDeals];
+    if(self.m_netMoney.floatValue >= [self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]){
+        _btn.selected = !_btn.selected;
+        [self reloadDeals];
+    }else{
+        [PubllicMaskViewHelper showTipViewWith:@"网币余额不够抵扣" inSuperView:self.view withDuration:1];
+    }
 }
 
 - (void)backToMain

@@ -941,4 +941,8 @@ successedBlock:(SuccessedBlock)success
       successedBlock:(SuccessedBlock)success
          failedBolck:(FailedBlock)failed;
 
+- (void)getUserInfo:(NSString *)account
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
 @end

@@ -10,6 +10,11 @@
 #import "UIImageView+WebCache.h"
 @implementation LxxTableViewCell
 
+- (void)headClicked
+{
+    [self.m_delegate onHeadClicked:self.currentData.m_userId];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
@@ -17,7 +22,11 @@
         m_head = [[EGOImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
         m_head.layer.cornerRadius = 30;
         m_head.clipsToBounds = YES;
+        m_head.userInteractionEnabled = YES;
         [self addSubview:m_head];
+
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headClicked)];
+        [m_head addGestureRecognizer:tap];
 
         m_nameLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,10,120, 18)];
         [m_nameLab setTextAlignment:NSTextAlignmentLeft];

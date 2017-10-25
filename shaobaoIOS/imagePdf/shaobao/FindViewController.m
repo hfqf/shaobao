@@ -16,6 +16,8 @@
 #import "FindSendConfirmOrderViewController.h"
 #import "FindServiceInfoViewController.h"
 #import "MWPhotoBrowser.h"
+#import "MyGradeViewController.h"
+#import "UserInfoViewController.h"
 @interface FindViewController ()<UITableViewDataSource,UITableViewDelegate,FindFilterViewDelegate,FindTableViewCellDelegate,MWPhotoBrowserDelegate>
 @property(nonatomic,strong) FindFilterView *m_filterView;
 @property(nonatomic,strong) NSMutableArray *m_arrPhoto;
@@ -306,5 +308,21 @@
         return [self.m_arrPhoto objectAtIndex:index];
     }
     return nil;
+}
+
+- (void)onHeadClicked:(NSString *)userId
+{
+
+    [HTTP_MANAGER getUserInfo:userId
+               successedBlock:^(NSDictionary *succeedResult) {
+                   NSDictionary *ret = succeedResult[@"data"];
+                   NSDictionary *info = [ret isKindOfClass:[NSNull class]] ? nil : ret;
+                   UserInfoViewController *user = [[UserInfoViewController alloc]initWith:info];
+                   [self.navigationController pushViewController:user animated:YES];
+               } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+               }];
+
+
 }
 @end

@@ -3538,4 +3538,14 @@ successedBlock:(SuccessedBlock)success
                               };
     [self startNormalPostWith:@"my/record" paragram:reqDic successedBlock:success failedBolck:failed];
 }
+
+///  POST /my/getUserInfo
+- (void)getUserInfo:(NSString *)account
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"userId":safeValue(account),
+                              };
+    [self startNormalPostWith:@"my/getUserInfo" paragram:reqDic successedBlock:success failedBolck:failed];
+}
 @end

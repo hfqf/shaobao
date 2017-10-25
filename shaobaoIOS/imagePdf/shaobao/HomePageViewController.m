@@ -18,7 +18,8 @@
 #import "FindSendConfirmOrderViewController.h"
 #import "FindServiceInfoViewController.h"
 #import "MWPhotoBrowser.h"
-
+#import "MyGradeViewController.h"
+#import "UserInfoViewController.h"
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate,MWPhotoBrowserDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
@@ -346,6 +347,21 @@
         return [self.m_arrPhoto objectAtIndex:index];
     }
     return nil;
+}
+
+- (void)onHeadClicked:(NSString *)userId
+{
+    [HTTP_MANAGER getUserInfo:userId
+               successedBlock:^(NSDictionary *succeedResult) {
+                   if([succeedResult[@"ret"] integerValue]==0){
+                       NSDictionary *ret = succeedResult[@"data"];
+                       NSDictionary *info = [ret isKindOfClass:[NSNull class]] ? nil : ret;
+                       UserInfoViewController *user = [[UserInfoViewController alloc]initWith:info];
+                       [self.navigationController pushViewController:user animated:YES];
+                   }
+    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+    }];
 }
 @end
 

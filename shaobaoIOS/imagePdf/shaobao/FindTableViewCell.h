@@ -14,6 +14,8 @@
 - (void)onDelete:(ADTFindItem *)data;
 
 - (void)onTap:(NSInteger)index with:(NSArray *)arrUrl;
+
+- (void)onHeadClicked:(NSString *)userId;
 @end
 #import <UIKit/UIKit.h>
 #import "EGOImageButton.h"

@@ -17,20 +17,20 @@
     UITextField *input4;
     UITextField *input5;
     UITextField *input6;
-    UITextField *input7;
-
+    UITextField *input;
 }
 @end
 
 @implementation ShaobaoRegisterViewController
 - (id)init
 {
-    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO]){
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO]){
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.tableView setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
         self.m_arrData = @[
+                           @"用户姓名",
                             @"选择身份",
                             @"登录账号",
                             @"登录密码",
@@ -40,6 +40,7 @@
                             @"QQ",
                            ];
         [self addFooterView];
+        [self reloadDeals];
     }
     return self;
 }
@@ -90,6 +91,11 @@
 
 - (void)commitBtnClicked
 {
+    if(input.text.length == 0){
+        [PubllicMaskViewHelper showTipViewWith:@"用户姓名不能为空" inSuperView:self.view withDuration:1];
+        return;
+    }
+
     if(input0.text.length == 0){
         [PubllicMaskViewHelper showTipViewWith:@"身份不能为空" inSuperView:self.view withDuration:1];
         return;
@@ -110,9 +116,10 @@
         return;
     }
 
+    [self showWaitingView];
     [HTTP_MANAGER startRegister:input1.text
                       loginPass:input2.text
-                       userName:input1.text
+                       userName:input.text
                            type:[input0.text
                                  isEqualToString:@"个人"] ? @"1" : @"2"
                           phone:input3.text
@@ -120,9 +127,15 @@
                          weixin:input5.text
                              qq:input6.text
                  successedBlock:^(NSDictionary *succeedResult) {
+                     [self removeWaitingView];
+                     [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                     if([succeedResult[@"ret"]integerValue]==0){
+                         [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                     }
 
     } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-
+        [self removeWaitingView];
+        [PubllicMaskViewHelper showTipViewWith:@"注册失败" inSuperView:self.view withDuration:1];
     }];
 
 }
@@ -159,6 +172,18 @@
 
     cell.accessoryType = UITableViewCellAccessoryNone;
     if(indexPath.row == 0){
+        if(input == nil){
+            input = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
+        }
+        input.font = [UIFont systemFontOfSize:15];
+        input.textAlignment = NSTextAlignmentRight;
+        input.placeholder = @"请输入用户姓名";
+        input.delegate = self;
+        input.returnKeyType = UIReturnKeyDone;
+        input.textColor = UIColorFromRGB(0xa1a1a1);
+        [cell addSubview:input];
+
+    }else if(indexPath.row == 1){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if(input0 == nil){
             input0 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-90, 15,60, 20)];
@@ -170,7 +195,7 @@
         input0.returnKeyType = UIReturnKeyDone;
         input0.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input0];
-    }else if(indexPath.row == 1){
+    }else if(indexPath.row == 2){
         if(input1 == nil){
             input1 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -182,7 +207,7 @@
         input1.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input1];
 
-    }else if(indexPath.row == 2){
+    }else if(indexPath.row == 3){
         if(input2 == nil){
             input2 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -194,7 +219,7 @@
         input2.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input2];
 
-    }else if(indexPath.row == 3){
+    }else if(indexPath.row == 4){
         if(input3 == nil){
             input3 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -207,7 +232,7 @@
         input3.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input3];
 
-    }else if(indexPath.row == 4){
+    }else if(indexPath.row == 5){
         if(input4 == nil){
             input4 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -220,7 +245,7 @@
         input4.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input4];
 
-    }else if(indexPath.row == 5){
+    }else if(indexPath.row == 6){
         if(input5 == nil){
             input5 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -233,7 +258,7 @@
         input5.textColor = UIColorFromRGB(0xa1a1a1);
         [cell addSubview:input5];
 
-    }else if(indexPath.row == 6){
+    }else if(indexPath.row == 7){
         if(input6 == nil){
             input6 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH/2-10, 15, MAIN_WIDTH/2, 20)];
         }
@@ -252,7 +277,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0){
+    if(indexPath.row == 1){
 
         UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择身份" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"商家",@"个人", nil];
         [act showInView:self.view];

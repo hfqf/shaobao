@@ -11,6 +11,7 @@
 #import "AddNewLxxViewController.h"
 #import "LxxTableViewCell.h"
 #import "MWPhotoBrowser.h"
+#import "UserInfoViewController.h"
 @interface LlxViewController ()<UITableViewDataSource,UITableViewDelegate,LxxTableViewCellDelegate,UITextFieldDelegate,MWPhotoBrowserDelegate>
 {
        UIView *m_tipView;
@@ -54,7 +55,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self removeBackBtn];
-    [title setText:@"辣新鲜"];
+    [title setText:@"蜡辣鲜"];
     UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [slideBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [slideBtn setFrame:CGRectMake(MAIN_WIDTH-80,20, 70, 44)];
@@ -322,6 +323,22 @@
         return [self.m_arrPhoto objectAtIndex:index];
     }
     return nil;
+}
+
+
+- (void)onHeadClicked:(NSString *)userId
+{
+
+    [HTTP_MANAGER getUserInfo:userId
+               successedBlock:^(NSDictionary *succeedResult) {
+                   NSDictionary *ret = succeedResult[@"data"];
+                   NSDictionary *info = [ret isKindOfClass:[NSNull class]] ? nil : ret;
+                   UserInfoViewController *user = [[UserInfoViewController alloc]initWith:info];
+                   [self.navigationController pushViewController:user animated:YES];
+               } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+               }];
+
 }
 @end
 
