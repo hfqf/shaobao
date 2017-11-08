@@ -93,6 +93,7 @@
 		7D1A65C61F8D239800DEC9B5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A648E1F8D1B8B00DEC9B5 /* AlipaySDK.bundle */; };
 		7D1A65C91F8D23C900DEC9B5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1A65C71F8D23C800DEC9B5 /* libcrypto.a */; };
 		7D1A65CA1F8D23C900DEC9B5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1A65C81F8D23C800DEC9B5 /* libssl.a */; };
+		7D200F251FB1E84D00D8FDE8 /* SaveMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D200F241FB1E84D00D8FDE8 /* SaveMoneyViewController.m */; };
 		7D20449E1F736B630061D6AD /* ADTHelpInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D20449D1F736B630061D6AD /* ADTHelpInfo.m */; };
 		7D2044A11F73B1210061D6AD /* SelectProviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A01F73B1210061D6AD /* SelectProviceViewController.m */; };
 		7D2044A41F73B14C0061D6AD /* SelectCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2044A31F73B14C0061D6AD /* SelectCityViewController.m */; };
@@ -577,6 +578,8 @@
 		7D1A65C71F8D23C800DEC9B5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		7D1A65C81F8D23C800DEC9B5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		7D1E93F31E1C806E006D0E73 /* officeMobile copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "officeMobile copy-Info.plist"; path = "/Users/points/Documents/Svn/officeMobile-Jianye/officeMobile copy-Info.plist"; sourceTree = "<absolute>"; };
+		7D200F231FB1E84D00D8FDE8 /* SaveMoneyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveMoneyViewController.h; sourceTree = "<group>"; };
+		7D200F241FB1E84D00D8FDE8 /* SaveMoneyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveMoneyViewController.m; sourceTree = "<group>"; };
 		7D20449C1F736B630061D6AD /* ADTHelpInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTHelpInfo.h; sourceTree = "<group>"; };
 		7D20449D1F736B630061D6AD /* ADTHelpInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTHelpInfo.m; sourceTree = "<group>"; };
 		7D20449F1F73B1210061D6AD /* SelectProviceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectProviceViewController.h; sourceTree = "<group>"; };
@@ -1611,6 +1614,8 @@
 				7D84E4731F938DB200E40BA0 /* AuthenticationViewController.m */,
 				7D84E4751F93B7E600E40BA0 /* WantWorkViewController.h */,
 				7D84E4761F93B7E600E40BA0 /* WantWorkViewController.m */,
+				7D200F231FB1E84D00D8FDE8 /* SaveMoneyViewController.h */,
+				7D200F241FB1E84D00D8FDE8 /* SaveMoneyViewController.m */,
 			);
 			name = tab4;
 			sourceTree = "<group>";
@@ -2650,6 +2655,7 @@
 				7D7412241B31C3FD00FC01BE /* MKAnnotationView+WebCache.m in Sources */,
 				7DBBFFCD1AA5F6EC000F1DCD /* HttpConnctionManager.m in Sources */,
 				7D1A65261F8D1FC200DEC9B5 /* RSADataVerifier.m in Sources */,
+				7D200F251FB1E84D00D8FDE8 /* SaveMoneyViewController.m in Sources */,
 				7D2044AA1F7408EB0061D6AD /* FindFilterView.m in Sources */,
 				7D7411EB1B31C32800FC01BE /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				7D84E4511F91AA1E00E40BA0 /* MyGradeViewController.m in Sources */,
@@ -2860,8 +2866,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
-				PROVISIONING_PROFILE = "33b5b779-99d0-450e-b9d7-fd2c5e8a90ac";
-				PROVISIONING_PROFILE_SPECIFIER = shaobaoAppStore;
+				PROVISIONING_PROFILE = "3e088e2c-da7e-4c9a-becf-1bbb31f9709d";
+				PROVISIONING_PROFILE_SPECIFIER = shaobao_adhoc;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;

@@ -96,21 +96,21 @@
     bg.userInteractionEnabled = YES;
 
     UILabel *tip1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 20+44, 90, 20)];
-    [tip1 setText:@"网币"];
+    [tip1 setText:@"网钞币"];
     [tip1 setFont:[UIFont systemFontOfSize:18]];
     [tip1 setTextAlignment:NSTextAlignmentLeft];
     [tip1 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip1];
 
     UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+44, MAIN_WIDTH-20, 50)];
-    [tip2 setText:[NSString stringWithFormat:@"%.2f",self.m_netMoney.floatValue]];
+    [tip2 setText:[NSString stringWithFormat:@"%.2fWCB",self.m_netMoney.floatValue]];
     [tip2 setFont:[UIFont boldSystemFontOfSize:50]];
     [tip2 setTextAlignment:NSTextAlignmentLeft];
     [tip2 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip2];
 
     UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 110+44, MAIN_WIDTH-20, 20)];
-    [tip3 setText:@"备注: 1网币等于1元人民币"];
+    [tip3 setText:@"备注: 1网钞币等于1元人民币"];
     [tip3 setFont:[UIFont systemFontOfSize:18]];
     [tip3 setTextAlignment:NSTextAlignmentLeft];
     [tip3 setTextColor:[UIColor whiteColor]];
@@ -152,11 +152,11 @@
         [m_input1 setTextColor:UIColorFromRGB(0x333333)];
         [m_input1 setPlaceholder:@"请输入提现金额"];
         [cell addSubview:m_input1];
+        [m_input1 resignFirstResponder];
     }else if (indexPath.row == 1){
         [tit setText:@"提取账号类型"];
         m_input2 = [[UITextField alloc]initWithFrame:CGRectMake(MAIN_WIDTH-200, 20, 190, 20)];
         m_input2.returnKeyType = UIReturnKeyDone;
-        m_input1.keyboardType = UIKeyboardTypeNumberPad;
         [m_input2 setTextColor:UIColorFromRGB(0x333333)];
         m_input2.enabled = NO;
         [m_input2 setPlaceholder:@"请输入提现账号类型"];
@@ -191,6 +191,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 1){
+        [m_input1 resignFirstResponder];
+
         UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择提取方式" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"支付宝",@"微信", nil];
         [act showInView:self.view];
     }
@@ -244,7 +246,10 @@
                payAccount:m_input3.text
            successedBlock:^(NSDictionary *succeedResult) {
                if([succeedResult[@"ret"]integerValue]==0){
-                   [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                   
+                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"正在处理中...即时或24小时到账!" message:@"快速处理电话(15261883123)" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                   alert.tag = 1;
+                   [alert show];
                    [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
                }else{
                    [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];

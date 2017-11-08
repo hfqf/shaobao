@@ -3420,6 +3420,19 @@ responseContent:(NSString *)responseContent
     [self startNormalPostWith:@"pay/payResult" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
+- (void)recharge:(NSString *)payType
+        relMoney:(NSString *)relMoney
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed
+{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"payType":payType,
+                              @"relMoney":relMoney,
+                              };
+    [self startNormalPostWith:@"pay/recharge" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
 #pragma mark - 我的
 ///查询我的网币余额
 - (void)getCash:(SuccessedBlock)success

@@ -86,26 +86,27 @@
     UILabel *_title = [[UILabel alloc]initWithFrame:CGRectMake(10, 15,120,20)];
     [_title setTextColor:UIColorFromRGB(0x333333)];
     [_title setFont:[UIFont systemFontOfSize:15]];
-    NSInteger type =  [info[@"type"]integerValue];
-    if(type == 1){
-        [_title setText:[NSString stringWithFormat:@"%@",@"提取"]];
-
-    }else if(type == 2){
-        [_title setText:[NSString stringWithFormat:@"%@",@"转赠"]];
-
-    }else if(type == 3){
-        [_title setText:[NSString stringWithFormat:@"%@",@"充值"]];
-
-    }else if(type == 4){
-        [_title setText:[NSString stringWithFormat:@"%@",@"提现拒绝转入"]];
-
-    }else if(type == 5){
-        [_title setText:[NSString stringWithFormat:@"%@",@"接单完成转入"]];
-
-    }else if(type == 6){
-        [_title setText:[NSString stringWithFormat:@"%@",@"支付抵扣"]];
-
-    }
+//    NSInteger type =  [info[@"type"]integerValue];
+//    if(type == 1){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"提取"]];
+//
+//    }else if(type == 2){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"转赠"]];
+//
+//    }else if(type == 3){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"充值"]];
+//
+//    }else if(type == 4){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"提现拒绝转入"]];
+//
+//    }else if(type == 5){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"接单完成转入"]];
+//
+//    }else if(type == 6){
+//        [_title setText:[NSString stringWithFormat:@"%@",@"支付抵扣"]];
+//
+//    }
+    [_title setText:info[@"typeName"]];
     [_title setTextAlignment:NSTextAlignmentLeft];
     [cell addSubview:_title];
 

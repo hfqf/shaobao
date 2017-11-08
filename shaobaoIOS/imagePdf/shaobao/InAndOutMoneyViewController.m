@@ -8,7 +8,7 @@
 
 #import "InAndOutMoneyViewController.h"
 
-@interface InAndOutMoneyViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface InAndOutMoneyViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property(nonatomic,strong) NSString *m_netMoney;
 @end
 
@@ -80,21 +80,21 @@
     bg.userInteractionEnabled = YES;
 
     UILabel *tip1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 20+44, 90, 20)];
-    [tip1 setText:@"网币"];
+    [tip1 setText:@"网钞币"];
     [tip1 setFont:[UIFont systemFontOfSize:18]];
     [tip1 setTextAlignment:NSTextAlignmentLeft];
     [tip1 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip1];
 
     UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+44, MAIN_WIDTH-20, 50)];
-    [tip2 setText:[NSString stringWithFormat:@"%.2f",self.m_netMoney.floatValue]];
+    [tip2 setText:[NSString stringWithFormat:@"%.2fWCB",self.m_netMoney.floatValue]];
     [tip2 setFont:[UIFont boldSystemFontOfSize:50]];
     [tip2 setTextAlignment:NSTextAlignmentLeft];
     [tip2 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip2];
 
     UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 110+44, MAIN_WIDTH-20, 20)];
-    [tip3 setText:@"备注: 1网币等于1元人民币"];
+    [tip3 setText:@"备注: 1网钞币等于1元人民币"];
     [tip3 setFont:[UIFont systemFontOfSize:18]];
     [tip3 setTextAlignment:NSTextAlignmentLeft];
     [tip3 setTextColor:[UIColor whiteColor]];
@@ -111,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,7 +120,15 @@
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(10, 20, 30, 30)];
-    [img setImage:[UIImage imageNamed:indexPath.row == 0 ? @"set_outcashe" : @"set_zhuanz"]];
+    if(indexPath.row == 0){
+        [img setImage:[UIImage imageNamed:@"set_outcashe"]];
+
+    }else if (indexPath.row == 1){
+        [img setImage:[UIImage imageNamed:@"set_zhuanz"]];
+
+    }else{
+        [img setImage:[UIImage imageNamed:@"set_szk"]];
+    }
     [cell addSubview:img];
 
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -128,8 +136,15 @@
     [tit setTextAlignment:NSTextAlignmentLeft];
     [tit setFont:[UIFont systemFontOfSize:16]];
     [tit setTextColor:UIColorFromRGB(0x333333)];
-    [tit setText:indexPath.row == 0 ?@"提取":@"转赠"];
     [cell addSubview:tit];
+
+    if(indexPath.row == 0){
+        [tit setText:@"提取"];
+    }else if (indexPath.row == 1){
+        [tit setText:@"转赠"];
+    }else{
+        [tit setText:@"充值"];
+    }
 
     UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0, 69.5, MAIN_WIDTH, 0.5)];
     [sep setBackgroundColor:UIColorFromRGB(0xebebeb)];
@@ -140,9 +155,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0){
-        [self.navigationController pushViewController:[[NSClassFromString(@"OutCashViewController") alloc]init] animated:YES];
-    }else{
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"余额提取需要收取3%的手续费(金融机构支付宝微信平台的费用)" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+        alert.tag = 1;
+        [alert show];
+    }else if(indexPath.row == 1) {
         [self.navigationController pushViewController:[[NSClassFromString(@"TransferViewController") alloc]init] animated:YES];
+    }else{
+         [self.navigationController pushViewController:[[NSClassFromString(@"SaveMoneyViewController") alloc]init] animated:YES];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+          [self.navigationController pushViewController:[[NSClassFromString(@"OutCashViewController") alloc]init] animated:YES];
     }
 }
 @end

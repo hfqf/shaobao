@@ -55,7 +55,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self removeBackBtn];
-    [title setText:@"蜡辣鲜"];
+    [title setText:@"腊辣鲜"];
     UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [slideBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [slideBtn setFrame:CGRectMake(MAIN_WIDTH-80,20, 70, 44)];

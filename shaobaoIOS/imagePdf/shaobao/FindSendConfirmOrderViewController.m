@@ -136,7 +136,7 @@
 
         [value setText:[NSString stringWithFormat:@"%.2f元",[self.m_helpInfo.m_serviceFee floatValue]+[self.m_helpInfo.m_creditFee floatValue]]];
     }else if (indexPath.row == 4){
-        [tip setText:@"网币余额"];
+        [tip setText:@"网钞币余额"];
 
         [value setText:[NSString stringWithFormat:@"%@网币",self.m_netMoney]];
     }else if (indexPath.row == 5){
@@ -155,7 +155,7 @@
         UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-90,12,80, 16)];
         [content setTextAlignment:NSTextAlignmentLeft];
         [content setFont:[UIFont systemFontOfSize:14]];
-        [content setText:@"网币抵扣"];
+        [content setText:@"网钞币抵扣"];
         [bg addSubview:content];
         [content setTextColor:[UIColor blackColor]];
 
@@ -506,7 +506,6 @@
                                   payId:payId
                                callback:^(NSDictionary *resultDic) {
                                    if([resultDic[@"code"]integerValue] == 10000){
-
 
 
 

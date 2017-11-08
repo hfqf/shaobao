@@ -887,6 +887,11 @@ successedBlock:(SuccessedBlock)success
    successedBlock:(SuccessedBlock)success
       failedBolck:(FailedBlock)failed;
 
+- (void)recharge:(NSString *)payType
+        relMoney:(NSString *)relMoney
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed;
+
 #pragma mark - 我的
 ///查询我的网币余额
 - (void)getCash:(SuccessedBlock)success
