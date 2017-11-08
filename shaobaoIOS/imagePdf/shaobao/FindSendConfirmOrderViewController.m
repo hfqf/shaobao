@@ -508,7 +508,6 @@
                                    if([resultDic[@"code"]integerValue] == 10000){
 
 
-
                                    }else{
                                        [PubllicMaskViewHelper showTipViewWith:resultDic[@"msg"] inSuperView:self.view withDuration:1];
                                    }
