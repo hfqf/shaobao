@@ -21,7 +21,8 @@
     ret.m_userId = [info stringWithFilted:@"userId"];
     ret.m_userName = [info stringWithFilted:@"userName"];
     ret.m_userType = [info stringWithFilted:@"userType"];
-    ret.m_arrComments = [info stringWithFilted:@"commentList"];
+    NSArray *arr = info[@"commentList"];
+    ret.m_arrComments = [arr isKindOfClass:[NSNull class]] ? @[] : arr;
     return ret;
 }
 @end

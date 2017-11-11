@@ -22,7 +22,7 @@
     self.m_title = title;
     self.m_url = url;
     if(self = [super init]){
-        m_webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, MAIN_WIDTH, MAIN_HEIGHT-64)];
+        m_webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, HEIGHT_NAVIGATION, MAIN_WIDTH, MAIN_HEIGHT-HEIGHT_NAVIGATION)];
         [m_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
         [self.view addSubview:m_webView];
     }

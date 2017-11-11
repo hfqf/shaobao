@@ -29,7 +29,7 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.tableView setFrame:CGRectMake(0, 64, MAIN_WIDTH, MAIN_HEIGHT-64-50)];
+        [self.tableView setFrame:CGRectMake(0, HEIGHT_NAVIGATION, MAIN_WIDTH, MAIN_HEIGHT-HEIGHT_NAVIGATION-50)];
         [self.tableView setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
 
         self.m_inputView = [[ChatInputView alloc]initWithFrame:CGRectMake(0, MAIN_HEIGHT-50, MAIN_WIDTH, 50)];

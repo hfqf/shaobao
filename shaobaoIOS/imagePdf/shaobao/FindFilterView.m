@@ -15,7 +15,7 @@
 
     if(self = [super initWithFrame:frame]){
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        m_table = [[UITableView alloc]initWithFrame:CGRectMake(60, 64, MAIN_WIDTH-60, MAIN_HEIGHT-64-50-50) style:UITableViewStylePlain];
+        m_table = [[UITableView alloc]initWithFrame:CGRectMake(60, HEIGHT_NAVIGATION, MAIN_WIDTH-60, MAIN_HEIGHT-HEIGHT_NAVIGATION-50-50) style:UITableViewStylePlain];
         m_table.separatorStyle = UITableViewCellSeparatorStyleNone;
         [m_table setBackgroundColor:[UIColor whiteColor]];
         m_table.dataSource = self;
@@ -28,7 +28,7 @@
         UIButton *resetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [resetBtn setBackgroundColor:UIColorFromRGB(0x53cfec)];
         [resetBtn addTarget:self action:@selector(resetBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [resetBtn setFrame:CGRectMake(60, MAIN_HEIGHT-64-50, (MAIN_WIDTH-60)/2, 50)];
+        [resetBtn setFrame:CGRectMake(60, MAIN_HEIGHT-HEIGHT_NAVIGATION-50, (MAIN_WIDTH-60)/2, 50)];
         [resetBtn setTitle:@"重置" forState:UIControlStateNormal];
         [resetBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:resetBtn];
@@ -36,7 +36,7 @@
         UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [okBtn setBackgroundColor:UIColorFromRGB(0x53cfec)];
         [okBtn addTarget:self action:@selector(okBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [okBtn setFrame:CGRectMake(60+(MAIN_WIDTH-60)/2,MAIN_HEIGHT-64-50, (MAIN_WIDTH-60)/2, 50)];
+        [okBtn setFrame:CGRectMake(60+(MAIN_WIDTH-60)/2,MAIN_HEIGHT-HEIGHT_NAVIGATION-50, (MAIN_WIDTH-60)/2, 50)];
         [okBtn setTitle:@"确认" forState:UIControlStateNormal];
         [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:okBtn];

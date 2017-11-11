@@ -49,13 +49,13 @@
     [title setText:@"发现"];
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, 20, 60, 44)];
+    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, HEIGHT_STATUSBAR, 60, 44)];
     [rightBtn setTitle:@"发布" forState:UIControlStateNormal];
     [navigationBG addSubview:rightBtn];
     navigationBG.userInteractionEnabled = YES;
     UIButton *filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [filterBtn addTarget:self action:@selector(filterBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [filterBtn setFrame:CGRectMake(0, 20, 60, 44)];
+    [filterBtn setFrame:CGRectMake(0, HEIGHT_STATUSBAR, 60, 44)];
     [filterBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [navigationBG addSubview:filterBtn];
 

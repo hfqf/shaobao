@@ -67,7 +67,7 @@
 
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-120,20 , 120, 44)];
+    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-120,HEIGHT_STATUSBAR , 120, 44)];
     [rightBtn setTitle:@"咨询消息" forState:0];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:0];
     [navigationBG addSubview:rightBtn];

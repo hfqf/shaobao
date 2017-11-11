@@ -26,7 +26,6 @@
 #define  IS_FIRST_LAUNCH               @"IS_FIRST_LAUNCH"
 #define  NOT_FIRST_LAUNCH              @"NOT_FIRST_LAUNCH"
 
-#define  HEIGHT_MAIN_BOTTOM            49
 
 #define  MAIN_HEIGHT                  [UIScreen mainScreen].bounds.size.height
 #define  MAIN_WIDTH                   [UIScreen mainScreen].bounds.size.width
@@ -41,8 +40,16 @@ id = nil;\
 }
 
 #define  HEIGHT_SEGEMENT_RES           30
-#define  HEIGHT_NAVIGATION             50
-#define  HEIGHT_STATUSBAR              20
+
+#define  iPhoneX (MAIN_WIDTH == 375.f && MAIN_HEIGHT == 812.f ? YES : NO)
+#define  HEIGHT_STATUSBAR              (iPhoneX  ? 44  : 20)
+
+#define  HEIGHT_NAVIGATION              (44 + HEIGHT_STATUSBAR)
+#define  HEIGHT_TAB_BOTTOM             (iPhoneX ? (49.f+34.f) : 49.f)
+
+#define  HEIGHT_MAIN_BOTTOM            HEIGHT_TAB_BOTTOM
+
+#define  HEIGHT_TAB_Safe_Bottom_Margin         (iPhoneX ? 34.f : 0.f)
 
 #define  OS_ABOVE_IOS8                 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? 1 : 0)
 

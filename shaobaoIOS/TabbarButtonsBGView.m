@@ -32,7 +32,7 @@ withButtonNum:(int)num
         NSMutableArray * arr = [NSMutableArray array];
         for(int i=0;i<num;i++)
         {
-            TabbarCustomButton * btn = [[TabbarCustomButton alloc]initWithFrame:CGRectMake((MAIN_WIDTH/num)*i, 0, (MAIN_WIDTH/num), HEIGHT_MAIN_BOTTOM) withTitle:[arrTitle objectAtIndex:i] withUnselectedImg:[arrUnSelected objectAtIndex:i] withSelectedImg:[arrSelected objectAtIndex:i] withUnreadType:ENUM_UNREAD_NONE];
+            TabbarCustomButton * btn = [[TabbarCustomButton alloc]initWithFrame:CGRectMake((MAIN_WIDTH/num)*i, 0, (MAIN_WIDTH/num), HEIGHT_MAIN_BOTTOM-HEIGHT_TAB_Safe_Bottom_Margin) withTitle:[arrTitle objectAtIndex:i] withUnselectedImg:[arrUnSelected objectAtIndex:i] withSelectedImg:[arrSelected objectAtIndex:i] withUnreadType:ENUM_UNREAD_NONE];
             btn.m_delegate = self;
             btn.tag = i;
             btn.index = i;

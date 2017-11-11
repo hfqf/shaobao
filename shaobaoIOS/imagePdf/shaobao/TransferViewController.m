@@ -90,25 +90,25 @@
 
 - (UIView *)headrView
 {
-    UIImageView *bg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 200)];
+    UIImageView *bg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, 200+HEIGHT_STATUSBAR)];
     [bg setImage:[UIImage imageNamed:@"set_ye_bg"]];
     bg.userInteractionEnabled = YES;
 
-    UILabel *tip1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 20+44, 90, 20)];
+    UILabel *tip1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 20+HEIGHT_NAVIGATION, 90, 20)];
     [tip1 setText:@"网钞币"];
     [tip1 setFont:[UIFont systemFontOfSize:18]];
     [tip1 setTextAlignment:NSTextAlignmentLeft];
     [tip1 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip1];
 
-    UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+44, MAIN_WIDTH-20, 50)];
+    UILabel *tip2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 50+HEIGHT_NAVIGATION, MAIN_WIDTH-20, 50)];
     [tip2 setText:[NSString stringWithFormat:@"%.2fWCB",self.m_netMoney.floatValue]];
     [tip2 setFont:[UIFont boldSystemFontOfSize:50]];
     [tip2 setTextAlignment:NSTextAlignmentLeft];
     [tip2 setTextColor:[UIColor whiteColor]];
     [bg addSubview:tip2];
 
-    UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 110+44, MAIN_WIDTH-20, 20)];
+    UILabel *tip3 = [[UILabel alloc]initWithFrame:CGRectMake(10, 110+HEIGHT_NAVIGATION, MAIN_WIDTH-20, 20)];
     [tip3 setText:@"备注: 1网钞币等于1元人民币"];
     [tip3 setFont:[UIFont systemFontOfSize:18]];
     [tip3 setTextAlignment:NSTextAlignmentLeft];

@@ -175,7 +175,7 @@
     NSInteger sep = 10;
     NSInteger cell_num = 3;
     NSInteger width = (MAIN_WIDTH-(70+sep*(cell_num+1)))/3;
-    high+= (sep+width)*row;
+    high+= ((sep+width)*row);
 
 
     for(NSDictionary *info in currentData.m_arrComments){

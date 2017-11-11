@@ -2866,8 +2866,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
-				PROVISIONING_PROFILE = "3e088e2c-da7e-4c9a-becf-1bbb31f9709d";
-				PROVISIONING_PROFILE_SPECIFIER = shaobao_adhoc;
+				PROVISIONING_PROFILE = "33b5b779-99d0-450e-b9d7-fd2c5e8a90ac";
+				PROVISIONING_PROFILE_SPECIFIER = shaobaoAppStore;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;

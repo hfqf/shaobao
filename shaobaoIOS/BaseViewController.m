@@ -64,7 +64,7 @@
     }
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    navigationBG = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, MAIN_WIDTH, HEIGHT_NAVIGATION+DISTANCE_TOP)];
+    navigationBG = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, MAIN_WIDTH, HEIGHT_NAVIGATION)];
     navigationBG.userInteractionEnabled = YES;
 //    [navigationBG setBackgroundColor:KEY_COMMON_CORLOR];
     [navigationBG setImage:[UIImage imageNamed:@"titlebar"]];
@@ -72,7 +72,7 @@
     [self.view addSubview:navigationBG];
     
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setFrame:CGRectMake(0,DISTANCE_TOP,61,44)];
+    [backBtn setFrame:CGRectMake(0,HEIGHT_STATUSBAR,61,44)];
 //    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setBackgroundColor:[UIColor clearColor]];
     [backBtn setImageEdgeInsets:UIEdgeInsetsMake(12,25, 12, 25)];
@@ -80,8 +80,7 @@
     [backBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [navigationBG addSubview:backBtn];
     
-    title= [[UILabel alloc]initWithFrame:CGRectMake(100, 5, 120, 34)];
-    [title setFrame:CGRectMake(50,5+DISTANCE_TOP,MAIN_WIDTH-100, title.frame.size.height)];
+    title= [[UILabel alloc]initWithFrame:CGRectMake(60, HEIGHT_STATUSBAR+12,MAIN_WIDTH-120, 20)];
     [title setFont:[UIFont systemFontOfSize:18]];
     [title setBackgroundColor:[UIColor clearColor]];
     title.hidden = NO;
