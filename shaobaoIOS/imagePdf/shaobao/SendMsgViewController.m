@@ -44,6 +44,12 @@
     return self;
 }
 
+
+
+- (void)autoRequest{
+    [self requestData:YES];
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     NSDictionary *info = [notification userInfo];
@@ -143,6 +149,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [title setText:self.m_findItem.m_isSender ? self.m_findItem.m_acceptUserName : self.m_findItem.m_userName];
+    
+    [NSTimer scheduledTimerWithTimeInterval:5
+                                    repeats:YES
+                                      block:^(NSTimer * _Nonnull timer) {
+                                       [self autoRequest];
+        
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

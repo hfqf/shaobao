@@ -58,6 +58,15 @@
                                                      NSNumber *index = note.object;
                                                      [self selectWithIndex:1];
     }];
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserverForName:KEY_IS_OUTDEATE_TOKEN
+                                                     object:nil
+                                                      queue:[NSOperationQueue currentQueue]
+                                                 usingBlock:^(NSNotification * _Nonnull note) {
+                                                     [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+
+                                                 }];
 }
 
 - (void)viewWillAppear:(BOOL)animated

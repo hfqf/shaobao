@@ -28,10 +28,10 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headClicked)];
         [m_head addGestureRecognizer:tap];
 
-        m_nameLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,10,120, 18)];
+        m_nameLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(m_head.frame)+10,10,MAIN_WIDTH-110-(CGRectGetMaxX(m_head.frame)+10), 18)];
         [m_nameLab setTextAlignment:NSTextAlignmentLeft];
         [m_nameLab setTextColor:[UIColor blackColor]];
-        [m_nameLab setFont:[UIFont systemFontOfSize:15]];
+        [m_nameLab setFont:[UIFont systemFontOfSize:14]];
         [self addSubview:m_nameLab];
 
         m_timeLab = [[UILabel alloc]initWithFrame:CGRectMake(MAIN_WIDTH-120,10,110, 18)];
@@ -139,7 +139,10 @@
     }
 
     if(arr.count == 0){
-        [m_sep setFrame:CGRectMake(0, CGRectGetMaxY(m_delBtn.frame)+10, MAIN_WIDTH, 0.5)];
+        [m_commentBtn setFrame:CGRectMake(m_commentBtn.frame.origin.x, CGRectGetMaxY(m_contentLab.frame)+30, m_commentBtn.frame.size.width, m_commentBtn.frame.size.height)];
+        [m_delBtn setFrame:CGRectMake(m_delBtn.frame.origin.x, CGRectGetMaxY(m_contentLab.frame)+30, m_delBtn.frame.size.width, m_delBtn.frame.size.height)];
+    }else{
+        
     }
 
     for(int i=0;i<arr.count;i++){

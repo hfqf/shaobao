@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SideslipViewController.mm"
-            timestampString = "520825252.803376"
+            timestampString = "545705701.293577"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
-            landmarkName = "-onShowSliderView"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
+            landmarkName = "-onRemoveTapObserver"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SideslipViewController.mm"
-            timestampString = "520825252.803376"
+            timestampString = "545705701.293635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "-onShowLeftView"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ContactDetailViewController.m"
-            timestampString = "509804118.231879"
+            timestampString = "546365916.635318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "19"
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.218766"
+            timestampString = "558177850.440434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1200"
-            endingLineNumber = "1200"
-            landmarkName = "-downloadFileWithUrl:fileName:params:successBlock:failedBolck:"
+            startingLineNumber = "1199"
+            endingLineNumber = "1199"
+            landmarkName = "-downloadQPFileWithUrl:params:successBlock:failedBolck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,13 +106,90 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.218844"
+            timestampString = "558177850.440531"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1178"
-            endingLineNumber = "1178"
+            startingLineNumber = "1177"
+            endingLineNumber = "1177"
             landmarkName = "-downloadFileWithUrl:fileName:params:successBlock:failedBolck:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HttpConnctionManager downloadFileWithUrl:fileName:params:successBlock:failedBolck:]"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.626134"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "588">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__85-[HttpConnctionManager downloadFileWithUrl:fileName:params:successBlock:failedBolck:]_block_invoke"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.6279041"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "339">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__copy_helper_block_.474"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.630049"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1163"
+                  endingLineNumber = "1163"
+                  offsetFromSymbolStart = "21">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__85-[HttpConnctionManager downloadFileWithUrl:fileName:params:successBlock:failedBolck:]_block_invoke.477"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.631989"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.479"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.635041"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "17">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +199,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.218899"
+            timestampString = "558177850.440588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1176"
-            endingLineNumber = "1176"
+            startingLineNumber = "1175"
+            endingLineNumber = "1175"
             landmarkName = "-downloadFileWithUrl:fileName:params:successBlock:failedBolck:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[HttpConnctionManager downloadFileWithUrl:fileName:params:successBlock:failedBolck:]"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.6425329"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "588">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__85-[HttpConnctionManager downloadFileWithUrl:fileName:params:successBlock:failedBolck:]_block_invoke"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/HttpConnctionManager.m"
+                  timestampString = "558178273.644085"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1178"
+                  endingLineNumber = "1178"
+                  offsetFromSymbolStart = "339">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -346,12 +455,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.219154"
+            timestampString = "558177850.4408571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1089"
-            endingLineNumber = "1089"
-            landmarkName = "-uploadFileWithPath:params:successBlock:failedBolck:"
+            startingLineNumber = "1088"
+            endingLineNumber = "1088"
+            landmarkName = "-uploadPDFFileWithPath:withFileData:params:successBlock:failedBolck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -378,12 +487,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.219226"
+            timestampString = "558177850.440963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1561"
-            endingLineNumber = "1561"
-            landmarkName = "-commitTodo:successedBlock:failedBolck:"
+            startingLineNumber = "1560"
+            endingLineNumber = "1560"
+            landmarkName = "-getGovermentFileInfo:successedBlock:failedBolck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -394,12 +503,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.219279"
+            timestampString = "558177850.441031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "475"
-            endingLineNumber = "475"
-            landmarkName = "-getDeptInfo:successedBlock:failedBolck:"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
+            landmarkName = "-getDepInfo:successedBlock:failedBolck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -505,22 +614,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ContactDetailViewController.m"
-            timestampString = "515561542.290096"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
-            landmarkName = "-shortTelBtnClicked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "jianye/ResourceCentreViewController.m"
             timestampString = "522140978.969239"
             startingColumnNumber = "9223372036854775807"
@@ -570,7 +663,7 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "532068099.447838"
+                  timestampString = "558178273.772722"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
@@ -585,7 +678,7 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "532068099.449176"
+                  timestampString = "558178273.775414"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
@@ -600,27 +693,12 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "532068099.451715"
+                  timestampString = "558178273.778038"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1309"
-                  endingLineNumber = "1309"
-                  offsetFromSymbolStart = "51">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.699"
-                  moduleName = "shaobao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "532068099.455451"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1309"
-                  endingLineNumber = "1309"
-                  offsetFromSymbolStart = "29">
+                  startingLineNumber = "1305"
+                  endingLineNumber = "1305"
+                  offsetFromSymbolStart = "16">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -630,7 +708,22 @@
                   moduleName = "shaobao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
-                  timestampString = "532068099.45903"
+                  timestampString = "558178273.781773"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1309"
+                  endingLineNumber = "1309"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.703"
+                  moduleName = "shaobao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/points/Documents/GitHub/shaobao/shaobaoIOS/TodoInfoViewController.m"
+                  timestampString = "558178273.784336"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1309"
@@ -887,12 +980,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.219728"
+            timestampString = "558177850.441487"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2143"
-            endingLineNumber = "2143"
-            landmarkName = "-getManagersMenuList:successedBlock:failedBolck:"
+            startingLineNumber = "2142"
+            endingLineNumber = "2142"
+            landmarkName = "-getEManagerList:subject:successedBlock:failedBolck:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -999,12 +1092,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
-            timestampString = "531849108.467304"
+            timestampString = "558177850.441658"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
-            landmarkName = "-doAlipayPay:body:payId:callback:"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "-doAlipayPay:callback:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1015,11 +1108,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/SendMsgViewController.m"
-            timestampString = "532069854.054593"
+            timestampString = "558175556.031541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1031,77 +1124,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HttpConnctionManager.m"
-            timestampString = "531755251.219989"
+            timestampString = "558177850.441743"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3473"
-            endingLineNumber = "3473"
-            landmarkName = "-authentication:phone:picUrl:avatar:email:weixin:qq:contactUserName:contactUserPhone:contactUserWeixin:contactUserName2:contactUserPhone2:contactUserWeixin2:successedBlock:failedBolck:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
-            timestampString = "529861469.944073"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "-addBtnClicked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
-            timestampString = "529861469.944216"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "-addBtnClicked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
-            timestampString = "529861469.944363"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "-addBtnClicked"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
-            timestampString = "529861469.944502"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-addBtnClicked"
-            landmarkType = "7">
+            startingLineNumber = "3475"
+            endingLineNumber = "3475"
+            landmarkName = "HttpConnctionManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1111,11 +1140,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
-            timestampString = "531849108.467416"
+            timestampString = "558177850.441815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "-onResp:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1126,28 +1155,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
-            timestampString = "531849108.467454"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindViewController.m"
-            timestampString = "532069854.054911"
+            timestampString = "549164477.893293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "-onSelectArea"
             landmarkType = "7">
          </BreakpointContent>
@@ -1159,7 +1172,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/SendHelpViewController.m"
-            timestampString = "530159799.140952"
+            timestampString = "558177850.441902"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "351"
@@ -1175,11 +1188,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/SendHelpViewController.m"
-            timestampString = "530159799.141011"
+            timestampString = "558177850.441958"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1191,7 +1204,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/SendHelpViewController.m"
-            timestampString = "530159799.141061"
+            timestampString = "558177850.44201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "326"
@@ -1238,28 +1251,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/FindFilterView.m"
-            timestampString = "532069854.055156"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
-            landmarkName = "-alertView:clickedButtonAtIndex:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindViewController.m"
-            timestampString = "532069854.055272"
+            timestampString = "549164477.893795"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "-onHeadClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1271,11 +1268,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/HomePageViewController.m"
-            timestampString = "531020015.767192"
+            timestampString = "549164477.8940541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-onHeadClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1287,11 +1284,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindViewController.m"
-            timestampString = "532069854.055399"
+            timestampString = "549164477.894111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "-onHeadClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1303,11 +1300,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/FindViewController.m"
-            timestampString = "532069854.055518"
+            timestampString = "549164477.894336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "-onHeadClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1319,11 +1316,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/HomePageViewController.m"
-            timestampString = "531020015.767306"
+            timestampString = "549164477.894547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "-onHeadClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1335,7 +1332,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/OutCashViewController.m"
-            timestampString = "532069854.055691"
+            timestampString = "536161623.726436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
@@ -1350,12 +1347,108 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/SaveMoneyViewController.m"
-            timestampString = "532069854.056468"
+            filePath = "imagePdf/shaobao/TransferViewController.m"
+            timestampString = "536161623.726574"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "-sendBtnClikced"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/TransferViewController.m"
+            timestampString = "536161623.726643"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "-sendBtnClikced"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindSendConfirmOrderViewController.m"
+            timestampString = "558177850.4422539"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
+            landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
+            timestampString = "553486378.8955131"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "-addBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownloadUrlSetViewController.m"
+            timestampString = "545705378.13562"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "-saveBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/HomePageViewController.m"
+            timestampString = "549164477.894729"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
+            landmarkName = "-clickImageIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindViewController.m"
+            timestampString = "549164489.540077"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -1366,13 +1459,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "imagePdf/shaobao/SaveMoneyViewController.m"
-            timestampString = "532069854.056597"
+            filePath = "imagePdf/shaobao/SendHelpViewController.m"
+            timestampString = "558177850.442391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "-init"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/SendServiceeViewController.m"
+            timestampString = "558177850.442454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "-init"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindServiceInfoViewController.m"
+            timestampString = "558177850.44251"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1383,12 +1508,188 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "imagePdf/shaobao/LlxViewController.m"
-            timestampString = "532069854.056698"
+            timestampString = "553486378.895821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "-textFieldShouldReturn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/LlxViewController.m"
+            timestampString = "553486378.896222"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "-textFieldShouldReturn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/LlxViewController.m"
+            timestampString = "553486378.896481"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "-textFieldShouldReturn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MainTabBarViewController.m"
+            timestampString = "553481653.050264"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
+            timestampString = "553486378.8967299"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "-addBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
+            timestampString = "553486378.896778"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-addBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/AddNewLxxViewController.m"
+            timestampString = "553486378.896822"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "-addBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/LlxViewController.m"
+            timestampString = "553486378.8968641"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "-high:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/LlxViewController.m"
+            timestampString = "553486378.897083"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "-requestData:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/SelectCityViewController.m"
+            timestampString = "558177850.442722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "-confirmBtnClicked"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HttpConnctionManager.m"
+            timestampString = "558177850.442786"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3398"
+            endingLineNumber = "3398"
+            landmarkName = "-payResult:resultCode:responseContent:successedBlock:failedBolck:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "imagePdf/shaobao/FindServiceInfoViewController.m"
+            timestampString = "558177850.44285"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

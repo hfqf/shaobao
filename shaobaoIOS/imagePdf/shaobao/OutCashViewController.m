@@ -216,7 +216,10 @@
 
 - (void)sendBtnClikced
 {
-    if(self.m_netMoney.integerValue == 0){
+    [m_input1 resignFirstResponder];
+    [m_input2 resignFirstResponder];
+    [m_input3 resignFirstResponder];
+    if(self.m_netMoney.floatValue == 0){
         [PubllicMaskViewHelper showTipViewWith:@"无钱可取" inSuperView:self.view withDuration:1];
         return;
     }
@@ -236,7 +239,7 @@
         return;
     }
 
-    if([m_input1.text intValue] >  self.m_netMoney.integerValue){
+    if([m_input1.text floatValue] >  self.m_netMoney.floatValue){
         [PubllicMaskViewHelper showTipViewWith:@"提取金额不能大于网币金额" inSuperView:self.view withDuration:1];
         return;
     }

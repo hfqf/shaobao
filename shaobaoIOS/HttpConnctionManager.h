@@ -90,8 +90,6 @@ typedef void (^FailBlock)(NSError *error);
             successedBlock:(SuccessedBlock)success
                failedBolck:(FailedBlock)failed;
 
-//检查当前应用版本
-- (void)checkVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
 
 //登录
 - (void)startLogin:(NSString *)name pwd:(NSString *)pwd successedBlock:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
@@ -375,8 +373,6 @@ typedef void (^FailBlock)(NSError *error);
                   successedBlock:(SuccessedBlock)success
                      failedBolck:(FailedBlock)failed;
 
-//检查更新
-- (void)gettheLastestVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
 
 - (void)getTipNum:(SuccessedBlock)success failedBolck:(FailedBlock)failed;
 
@@ -770,6 +766,7 @@ successedBlock:(SuccessedBlock)success
           weixin:(NSString *)weixin
               qq:(NSString *)qq
          picUrls:(NSString *)picUrls
+           email:(NSString *)email
   successedBlock:(SuccessedBlock)success
      failedBolck:(FailedBlock)failed;
 

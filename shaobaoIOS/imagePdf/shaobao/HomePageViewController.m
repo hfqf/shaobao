@@ -187,10 +187,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
         [cell setBackgroundColor:[UIColor whiteColor]];
         NSArray *arr = @[
-                         @{
-                             @"name":@"叫人帮忙",
-                             @"icon":@"home_quick_0",
-                             },
+                     
                          @{
                              @"name":@"律师侦探",
                              @"icon":@"home_quick_1",
@@ -202,6 +199,10 @@
                          @{
                              @"name":@"纠纷债务",
                              @"icon":@"home_quick_3",
+                             },
+                         @{
+                             @"name":@"叫人帮忙",
+                             @"icon":@"home_quick_0",
                              },
                          @{
                              @"name":@"个性需求",

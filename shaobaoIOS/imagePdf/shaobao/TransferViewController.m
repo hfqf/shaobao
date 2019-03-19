@@ -77,7 +77,7 @@
 
         if([succeedResult[@"ret"]integerValue]==0){
             self.m_netMoney = succeedResult[@"data"][@"netMoney"];
-            //            self.m_netMoney =@"1000";
+//            self.m_netMoney =@"0.2";
         }
 
         [self reloadDeals];
@@ -205,7 +205,9 @@
 
 - (void)sendBtnClikced
 {
-    if(self.m_netMoney.integerValue == 0){
+    [m_input1 resignFirstResponder];
+    [m_input3 resignFirstResponder];
+    if(self.m_netMoney.floatValue == 0){
         [PubllicMaskViewHelper showTipViewWith:@"无钱可取" inSuperView:self.view withDuration:1];
         return;
     }
@@ -215,12 +217,12 @@
         return;
     }
 
-    if(m_input2.text.length == 0){
+    if(m_input3.text.length == 0){
         [PubllicMaskViewHelper showTipViewWith:@"对方账号不能为空" inSuperView:self.view withDuration:1];
         return;
     }
 
-    [HTTP_MANAGER transferCash:m_input2.text
+    [HTTP_MANAGER transferCash:m_input3.text
                          money:m_input1.text
                 successedBlock:^(NSDictionary *succeedResult) {
                if([succeedResult[@"ret"]integerValue]==0){

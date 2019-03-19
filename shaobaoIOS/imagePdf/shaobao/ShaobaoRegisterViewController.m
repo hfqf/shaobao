@@ -30,14 +30,11 @@
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.tableView setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
         self.m_arrData = @[
-                           @"用户姓名",
-                            @"选择身份",
-                            @"登录账号",
-                            @"登录密码",
-                            @"手机号码",
-                            @"邮箱",
-                            @"微信",
-                            @"QQ",
+                            @"用户昵称*",
+                            @"选择身份*",
+                            @"登录账号*",
+                            @"登录密码*",
+                            @"手机号码*",
                            ];
         [self addFooterView];
         [self reloadDeals];
@@ -163,8 +160,13 @@
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identy];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:[self.m_arrData objectAtIndex:indexPath.row]];
+    [str addAttribute:NSForegroundColorAttributeName
+                          value:[UIColor redColor]
+                          range:NSMakeRange(4, 1)];
     UILabel *tip = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 100, 20)];
-    [tip setText:[self.m_arrData objectAtIndex:indexPath.row]];
+    [tip setAttributedText:str];
+    
     [tip setTextAlignment:NSTextAlignmentLeft];
     [tip setFont:[UIFont systemFontOfSize:16]];
     [tip setTextColor:UIColorFromRGB(0x5d5d5d)];

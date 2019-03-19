@@ -7,7 +7,6 @@
 //
 
 #import "ChatTextTableViewCell.h"
-#import "RegexKitLite.h"
 #import "JSONKit.h"
 @implementation ChatTextTableViewCell
 @synthesize m_delegate;

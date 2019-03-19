@@ -29,7 +29,7 @@
 
         self.m_arrData = @[
                            @[@"服务信息",@"服务类型",@"需求说明",@"服务区域"],
-                           @[@"费用信息",@"费用定金承诺"],
+                           @[@"费用信息",@"履约保证金"],
                            @[@"联系信息",@"发布人",@"手机号码",@"邮箱"],
                            @[@"添加图片",@""],
                            ];
@@ -181,6 +181,7 @@
             content.tag = 6;
             content.delegate = self;
             content.returnKeyType= UIReturnKeyDone;
+            content.keyboardType= UIKeyboardTypeNumbersAndPunctuation;
             content.placeholder = @"请输入承诺服务定金";
             [content setTextAlignment:NSTextAlignmentRight];
             [content setFont:[UIFont systemFontOfSize:15]];
@@ -206,6 +207,7 @@
             content.tag = 10;
             content.delegate = self;
             content.returnKeyType= UIReturnKeyDone;
+            content.keyboardType= UIKeyboardTypeNumbersAndPunctuation;
             content.placeholder = @"请输入手机号码";
             [content setTextAlignment:NSTextAlignmentRight];
             [content setFont:[UIFont systemFontOfSize:15]];
@@ -217,7 +219,8 @@
         else if(indexPath.row == 3){
 
             UITextField *content = [[UITextField alloc]initWithFrame:CGRectMake(100, ([self high:indexPath]-20)/2,MAIN_WIDTH-110, 20)];
-            content.tag = 10;
+            content.tag = 11;
+            content.keyboardType= UIKeyboardTypeEmailAddress;
             content.delegate = self;
             content.returnKeyType= UIReturnKeyDone;
             content.placeholder = @"请输入邮箱地址";
@@ -347,7 +350,8 @@
     [self showWaitingView];
     [HTTP_MANAGER findSend:[NSString stringWithFormat:@"%lu",self.m_helpInfo.m_type.integerValue]
                    content:self.m_helpInfo.m_desc
-                  province:self.m_helpInfo.m_area[@"provice"][@"id"] city:self.m_helpInfo.m_area[@"city"][@"id"]
+                  province:self.m_helpInfo.m_area[@"provice"][@"id"]
+                      city:self.m_helpInfo.m_area[@"city"][@"id"]
                     county:self.m_helpInfo.m_area[@"area"][@"id"]
                    address:self.m_helpInfo.m_address
                 serviceFee:@"0"
@@ -356,6 +360,7 @@
                     weixin:@""
                         qq:@""
                    picUrls:pics
+                     email:self.m_helpInfo.m_email
             successedBlock:^(NSDictionary *succeedResult) {
                 [self removeWaitingView];
                 if([succeedResult[@"ret"]integerValue] == 0){
@@ -396,6 +401,8 @@
         self.m_helpInfo.m_promise2 = textField.text;
     }else if (textField.tag == 10){
         self.m_helpInfo.m_tel = textField.text;
+    }else if (textField.tag == 11){
+        self.m_helpInfo.m_email = textField.text;
     }
     [textField resignFirstResponder];
     return YES;
@@ -422,9 +429,15 @@
 - (void)onSelectedProvice:(NSDictionary *)pInfo withCity:(NSDictionary *)cInfo withArea:(NSDictionary *)aInfo
 {
     NSMutableDictionary *area = [NSMutableDictionary dictionary];
-    [area setObject:pInfo forKey:@"provice"];
-    [area setObject:cInfo forKey:@"city"];
-    [area setObject:aInfo forKey:@"area"];
+    if(pInfo){
+        [area setObject:pInfo forKey:@"provice"];
+    }
+    if(cInfo){
+        [area setObject:cInfo forKey:@"city"];
+    }
+    if(aInfo){
+        [area setObject:aInfo forKey:@"area"];
+    }
     self.m_helpInfo.m_area = area;
     [self reloadDeals];
 }

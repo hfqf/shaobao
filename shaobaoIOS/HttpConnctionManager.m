@@ -39,19 +39,6 @@
 
 SINGLETON_FOR_CLASS(HttpConnctionManager)
 
-#define APP_URL    @"http://itunes.apple.com/lookup?id=677079618"
-
-//检查版本更新
-- (void)checkVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed
-{
-    self = [super initWithBaseURL:[NSURL URLWithString:BJ_SERVER]];
-    [self startGetWith:APP_URL paragram:nil successedBlock:^(NSDictionary *retDic){
-        success(retDic);
-    }
-           failedBolck:^(AFHTTPRequestOperation *operation, NSError *error){
-           }];
-}
-
 #pragma mark - 封装过的网络请求接口
 
 - (void)startGetWith:( NSString *)url
@@ -91,10 +78,9 @@ SINGLETON_FOR_CLASS(HttpConnctionManager)
     parameters:para
        success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-                      if([[responseObject objectForKey:@"RESULT"]integerValue] == KEY_VALUE_TOKEN_OUTDATE)
+//                    if([url rangeOfString:@"getHelpList"].length >0)
+                      if([[responseObject objectForKey:@"ret"]integerValue]==1  &&[[responseObject objectForKey:@"msg"] isEqualToString:@"请登录"])
                       {
-                          [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:KEY_IS_OUTDEATE_TOKEN];
-                          [PubllicMaskViewHelper showTipViewWith:@"用户身份失效,自动重新登录" inSuperView:[UIApplication sharedApplication].keyWindow.rootViewController.view withDuration:1];
                           [[NSNotificationCenter defaultCenter]postNotificationName:KEY_IS_OUTDEATE_TOKEN object:nil];
                           return ;
                       }
@@ -1655,12 +1641,6 @@ failedBolck:(FailedBlock)failed
     [self startNormalPostWith:nil paragram:@{@"DATA":[self encodeToPercentEscapeString:[dic JSONString]]} successedBlock:success failedBolck:failed];
 }
 
-//检查更新
-- (void)gettheLastestVersion:(SuccessedBlock)success failedBolck:(FailedBlock)failed
-{
-    NSString *url = @"http://melaka.fir.im/api/v2/app/55591f138e82369a570010bf/versions?token=WKQhCC19JIygnoM2k3H4dojAWYx3I4x5jo1iO7Qm";
-    [self startGetWith:url paragram:nil successedBlock:success failedBolck:failed];
-}
 
 - (void)getTipNum:(SuccessedBlock)success failedBolck:(FailedBlock)failed
 {
@@ -3085,23 +3065,26 @@ successedBlock:(SuccessedBlock)success
           weixin:(NSString *)weixin
               qq:(NSString *)qq
          picUrls:(NSString *)picUrls
+           email:(NSString *)email
+
  successedBlock:(SuccessedBlock)success
     failedBolck:(FailedBlock)failed
 {
 
     NSDictionary *reqDic =  @{
                               @"accessToken":[LoginUserUtil accessToken],
-                              @"type":type,
-                              @"content":content,
-                              @"province":province,
-                              @"city":city,
-                              @"county":county,
+                              @"type":type == nil ? @"" :type,
+                              @"content":content == nil ? @"" : content ,
+                              @"province":province == nil ? @"" : province,
+                              @"city":city == nil ? @"":city,
+                              @"county":county == nil ? @"" :county,
                               @"address":address == nil ? @"" :address,
                               @"serviceFee":serviceFee == nil ? @"0" : serviceFee,
                               @"creditFee":creditFee==nil?@"0":creditFee,
                               @"phone":phone==nil ? @"":phone,
                               @"weixin":weixin==nil ? @"":weixin,
                               @"qq":qq==nil ? @"":qq,
+                              @"email":email==nil ? @"":email,
                               @"picUrls":picUrls,
                               @"accessToken":[LoginUserUtil shaobaoAccessToken]
                               };
@@ -3413,9 +3396,9 @@ responseContent:(NSString *)responseContent
 {
     NSDictionary *reqDic =  @{
                               @"accessToken":[LoginUserUtil accessToken],
-                              @"payId":payId,
-                              @"resultCode":resultCode,
-                              @"responseContent":responseContent,
+                              @"payId":payId == nil ? @"" : payId ,
+                              @"resultCode":resultCode == nil ? @"" :resultCode,
+                              @"responseContent":responseContent == nil ? @"" : responseContent,
                               };
     [self startNormalPostWith:@"pay/payResult" paragram:reqDic successedBlock:success failedBolck:failed];
 }
@@ -3549,7 +3532,7 @@ successedBlock:(SuccessedBlock)success
                               @"account":safeValue(account),
                               @"money":money,
                               };
-    [self startNormalPostWith:@"my/record" paragram:reqDic successedBlock:success failedBolck:failed];
+    [self startNormalPostWith:@"my/transferCash" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 
 ///  POST /my/getUserInfo

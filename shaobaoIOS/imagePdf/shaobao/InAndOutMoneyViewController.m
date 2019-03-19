@@ -16,7 +16,7 @@
 
 - (id)init
 {
-    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:YES withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
+    if(self = [super initWithStyle:UITableViewStylePlain withIsNeedPullDown:NO withIsNeedPullUpLoadMore:NO withIsNeedBottobBar:NO])
     {
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
@@ -44,6 +44,12 @@
 
     [self.view bringSubviewToFront:navigationBG];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestData:YES];
 }
 
 - (void)rightBtnClicked

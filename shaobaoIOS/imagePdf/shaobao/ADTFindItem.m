@@ -30,6 +30,8 @@
     ret.m_creditFee = [NSString stringWithFormat:@"%@", @([info[@"creditFee"]doubleValue])];
     ret.m_id = [info stringWithFilted:@"id"];
     ret.m_payStatus = [info stringWithFilted:@"payStatus"];
+    ret.m_email = [info stringWithFilted:@"userEmail"];
+    ret.m_userWX = [info stringWithFilted:@"userWeixin"];
     NSString *pics = [info stringWithFilted:@"picUrls"];
     NSMutableArray *arrPic = [NSMutableArray array];
     if(pics.length > 0){

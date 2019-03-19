@@ -277,9 +277,17 @@
             [m_nameText setText:nil];
             [m_pwdText setText:nil];
         }
+    }else  if ([data[@"ret"]integerValue] == 1 && [data[@"msg"] isEqualToString:@"请登录"]) {
+        [PubllicMaskViewHelper showTipViewWith:data[@"msg"] inSuperView:self.view withDuration:1];
+    }
+    else{
+        [PubllicMaskViewHelper showTipViewWith:data[@"msg"] inSuperView:self.view withDuration:1];
     }
 }
 
+- (void)jumo2Login{
+    [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
+}
 #pragma mark - 自动保存密码
 
 + (void)saveUserToAutoPlist:(NSDictionary *)dic

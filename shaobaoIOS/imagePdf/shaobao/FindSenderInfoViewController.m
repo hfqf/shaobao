@@ -30,13 +30,13 @@
         [self requestData:YES];
 
         self.m_arrData = findInfo.m_arrPics.count == 0 ? @[
-                           @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
+                           @[@"需求信息",@"需求类型",@"需求说明",@"区域地址",@"详细地址"],
                            @[@"费用信息",@"服务费用",@"履约定金"],
                            @[@"联系信息",@"需求人",@"手机号码"],
                            @[@"承接人",@"承接人",@"手机号码",@"承接时间"],
                            ]:
         @[
-          @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
+          @[@"需求信息",@"需求类型",@"需求说明",@"区域地址",@"详细地址"],
           @[@"费用信息",@"服务费用",@"履约定金"],
           @[@"联系信息",@"需求人",@"手机号码"],
           @[@"承接人",@"承接人",@"手机号码",@"承接时间"],
@@ -196,7 +196,7 @@
             content.tag = 6;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_creditFee]];
+            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_serviceFee]];
             [cell addSubview:content];
             [content setTextColor:KEY_COMMON_CORLOR];
 
@@ -206,7 +206,7 @@
             content.tag = 7;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_serviceFee]];
+            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_creditFee]];
             [cell addSubview:content];
             [content setTextColor:KEY_COMMON_CORLOR];
 

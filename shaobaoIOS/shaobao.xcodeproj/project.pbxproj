@@ -106,7 +106,6 @@
 		7D3722BC1AAC9D9F001F8914 /* SideslipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B71AAC9D9F001F8914 /* SideslipView.m */; };
 		7D3722BD1AAC9D9F001F8914 /* SideslipViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B91AAC9D9F001F8914 /* SideslipViewController.mm */; };
 		7D3722BE1AAC9D9F001F8914 /* SliderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722BB1AAC9D9F001F8914 /* SliderTableViewCell.m */; };
-		7D3722C11AAC9E45001F8914 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722C01AAC9E45001F8914 /* SettingViewController.m */; };
 		7D3722C31AAC9EFA001F8914 /* leftStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722C21AAC9EFA001F8914 /* leftStart.png */; };
 		7D3722C61AACA06B001F8914 /* slider_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722C51AACA06B001F8914 /* slider_bg.png */; };
 		7D3722C81AACA075001F8914 /* chat_friend_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722C71AACA075001F8914 /* chat_friend_default@2x.png */; };
@@ -138,7 +137,6 @@
 		7D44FAEA1EFA72CD00098242 /* sign@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D44FAD91EFA72CD00098242 /* sign@3x.png */; };
 		7D44FAEC1EFA72D100098242 /* SignPDFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D44FAEB1EFA72D000098242 /* SignPDFSDK.framework */; };
 		7D458B031ADD61AC00BCACAB /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D458B021ADD61AC00BCACAB /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		7D4D2D891B03A33000A88CAF /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4D2D881B03A33000A88CAF /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7D50A45E1F72C40E00ACAA80 /* SendHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */; };
 		7D5546C31BC3EE9C008397F0 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5546C21BC3EE9C008397F0 /* LKBadgeView.m */; };
 		7D55492A1AE9DBB400E1B47A /* checkbox_single_null.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D5548D91AE9DBB400E1B47A /* checkbox_single_null.png */; };
@@ -227,7 +225,6 @@
 		7D99FA731EB9D15C0058ECCB /* SliderUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D99FA721EB9D15C0058ECCB /* SliderUITableView.m */; };
 		7DA2784A1AAF31E8004E8BF2 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA278491AAF31E8004E8BF2 /* ContactTableViewCell.m */; };
 		7DA2784D1AAF3D33004E8BF2 /* PublicFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA2784C1AAF3D33004E8BF2 /* PublicFileViewController.m */; };
-		7DA60E8E1B77A016001A5BD0 /* DownloadUrlSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA60E8D1B77A016001A5BD0 /* DownloadUrlSetViewController.m */; };
 		7DAC57E41A7F89BD004C6F1F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DAC57E31A7F89BD004C6F1F /* libz.dylib */; };
 		7DBB00051AA5F7CD000F1DCD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBFFE11AA5F7CD000F1DCD /* AFHTTPRequestOperation.m */; };
 		7DBB00061AA5F7CD000F1DCD /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBFFE31AA5F7CD000F1DCD /* AFHTTPRequestOperationManager.m */; };
@@ -607,8 +604,6 @@
 		7D3722B91AAC9D9F001F8914 /* SideslipViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SideslipViewController.mm; sourceTree = "<group>"; };
 		7D3722BA1AAC9D9F001F8914 /* SliderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTableViewCell.h; sourceTree = "<group>"; };
 		7D3722BB1AAC9D9F001F8914 /* SliderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderTableViewCell.m; sourceTree = "<group>"; };
-		7D3722BF1AAC9E45001F8914 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
-		7D3722C01AAC9E45001F8914 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		7D3722C21AAC9EFA001F8914 /* leftStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftStart.png; sourceTree = "<group>"; };
 		7D3722C51AACA06B001F8914 /* slider_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_bg.png; sourceTree = "<group>"; };
 		7D3722C71AACA075001F8914 /* chat_friend_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_friend_default@2x.png"; sourceTree = "<group>"; };
@@ -648,8 +643,6 @@
 		7D44FAEB1EFA72D000098242 /* SignPDFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SignPDFSDK.framework; sourceTree = "<group>"; };
 		7D458B011ADD61AC00BCACAB /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		7D458B021ADD61AC00BCACAB /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
-		7D4D2D871B03A33000A88CAF /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		7D4D2D881B03A33000A88CAF /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		7D50A45C1F72C40E00ACAA80 /* SendHelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendHelpViewController.h; sourceTree = "<group>"; };
 		7D50A45D1F72C40E00ACAA80 /* SendHelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendHelpViewController.m; sourceTree = "<group>"; };
 		7D5546C11BC3EE9C008397F0 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKBadgeView.h; sourceTree = "<group>"; };
@@ -818,8 +811,6 @@
 		7DA278491AAF31E8004E8BF2 /* ContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableViewCell.m; sourceTree = "<group>"; };
 		7DA2784B1AAF3D33004E8BF2 /* PublicFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicFileViewController.h; sourceTree = "<group>"; };
 		7DA2784C1AAF3D33004E8BF2 /* PublicFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicFileViewController.m; sourceTree = "<group>"; };
-		7DA60E8C1B77A016001A5BD0 /* DownloadUrlSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadUrlSetViewController.h; sourceTree = "<group>"; };
-		7DA60E8D1B77A016001A5BD0 /* DownloadUrlSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadUrlSetViewController.m; sourceTree = "<group>"; };
 		7DAC57E31A7F89BD004C6F1F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7DBB00011AA5F7CD000F1DCD /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
 		7DBB00021AA5F7CD000F1DCD /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
@@ -1046,6 +1037,7 @@
 				7D1A64821F8D1B3B00DEC9B5 /* libc++.tbd in Frameworks */,
 				7D0FEBF71F87D7AD00C482D0 /* Photos.framework in Frameworks */,
 				7D0FEBF51F87D7A500C482D0 /* AssetsLibrary.framework in Frameworks */,
+				18E1D90019D3BFFA0050B775 /* AVFoundation.framework in Frameworks */,
 				7DBBFFC41AA5F63F000F1DCD /* libsqlite3.dylib in Frameworks */,
 				7D44FAEC1EFA72D100098242 /* SignPDFSDK.framework in Frameworks */,
 				7DBBFFC21AA5F635000F1DCD /* libiconv.dylib in Frameworks */,
@@ -1059,7 +1051,6 @@
 				7D1A65C51F8D238A00DEC9B5 /* AlipaySDK.framework in Frameworks */,
 				18E21BB3197520080029EC1F /* libxml2.dylib in Frameworks */,
 				7D2D2A221F96496600D4DE28 /* libWeChatSDK.a in Frameworks */,
-				18E1D90019D3BFFA0050B775 /* AVFoundation.framework in Frameworks */,
 				18E1D8FE19D3BFF40050B775 /* AudioToolbox.framework in Frameworks */,
 				18E21A7B19751F9A0029EC1F /* CoreGraphics.framework in Frameworks */,
 				18E21A7D19751F9A0029EC1F /* UIKit.framework in Frameworks */,
@@ -1482,8 +1473,6 @@
 			children = (
 				7D5546C11BC3EE9C008397F0 /* LKBadgeView.h */,
 				7D5546C21BC3EE9C008397F0 /* LKBadgeView.m */,
-				7D4D2D871B03A33000A88CAF /* RegexKitLite.h */,
-				7D4D2D881B03A33000A88CAF /* RegexKitLite.m */,
 				7D458B011ADD61AC00BCACAB /* OpenUDID.h */,
 				7D458B021ADD61AC00BCACAB /* OpenUDID.m */,
 				7DBB00691AA5F9A2000F1DCD /* PublicADT.h */,
@@ -1888,12 +1877,8 @@
 				7DBB00521AA5F89D000F1DCD /* LoginViewController.m */,
 				7DBB006A1AA5F9E3000F1DCD /* LoginScrollerView.h */,
 				7DBB006B1AA5F9E3000F1DCD /* LoginScrollerView.m */,
-				7D3722BF1AAC9E45001F8914 /* SettingViewController.h */,
-				7D3722C01AAC9E45001F8914 /* SettingViewController.m */,
 				7DD203071ACAE082005F442A /* FilePreviewViewController.h */,
 				7DD203081ACAE082005F442A /* FilePreviewViewController.m */,
-				7DA60E8C1B77A016001A5BD0 /* DownloadUrlSetViewController.h */,
-				7DA60E8D1B77A016001A5BD0 /* DownloadUrlSetViewController.m */,
 				7D43B1D41F0765CE00BE2571 /* FaultReprairViewController.h */,
 				7D43B1D51F0765CE00BE2571 /* FaultReprairViewController.m */,
 				7D43B1D71F076DA000BE2571 /* AddNewFaultRepriarViewController.h */,
@@ -2474,7 +2459,6 @@
 				7D7411EF1B31C32800FC01BE /* PSTCollectionViewData.m in Sources */,
 				7DD3E5B71E5EB42100C6A265 /* AddNewNoticeViewController.m in Sources */,
 				7DEC2E111AE69F010031E98F /* ADTGropuInfo.m in Sources */,
-				7D3722C11AAC9E45001F8914 /* SettingViewController.m in Sources */,
 				7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */,
 				7D50A45E1F72C40E00ACAA80 /* SendHelpViewController.m in Sources */,
 				7D458B031ADD61AC00BCACAB /* OpenUDID.m in Sources */,
@@ -2493,7 +2477,6 @@
 				7D0FEC001F8871AE00C482D0 /* NSBundle+TZImagePicker.m in Sources */,
 				7D7412331B31C3FD00FC01BE /* UIView+WebCacheOperation.m in Sources */,
 				7DF83B1B1BE511F500E9C16E /* ScheduleViewController.m in Sources */,
-				7D4D2D891B03A33000A88CAF /* RegexKitLite.m in Sources */,
 				7DBB00481AA5F857000F1DCD /* FontSizeUtil.m in Sources */,
 				7D7411E81B31C32800FC01BE /* MWZoomingScrollView.m in Sources */,
 				7DEC2E271AE74A460031E98F /* SBJson4StreamTokeniser.m in Sources */,
@@ -2660,7 +2643,6 @@
 				7D7411EB1B31C32800FC01BE /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				7D84E4511F91AA1E00E40BA0 /* MyGradeViewController.m in Sources */,
 				7D0FEC211F8A53CC00C482D0 /* FindCategoryViewController.m in Sources */,
-				7DA60E8E1B77A016001A5BD0 /* DownloadUrlSetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2781,7 +2763,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: wei liu (C78H27QVSY)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BJW9F34F29;
 				ENABLE_BITCODE = NO;
@@ -2817,7 +2799,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
-				PROVISIONING_PROFILE = "d1d14c58-be16-4b0b-8045-ca0acc93d43f";
+				PROVISIONING_PROFILE = "db88a39a-c8af-4334-9381-c8a5e18c5cc9";
 				PROVISIONING_PROFILE_SPECIFIER = shaobaoDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
@@ -2866,7 +2848,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfqf.shaobao;
 				PRODUCT_NAME = shaobao;
-				PROVISIONING_PROFILE = "33b5b779-99d0-450e-b9d7-fd2c5e8a90ac";
+				PROVISIONING_PROFILE = "e9a3c43f-b5b1-4d26-958b-53700034fc38";
 				PROVISIONING_PROFILE_SPECIFIER = shaobaoAppStore;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";

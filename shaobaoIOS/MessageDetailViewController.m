@@ -8,7 +8,6 @@
 
 #import "MessageDetailViewController.h"
 #import "FontSizeUtil.h"
-#import "RegexKitLite.h"
 @interface MessageDetailViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 {

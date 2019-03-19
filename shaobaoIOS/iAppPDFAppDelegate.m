@@ -19,15 +19,7 @@
 @end
 @implementation iAppPDFAppDelegate
 
-- (void)checkLauhchDaTangApp{
-//    NSString *ret = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_SSO_IS_NEED_LOGIN];
-//    if([ret integerValue] != 1){
-        if([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"www.cattsoft.gportal:"]])
-        {
-            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"www.cattsoft.gportal://com.kj.jyoa?info=login"]];
-        }
-//    }
-}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -35,24 +27,6 @@
     [WXApi registerApp:@"wxc508d5fdc6898b52"];
 
     
-#if DEBUG
-    
-#else
-    [self checkLauhchDaTangApp];
-#endif
-    
-    
-    NSString *server =[[NSUserDefaults standardUserDefaults]objectForKey:KEY_SERVER_PRE];
-    if(server == nil || server.length == 0)
-    {
-#if DEBUG
-        [[NSUserDefaults standardUserDefaults]setObject:@"218.94.19.242:3001/jymserver" forKey:KEY_SERVER_PRE];
-#else
-        [[NSUserDefaults standardUserDefaults]setObject:@"58.213.150.105:8080/jymserver" forKey:KEY_SERVER_PRE];
-#endif
-    }
-    
-    [self checkUpdate];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     self.rootVC = [[MainTabBarViewController alloc]init];
 
@@ -87,7 +61,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self checkUpdate];
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -100,51 +74,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-#pragma mark -
-
-- (void)checkUpdate
-{
-    [[HttpConnctionManager sharedInstance] gettheLastestVersion:^(NSDictionary *retDic){
-        
-        NSArray *arr = (NSArray *)retDic;
-        if(arr.count > 0)
-        {
-            NSDictionary  *bundleDic = [[NSBundle mainBundle] infoDictionary];
-            NSString *currentAppVersion = [bundleDic objectForKey:@"CFBundleVersion"];
-            
-            self.m_versionDic = [arr firstObject];
-            BOOL isCanUpdate =  [currentAppVersion integerValue] < [self.m_versionDic[@"version"]integerValue];
-            
-            if(isCanUpdate)
-            {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"有版本可以升级" message:@"是否升级" delegate:self cancelButtonTitle:@"忽略" otherButtonTitles:@"确认", nil];
-                [alert show];
-            }
-
-        }
-        else
-        {
-            
-        }
-        
-    } failedBolck:FAILED_BLOCK{
-        
-    }];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 0)
-    {
-        
-    }
-    else
-    {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https%3A%2F%2Fmelaka.fir.im%2Fapi%2Fv2%2Fapp%2Finstall%2F55591f138e82369a570010bf%3Ftoken%3DWKQhCC19JIygnoM2k3H4dojAWYx3I4x5jo1iO7Qm"]];
-    }
-}
-
 
 
 - (BOOL)application:(UIApplication *)application

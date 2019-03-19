@@ -8,8 +8,10 @@
 
 #import "SelectCityViewController.h"
 #import "SelectAreaViewController.h"
+#import "SendHelpViewController.h"
+#import "SendServiceeViewController.h"
 @interface SelectCityViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+@property(nonatomic,assign)NSInteger m_index;
 @end
 
 @implementation SelectCityViewController
@@ -29,9 +31,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [title setText:@"选择省份"];
+    [title setText:@"选择城市"];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(MAIN_WIDTH-50, HEIGHT_STATUSBAR, 40, 44)];
+    [btn setTitle:@"确认" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [navigationBG addSubview:btn];
+    [btn addTarget:self action:@selector(confirmBtnClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)confirmBtnClicked
+{
+    NSDictionary *info = [self.m_arrData objectAtIndex:self.m_index];
+    [self.m_delegate onSelectedProvice:self.m_info withCity:info withArea:nil];
+    NSArray *arr = self.navigationController.viewControllers;
+    for(UIViewController *vc in arr){
+        if([vc isMemberOfClass: [SendHelpViewController  class]] ||
+           [vc isMemberOfClass: [SendServiceeViewController  class]] ){
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -72,7 +92,21 @@
 
     NSDictionary *info = [self.m_arrData objectAtIndex:indexPath.row];
     [cell.textLabel setText:info[@"name"]];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.tag = indexPath.row;
+    [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setFrame:CGRectMake(MAIN_WIDTH-50, 0, 40, 40)];
+    [btn setImage:[UIImage imageNamed:self.m_index == indexPath.row ?@"area_select_on" : @"area_select_un"] forState:UIControlStateNormal];
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+    [cell addSubview:btn];
     return cell;
+}
+
+- (void)btnClicked:(UIButton *)btn
+{
+    self.m_index = btn.tag;
+    [self reloadDeals];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

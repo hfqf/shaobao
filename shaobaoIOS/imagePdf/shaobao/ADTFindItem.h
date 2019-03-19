@@ -43,6 +43,7 @@
 @property(nonatomic,strong) NSString *m_acceptScoreStatus;
 @property(nonatomic,strong) NSString *m_email;
 @property(nonatomic,strong) NSString *m_userScoreStatus;
+@property(nonatomic,strong) NSString *m_userWX;
 @property(assign)BOOL m_isSender;
 
 + (ADTFindItem *)from:(NSDictionary *)info;

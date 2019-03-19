@@ -33,7 +33,7 @@
         [self requestData:YES];
 
         self.m_arrData = @[
-                           @[@"需求信息",@"需求类型",@"需求说明",@"服务区域",@"详细地址"],
+                           @[@"需求信息",@"需求类型",@"需求说明",@"区域地址",@"详细地址"],
                            @[@"费用信息",@"服务费用",@"履约定金"],
                            @[@"联系信息",@"需求人",@"手机号码",@"邮箱",@"微信"],
                            ];
@@ -104,7 +104,13 @@
 
 - (CGFloat)high:(NSIndexPath *)path
 {
+    if(path.row == 2 &&path.section == 0){
+        CGSize size = [FontSizeUtil sizeOfString:self.m_helpInfo.m_content withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-160];
+        return size.height+20;
+    }
+    
     if(path.row == 0){
+     
         return 30;
     }else{
         return 50;
@@ -155,8 +161,12 @@
 
         }else if(indexPath.row == 2){
 
-            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
+               CGSize size = [FontSizeUtil sizeOfString:self.m_helpInfo.m_content withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-160];
+            
+            
+            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150,10,MAIN_WIDTH-160, size.height)];
             content.tag = 2;
+            content.numberOfLines = 0;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
             [content setText:self.m_helpInfo.m_content];
@@ -188,7 +198,7 @@
             content.tag = 6;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_creditFee]];
+            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_serviceFee]];
             [cell addSubview:content];
             [content setTextColor:KEY_COMMON_CORLOR];
 
@@ -198,7 +208,7 @@
             content.tag = 7;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_serviceFee]];
+            [content setText:[NSString stringWithFormat:@"%@元",self.m_helpInfo.m_creditFee]];
             [cell addSubview:content];
             [content setTextColor:KEY_COMMON_CORLOR];
 
@@ -225,6 +235,26 @@
             [cell addSubview:content];
             [content setTextColor:[UIColor blackColor]];
 
+        }else if(indexPath.row == 3){
+            
+            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
+            content.tag = 11;
+            [content setTextAlignment:NSTextAlignmentLeft];
+            [content setFont:[UIFont systemFontOfSize:13]];
+            [content setText:self.m_helpInfo.m_email];
+            [cell addSubview:content];
+            [content setTextColor:[UIColor blackColor]];
+            
+        }else if(indexPath.row == 4){
+            
+            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
+            content.tag = 12;
+            [content setTextAlignment:NSTextAlignmentLeft];
+            [content setFont:[UIFont systemFontOfSize:13]];
+            [content setText:self.m_helpInfo.m_userWX];
+            [cell addSubview:content];
+            [content setTextColor:[UIColor blackColor]];
+            
         }
     }
 

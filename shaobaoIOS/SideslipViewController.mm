@@ -7,7 +7,6 @@
 //
 
 #import "SideslipViewController.h"
-#import "SettingViewController.h"
 
 @interface SideslipViewController ()<sideslipViewDelegate,UIAlertViewDelegate,MainTabBarViewControllerDelegate,UIGestureRecognizerDelegate>
 {
@@ -278,8 +277,6 @@
         }
         case 9://个人设置
         {
-            SettingViewController *vc4 = [[SettingViewController alloc]init];
-            [self.navigationController pushViewController:vc4 animated:YES];
             break;
         }
             
@@ -298,14 +295,7 @@
 - (void)logoutToLoginView
 {
     
-    if([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"www.cattsoft.gportal:"]])
-    {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"www.cattsoft.gportal://com.kj.jyoa?info=logout"]];
-    }
-    else
-    {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+  
     
 }
 
@@ -318,8 +308,6 @@
 - (void)settingBtnActionDelegate:(id)sender
 {
     
-    [self.navigationController pushViewController:[[NSClassFromString(@"SettingViewController") alloc]init] animated:YES];
-
 
 }
 

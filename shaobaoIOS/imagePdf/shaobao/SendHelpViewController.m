@@ -359,6 +359,7 @@
                     weixin:@""
                         qq:@""
                    picUrls:pics
+                     email:self.m_helpInfo.m_email
             successedBlock:^(NSDictionary *succeedResult) {
                 [self removeWaitingView];
                 if([succeedResult[@"ret"]integerValue] == 0){
@@ -427,10 +428,17 @@
 #pragma mark -
 - (void)onSelectedProvice:(NSDictionary *)pInfo withCity:(NSDictionary *)cInfo withArea:(NSDictionary *)aInfo
 {
+    
     NSMutableDictionary *area = [NSMutableDictionary dictionary];
-    [area setObject:pInfo forKey:@"provice"];
-    [area setObject:cInfo forKey:@"city"];
-    [area setObject:aInfo forKey:@"area"];
+    if(pInfo){
+        [area setObject:pInfo forKey:@"provice"];
+    }
+    if(cInfo){
+        [area setObject:cInfo forKey:@"city"];
+    }
+    if(aInfo){
+        [area setObject:aInfo forKey:@"area"];
+    }
     self.m_helpInfo.m_area = area;
     [self reloadDeals];
 }

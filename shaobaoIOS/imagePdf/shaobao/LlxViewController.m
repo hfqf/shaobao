@@ -58,16 +58,21 @@
     [title setText:@"腊辣鲜"];
     UIButton *slideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [slideBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [slideBtn setFrame:CGRectMake(MAIN_WIDTH-80,20, 70, 44)];
+    [slideBtn setFrame:CGRectMake(MAIN_WIDTH-80,HEIGHT_STATUSBAR, 70, 44)];
     [slideBtn setTitle:@"发帖" forState:UIControlStateNormal];
     [slideBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [navigationBG addSubview:slideBtn];
+}
+
+- (void)onNeedRefreshTableView{
+    [self requestData:YES];
 }
 
 - (void)addBtnClicked
 {
     if([LoginUserUtil isLogined]){
         AddNewLxxViewController *add = [[AddNewLxxViewController alloc]init];
+        add.m_delegate = self;
         [self.navigationController pushViewController:add animated:YES];
     }else{
         [self.navigationController pushViewController:[[NSClassFromString(@"LoginViewController") alloc]init] animated:YES];
@@ -91,7 +96,7 @@
         [btn setBackgroundColor:[UIColor whiteColor]];
         [btn addTarget:self action:@selector(categoryBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = i;
-        [btn setFrame:CGRectMake(i*(MAIN_WIDTH/self.m_arrCategory.count), CGRectGetMaxY(navigationBG.frame)-10, MAIN_WIDTH/self.m_arrCategory.count, 36)];
+        [btn setFrame:CGRectMake(i*(MAIN_WIDTH/self.m_arrCategory.count), CGRectGetMaxY(navigationBG.frame), MAIN_WIDTH/self.m_arrCategory.count, 36)];
         [btn setTitle:[self.m_arrCategory objectAtIndex:i] forState:UIControlStateNormal];
         [btn setTitleColor:i == 0 ? KEY_COMMON_CORLOR : [UIColor grayColor] forState:UIControlStateNormal];
         [self.view addSubview:btn];
@@ -101,7 +106,7 @@
     m_tipView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBG.frame)+32, MAIN_WIDTH/self.m_arrCategory.count, 4)];
     [self.view addSubview:m_tipView];
     [m_tipView setBackgroundColor:KEY_COMMON_CORLOR];
-    [self.tableView setFrame:CGRectMake(0,104, MAIN_WIDTH,MAIN_HEIGHT-104-HEIGHT_MAIN_BOTTOM)];
+    [self.tableView setFrame:CGRectMake(0,CGRectGetMaxY(m_tipView.frame), MAIN_WIDTH,MAIN_HEIGHT-CGRectGetMaxY(m_tipView.frame)-HEIGHT_MAIN_BOTTOM)];
 }
 
 #pragma mark - private
@@ -168,15 +173,20 @@
 {
     CGFloat high = 40;
     CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:[UIFont systemFontOfSize:15] withWidth:(MAIN_WIDTH-(20+70))];
+    if(size.height)
     high+=size.height;
-    high+=40;
+    if(currentData.m_arrPics.count == 0){
+        high+=30;
+        high+=40;
+    }else{
+        high+=40;
+    }
 
     NSInteger row = ceil(currentData.m_arrPics.count/3.0);
     NSInteger sep = 10;
     NSInteger cell_num = 3;
     NSInteger width = (MAIN_WIDTH-(70+sep*(cell_num+1)))/3;
     high+= ((sep+width)*row);
-
 
     for(NSDictionary *info in currentData.m_arrComments){
         NSString *content = [NSString stringWithFormat:@"%@回复:%@",info[@"userName"], info[@"content"]];

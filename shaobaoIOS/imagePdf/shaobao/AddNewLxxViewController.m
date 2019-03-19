@@ -153,40 +153,62 @@
 
     __block NSInteger count=0;
     [self showWaitingView];
-    for(UIImage *img in self.selectedPhotos){
-        [HTTP_MANAGER uploadShaobaoFileWithPathData:UIImageJPEGRepresentation(img,0.1)
-                                    successBlock:^(NSDictionary *succeedResult) {
-                                        [self.m_arrFilePics addObject:succeedResult[@"data"][@"fileUrl"]];
-                                        count++;
-                                        if(count == self.selectedPhotos.count){
+    if(self.selectedPhotos.count==0){
 
-                                            NSMutableString *str =[NSMutableString string];
-                                            for(NSString *url in self.m_arrFilePics){
-                                                [str appendFormat:@"%@,",url];
-                                            }
+        [HTTP_MANAGER sendBbs:self.m_input.text
+                     withPics:@""
+               successedBlock:^(NSDictionary *succeedResult) {
+                   [self removeWaitingView];
+                   if([succeedResult[@"ret"]integerValue]==0){
+                       [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                       [self.m_delegate onNeedRefreshTableView];
+                       [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                   }
+               } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
 
-                                            [HTTP_MANAGER sendBbs:self.m_input.text
-                                                         withPics:str
-                                                   successedBlock:^(NSDictionary *succeedResult) {
-                                                       [self removeWaitingView];
-                                                       if([succeedResult[@"ret"]integerValue]==0){
-                                                           [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
-                                                           [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
-                                                       }
-                                            } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+                   [self removeWaitingView];
 
-                                                [self removeWaitingView];
+               }];
 
-                                            }];
+    }else{
 
-                                        }else{
-                                            [self removeWaitingView];
-                                            [PubllicMaskViewHelper showTipViewWith:[NSString stringWithFormat:@"上传附件%lu/%lu",count,self.selectedPhotos.count] inSuperView:self.view withDuration:1];
-                                        }
-                                    } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
-                                        [self removeWaitingView];
-                                    }];
+        for(UIImage *img in self.selectedPhotos){
+            [HTTP_MANAGER uploadShaobaoFileWithPathData:UIImageJPEGRepresentation(img,0.1)
+                                           successBlock:^(NSDictionary *succeedResult) {
+                                               [self.m_arrFilePics addObject:succeedResult[@"data"][@"fileUrl"]];
+                                               count++;
+                                               if(count == self.selectedPhotos.count){
+
+                                                   NSMutableString *str =[NSMutableString string];
+                                                   for(NSString *url in self.m_arrFilePics){
+                                                       [str appendFormat:@"%@,",url];
+                                                   }
+
+                                                   [HTTP_MANAGER sendBbs:self.m_input.text
+                                                                withPics:str
+                                                          successedBlock:^(NSDictionary *succeedResult) {
+                                                              [self removeWaitingView];
+                                                              if([succeedResult[@"ret"]integerValue]==0){
+                                                                  [PubllicMaskViewHelper showTipViewWith:succeedResult[@"msg"] inSuperView:self.view withDuration:1];
+                                                                  [self.m_delegate onNeedRefreshTableView];
+                                                                  [self performSelector:@selector(backBtnClicked) withObject:nil afterDelay:1];
+                                                              }
+                                                          } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+
+                                                              [self removeWaitingView];
+
+                                                          }];
+
+                                               }else{
+                                                   [self removeWaitingView];
+                                                   [PubllicMaskViewHelper showTipViewWith:[NSString stringWithFormat:@"上传附件%lu/%lu",count,self.selectedPhotos.count] inSuperView:self.view withDuration:1];
+                                               }
+                                           } failedBolck:^(AFHTTPRequestOperation *response, NSError *error) {
+                                               [self removeWaitingView];
+                                           }];
+        }
     }
+
 
 }
 #pragma mark UICollectionView

@@ -66,7 +66,17 @@
                                                       queue:[NSOperationQueue currentQueue]
                                                  usingBlock:^(NSNotification * _Nonnull note) {
                                                      NSNumber *index = note.object;
-                                                     self.m_filterView.m_type = [NSString stringWithFormat:@"%ld",index.integerValue];
+                                                     if(index.integerValue == 0){
+                                                         self.m_filterView.m_type = @"2";
+                                                     }else if (index.integerValue == 1){
+                                                         self.m_filterView.m_type = @"3";
+                                                     }else if (index.integerValue == 2){
+                                                         self.m_filterView.m_type = @"4";
+                                                     }else if (index.integerValue == 3){
+                                                         self.m_filterView.m_type = @"1";
+                                                     }else if (index.integerValue == 4){
+                                                         self.m_filterView.m_type = @"5";
+                                                     }
                                                      [self requestData:YES];
                                                  }];
 }

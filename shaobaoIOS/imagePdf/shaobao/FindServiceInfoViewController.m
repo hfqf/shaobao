@@ -27,8 +27,8 @@
         [self requestData:YES];
 
         self.m_arrData = @[
-                           @[@"服务信息",@"服务类型",@"服务说明",@"服务区域"],
-                           @[@"费用信息",@"费用定金承诺"],
+                           @[@"服务信息",@"服务类型",@"服务说明",@"区域地址"],
+                           @[@"费用信息",@"履约保证金"],
                            @[@"联系信息",@"发布人",@"手机号码",@"邮箱"],
                            ];
 
@@ -95,7 +95,13 @@
 
 - (CGFloat)high:(NSIndexPath *)path
 {
+    
+    if(path.row == 2 &&path.section == 0){
+        CGSize size = [FontSizeUtil sizeOfString:self.m_helpInfo.m_content withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-160];
+        return size.height+20;
+    }
     if(path.row == 0){
+
         return 30;
     }else{
         return 50;
@@ -146,8 +152,10 @@
 
         }else if(indexPath.row == 2){
 
-            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
+            CGSize size = [FontSizeUtil sizeOfString:self.m_helpInfo.m_content withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-160];
+            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150,10,MAIN_WIDTH-160,size.height)];
             content.tag = 2;
+            content.numberOfLines = 0;
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
             [content setText:self.m_helpInfo.m_content];
@@ -202,7 +210,7 @@
             UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2, MAIN_WIDTH-160, 20)];
             [content setTextAlignment:NSTextAlignmentLeft];
             [content setFont:[UIFont systemFontOfSize:13]];
-            [content setText:[LoginUserUtil shaobaoUserName]];
+            [content setText:self.m_helpInfo.m_userName];
             [cell addSubview:content];
             [content setTextColor:[UIColor blackColor]];
 
@@ -216,6 +224,16 @@
             [cell addSubview:content];
             [content setTextColor:[UIColor blackColor]];
 
+        }else if(indexPath.row == 3){
+            
+            UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(150, ([self high:indexPath]-20)/2,MAIN_WIDTH-160, 20)];
+            content.tag = 11;
+            [content setTextAlignment:NSTextAlignmentLeft];
+            [content setFont:[UIFont systemFontOfSize:13]];
+            [content setText:self.m_helpInfo.m_email];
+            [cell addSubview:content];
+            [content setTextColor:[UIColor blackColor]];
+            
         }
     }
 
