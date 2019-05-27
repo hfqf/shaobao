@@ -3545,3 +3545,238 @@ successedBlock:(SuccessedBlock)success
     [self startNormalPostWith:@"my/getUserInfo" paragram:reqDic successedBlock:success failedBolck:failed];
 }
 @end
+
+@implementation HttpConnctionManager (v2)
+
+- (void)addOrg:(NSString *)parentId
+          name:(NSString *)name
+       address:(NSString *)address
+         email:(NSString *)email
+          tel1:(NSString *)tel1
+          tel2:(NSString *)tel2
+          tel3:(NSString *)tel3
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"parentId":parentId == nil ? @"0":parentId,
+                              @"name":safeValue(name),
+                              @"address":safeValue(address),
+                              @"email":safeValue(email),
+                              @"tel1":safeValue(tel1),
+                              @"tel2":safeValue(tel2),
+                              @"tel3":safeValue(tel3),
+                              };
+    [self startNormalPostWith:@"v2/addOrg" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+- (void)addPerson:(NSString *)jobNumber
+             name:(NSString *)name
+             duty:(NSString *)duty
+            grade:(NSString *)grade
+           image1:(NSString *)image1
+           image2:(NSString *)image2
+           image3:(NSString *)image3
+            orgId:(NSString *)orgId
+             gztd:(NSString *)gztd
+             ywnl:(NSString *)ywnl
+             qyjs:(NSString *)qyjs
+             pxpz:(NSString *)pxpz
+             ljzl:(NSString *)ljzl
+             shgx:(NSString *)shgx
+             zwpz:(NSString *)zwpz
+   successedBlock:(SuccessedBlock)success
+      failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"name":safeValue(name),
+                              @"jobNumber":safeValue(jobNumber),
+                              @"duty":safeValue(duty),
+                              @"grade":safeValue(grade),
+                              @"image1":safeValue(image1),
+                              @"image2":safeValue(image2),
+                              @"image3":safeValue(image3),
+                              @"orgId":safeValue(orgId),
+                              @"gztd":safeValue(gztd),
+                              @"ywnl":safeValue(ywnl),
+                              @"qyjs":safeValue(qyjs),
+                              @"pxpz":safeValue(pxpz),
+                              @"ljzl":safeValue(ljzl),
+                              @"shgx":safeValue(shgx),
+                              @"zwpz":safeValue(zwpz),
+                              };
+    [self startNormalPostWith:@"v2/addPerson" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)addComment:(NSString *)relationId
+              type:(NSString *)type
+           content:(NSString *)content
+          imageUrl:(NSString *)imageUrl
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"relationId":relationId,
+                              @"type":type,
+                              @"content":safeValue(content),
+                              @"imageUrl":safeValue(imageUrl),
+                              };
+    [self startNormalPostWith:@"v2/addComment" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+- (void)addVote:(NSString *)title
+         option:(NSString *)option
+         image1:(NSString *)image1
+         image2:(NSString *)image2
+         image3:(NSString *)image3
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"title":title,
+                              @"option":option,
+                              @"image1":safeValue(image1),
+                              @"image2":safeValue(image2),
+                              @"image3":safeValue(image3),
+                              };
+    [self startNormalPostWith:@"v2/addVote" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)getCommentList:(NSString *)relationId
+                  type:(NSString *)type
+             commentId:(NSString *)commentId
+              pageSize:(NSString *)pageSize
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"relationId":relationId,
+                              @"type":type,
+                              @"commentId":commentId,
+                              @"pageSize":pageSize,
+                              };
+    [self startNormalPostWith:@"v2/getCommentList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)getOrgList:(NSString *)parentId
+             orgId:(NSString *)orgId
+          pageSize:(NSString *)pageSize
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"parentId":parentId,
+                              @"orgId":safeValue(orgId) ,
+                              @"pageSize":pageSize,
+                              };
+    [self startNormalPostWith:@"v2/getOrgList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)getPersonList:(NSString *)orgId
+               userId:(NSString *)userId
+             pageSize:(NSString *)pageSize
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"orgId":orgId,
+                              @"userId":userId,
+                              };
+    [self startNormalPostWith:@"v2/getPersonList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)getPersonDetail:(NSString *)userId
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"userId":userId,
+                              };
+    [self startNormalPostWith:@"v2/getPersonDetail" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+
+- (void)getVoteDetail:(NSString *)voteId
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"voteId":voteId,
+                              };
+    [self startNormalPostWith:@"v2/getVoteDetail" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)getVoteList:(NSString *)voteId
+           pageSize:(NSString *)pageSize
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"voteId":voteId,
+                              @"pageSize":pageSize,
+                              };
+    [self startNormalPostWith:@"v2/getVoteList" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+
+/**
+ 被点击的选项，取值(汉语拼音_高中低)：gztd_g, gztd_z, gztd_d, ywnl_g, ywnl_z, ywnl_d, qyjs_g, qyjs_z, qyjs_d, pxpz_g, pxpz_z, pxpz_d, ljzl_g, ljzl_z, ljzl_d, shgx_g, shgx_z, shgx_d, zwpz_g, zwpz_z, zwpz_d
+
+ @param userId
+ @param option
+ @param success
+ @param failed 
+ */
+- (void)scorePerson:(NSString *)userId
+             option:(NSString *)option
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"userId":userId,
+                              @"option":option,
+                              };
+    [self startNormalPostWith:@"v2/scorePerson" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)scorePersonOption:(NSString *)voteId
+             voteOptionId:(NSString *)voteOptionId
+           successedBlock:(SuccessedBlock)success
+              failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"voteId":voteId,
+                              @"voteOptionId":voteOptionId,
+                              };
+    [self startNormalPostWith:@"v2/scoreVoteOption" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)globalSearch:(NSString *)key
+      successedBlock:(SuccessedBlock)success
+         failedBolck:(FailedBlock)failed{
+    NSDictionary *reqDic =  @{
+                              @"accessToken":[LoginUserUtil accessToken],
+                              @"searchKey":key,
+                              };
+    [self startNormalPostWith:@"v2/search" paragram:reqDic successedBlock:success failedBolck:failed];
+}
+
+- (void)testMutipPraa:(ADTFindItem *)firstArg, ... NS_REQUIRES_NIL_TERMINATION{
+    if (firstArg) {
+        va_list args;
+        // 用于存放取出的参数
+        ADTFindItem *arg;
+        // 初始化变量刚定义的va_list变量，这个宏的第二个参数是第一个可变参数的前一个参数，是一个固定的参数
+        va_start(args, firstArg);
+        // 遍历全部参数 va_arg返回可变的参数(a_arg的第二个参数是你要返回的参数的类型)
+        while ((arg = va_arg(args, ADTFindItem *))) {
+            NSLog(@"%@", arg.m_id);
+        }
+        // 清空参数列表，并置参数指针args无效
+        va_end(args);
+    }
+}
+@end

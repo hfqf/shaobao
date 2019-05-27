@@ -7,37 +7,23 @@
 //
 
 #import "AddNewLxxViewController.h"
-#import "TZImagePickerController.h"
-#import "UIView+Layout.h"
-#import "TZTestCell.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <Photos/Photos.h>
-#import "LxGridViewFlowLayout.h"
-#import "TZImageManager.h"
-#import "TZVideoPlayerController.h"
-#import "TZPhotoPreviewController.h"
-#import "TZGifPhotoPreviewController.h"
-#import "TZLocationManager.h"
-#import "AddLxxBtnCollectionViewCell.h"
+
 @interface AddNewLxxViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,TZImagePickerControllerDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>{
     CGFloat _itemWH;
     CGFloat _margin;
 }
 
-@property(nonatomic,strong) NSMutableArray *selectedPhotos;
-@property(nonatomic,strong) NSMutableArray *selectedAssets;
-@property(nonatomic,strong) NSMutableArray *m_arrFilePics;
 
-@property (nonatomic, strong) UIImagePickerController *imagePickerVc;
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (strong, nonatomic) LxGridViewFlowLayout *layout;
-
-@property (strong, nonatomic) UITextView *m_input;;
 
 @end
 
 @implementation AddNewLxxViewController
-
+- (instancetype)init2{
+    if(self=[super init]){
+        
+    }
+    return self;
+}
 - (UIImagePickerController *)imagePickerVc {
     if (_imagePickerVc == nil) {
         _imagePickerVc = [[UIImagePickerController alloc] init];
@@ -75,7 +61,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
     [title setText:@"发表议题"];
@@ -527,14 +512,6 @@
     // NSLog(@"cancel");
 }
 
-// The picker should dismiss itself; when it dismissed these handle will be called.
-// If isOriginalPhoto is YES, user picked the original photo.
-// You can get original photo with asset, by the method [[TZImageManager manager] getOriginalPhotoWithAsset:completion:].
-// The UIImage Object in photos default width is 828px, you can set it by photoWidth property.
-// 这个照片选择器会自己dismiss，当选择器dismiss的时候，会执行下面的代理方法
-// 如果isSelectOriginalPhoto为YES，表明用户选择了原图
-// 你可以通过一个asset获得原图，通过这个方法：[[TZImageManager manager] getOriginalPhotoWithAsset:completion:]
-// photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     _selectedAssets = [NSMutableArray arrayWithArray:assets];

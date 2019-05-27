@@ -33,12 +33,12 @@
 
         [self setImageEdgeInsets:UIEdgeInsetsMake(5, 0, 0, 0)];
         //title
-//        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,37, self.frame.size.width, 19)];
-//        [titleLab setBackgroundColor:[UIColor clearColor]];
-//        [titleLab setText:title];
-//        [titleLab setTextAlignment:NSTextAlignmentCenter];
-//        [titleLab setFont:[UIFont boldSystemFontOfSize:12]];
-//        [self addSubview:titleLab];
+        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,37, self.frame.size.width, 19)];
+        [titleLab setBackgroundColor:[UIColor clearColor]];
+        [titleLab setText:title];
+        [titleLab setTextAlignment:NSTextAlignmentCenter];
+        [titleLab setFont:[UIFont boldSystemFontOfSize:12]];
+        [self addSubview:titleLab];
         
     
     }
@@ -67,7 +67,7 @@
     self.selected = isSelected;
    // [self setBackgroundColor:isSelected ? UIColorFromRGB(0x52a6e0):[UIColor clearColor]];
     [self setBackgroundColor:[UIColor clearColor]];
-    [titleLab setTextColor: isSelected ? UIColorFromRGB(0x0079FE) :UIColorFromRGB(0x787878)];
+    [titleLab setTextColor: isSelected ? KEY_COMMON_CORLOR :UIColorFromRGB(0x787878)];
 }
 
 

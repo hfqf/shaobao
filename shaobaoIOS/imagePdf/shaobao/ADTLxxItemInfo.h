@@ -20,4 +20,6 @@
 @property(nonatomic,strong)NSString *m_userType;
 @property(nonatomic,strong)NSArray *m_arrComments;
 +(ADTLxxItemInfo *)from:(NSDictionary *)info;
+
++(ADTLxxItemInfo *)from2:(NSDictionary *)info;
 @end

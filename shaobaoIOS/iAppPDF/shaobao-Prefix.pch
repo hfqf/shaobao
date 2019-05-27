@@ -35,4 +35,8 @@
 #import "ADTChatMessage.h"
 #import "ADTFindItem.h"
 #import "UIImageView+WebCache.h"
+#import "ADTVoteItem.h"
+#import "ADTGroupItem.h"
+#import "ADTStaffItem.h"
+#import "EGOImageButton.h"
 #endif

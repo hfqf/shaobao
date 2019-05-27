@@ -102,6 +102,10 @@
 		7D221BB01F9EE012002C7CA4 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D221BAF1F9EE012002C7CA4 /* UserInfoViewController.m */; };
 		7D2D2A221F96496600D4DE28 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2D2A1D1F96486A00D4DE28 /* libWeChatSDK.a */; };
 		7D30CE9A1AB076A500088A6E /* ADTGovermentFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */; };
+		7D365C752286B2D4007AAD96 /* ADTVoteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D365C742286B2D4007AAD96 /* ADTVoteItem.m */; };
+		7D365C782286B432007AAD96 /* VoteHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D365C772286B432007AAD96 /* VoteHomeTableViewCell.m */; };
+		7D365C7B2286C726007AAD96 /* LZGSGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D365C7A2286C726007AAD96 /* LZGSGroupViewController.m */; };
+		7D365C7E2286C74A007AAD96 /* AddLZGSGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D365C7D2286C74A007AAD96 /* AddLZGSGroupViewController.m */; };
 		7D3722B41AAC9A1F001F8914 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B31AAC9A1F001F8914 /* MessageTableViewCell.m */; };
 		7D3722BC1AAC9D9F001F8914 /* SideslipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B71AAC9D9F001F8914 /* SideslipView.m */; };
 		7D3722BD1AAC9D9F001F8914 /* SideslipViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7D3722B91AAC9D9F001F8914 /* SideslipViewController.mm */; };
@@ -111,6 +115,10 @@
 		7D3722C81AACA075001F8914 /* chat_friend_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722C71AACA075001F8914 /* chat_friend_default@2x.png */; };
 		7D3722CB1AACA3A2001F8914 /* register_check_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722C91AACA3A2001F8914 /* register_check_on@3x.png */; };
 		7D3722CC1AACA3A2001F8914 /* register_check_un@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D3722CA1AACA3A2001F8914 /* register_check_un@3x.png */; };
+		7D38A553228D335D00FE876E /* ADTGroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38A552228D335D00FE876E /* ADTGroupItem.m */; };
+		7D38A556228D337F00FE876E /* ADTStaffItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38A555228D337F00FE876E /* ADTStaffItem.m */; };
+		7D38A559228D5C3800FE876E /* AddStaffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38A558228D5C3800FE876E /* AddStaffViewController.m */; };
+		7D38A55C228D6C7F00FE876E /* StaffWorkItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38A55B228D6C7F00FE876E /* StaffWorkItemTableViewCell.m */; };
 		7D3B4DA21E56D620005B9924 /* MeetingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3B4DA11E56D620005B9924 /* MeetingInfoViewController.m */; };
 		7D43B1D61F0765CE00BE2571 /* FaultReprairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D43B1D51F0765CE00BE2571 /* FaultReprairViewController.m */; };
 		7D43B1D91F076DA000BE2571 /* AddNewFaultRepriarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D43B1D81F076DA000BE2571 /* AddNewFaultRepriarViewController.m */; };
@@ -159,6 +167,7 @@
 		7D64B4091F6D74E400709A6C /* WoyiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D64B4081F6D74E400709A6C /* WoyiViewController.m */; };
 		7D6E04881F692E0E009EA38C /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6E04871F692E0E009EA38C /* HomePageViewController.m */; };
 		7D6EE68F1F7E3B8300CBB9C0 /* ADTFindItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6EE68E1F7E3B8300CBB9C0 /* ADTFindItem.m */; };
+		7D726D7D229384E8001D2651 /* AddNewCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D726D7C229384E8001D2651 /* AddNewCommentViewController.m */; };
 		7D7411E11B31C32800FC01BE /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411A71B31C32800FC01BE /* MWCaptionView.m */; };
 		7D7411E21B31C32800FC01BE /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411AA1B31C32800FC01BE /* MWGridCell.m */; };
 		7D7411E31B31C32800FC01BE /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7411AC1B31C32800FC01BE /* MWGridViewController.m */; };
@@ -200,6 +209,7 @@
 		7D7412311B31C3FD00FC01BE /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D74121E1B31C3FD00FC01BE /* UIImageView+HighlightedWebCache.m */; };
 		7D7412321B31C3FD00FC01BE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7412201B31C3FD00FC01BE /* UIImageView+WebCache.m */; };
 		7D7412331B31C3FD00FC01BE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7412221B31C3FD00FC01BE /* UIView+WebCacheOperation.m */; };
+		7D75926022808A420017AAC5 /* VoteHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D75925F22808A420017AAC5 /* VoteHomeViewController.m */; };
 		7D84E4291F8FB12700E40BA0 /* SendServiceeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84E4281F8FB12700E40BA0 /* SendServiceeViewController.m */; };
 		7D84E42C1F8FC08E00E40BA0 /* FindServiceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84E42B1F8FC08E00E40BA0 /* FindServiceInfoViewController.m */; };
 		7D84E44B1F91972400E40BA0 /* PunishedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84E44A1F91972400E40BA0 /* PunishedOrdersViewController.m */; };
@@ -284,6 +294,9 @@
 		7DBBFFD61AA5F710000F1DCD /* TabbarCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBFFD21AA5F710000F1DCD /* TabbarCustomButton.m */; };
 		7DBBFFDD1AA5F7C0000F1DCD /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBFFDA1AA5F7C0000F1DCD /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7DBBFFDE1AA5F7C0000F1DCD /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBBFFDC1AA5F7C0000F1DCD /* MBProgressHUD.m */; };
+		7DBE4ECF229186A900209204 /* AddVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBE4ECE229186A900209204 /* AddVoteViewController.m */; };
+		7DBE4ED222919AF600209204 /* VoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBE4ED122919AF600209204 /* VoteTableViewCell.m */; };
+		7DBE4ED52292A62200209204 /* EvaStaffViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBE4ED42292A62200209204 /* EvaStaffViewController.m */; };
 		7DC004CD1ABEEB8C006616B0 /* SendEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC004CC1ABEEB8C006616B0 /* SendEmailViewController.m */; };
 		7DC004D01ABEFEAC006616B0 /* SelectContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC004CF1ABEFEAC006616B0 /* SelectContactViewController.m */; };
 		7DC004D41ABF0101006616B0 /* AdtContacterInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC004D31ABF0101006616B0 /* AdtContacterInfo.m */; };
@@ -596,6 +609,14 @@
 		7D2D2A211F96486A00D4DE28 /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		7D30CE981AB076A500088A6E /* ADTGovermentFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTGovermentFileInfo.h; sourceTree = "<group>"; };
 		7D30CE991AB076A500088A6E /* ADTGovermentFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTGovermentFileInfo.m; sourceTree = "<group>"; };
+		7D365C732286B2D4007AAD96 /* ADTVoteItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTVoteItem.h; sourceTree = "<group>"; };
+		7D365C742286B2D4007AAD96 /* ADTVoteItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTVoteItem.m; sourceTree = "<group>"; };
+		7D365C762286B432007AAD96 /* VoteHomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoteHomeTableViewCell.h; sourceTree = "<group>"; };
+		7D365C772286B432007AAD96 /* VoteHomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoteHomeTableViewCell.m; sourceTree = "<group>"; };
+		7D365C792286C726007AAD96 /* LZGSGroupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZGSGroupViewController.h; sourceTree = "<group>"; };
+		7D365C7A2286C726007AAD96 /* LZGSGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZGSGroupViewController.m; sourceTree = "<group>"; };
+		7D365C7C2286C74A007AAD96 /* AddLZGSGroupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddLZGSGroupViewController.h; sourceTree = "<group>"; };
+		7D365C7D2286C74A007AAD96 /* AddLZGSGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddLZGSGroupViewController.m; sourceTree = "<group>"; };
 		7D3722B21AAC9A1F001F8914 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		7D3722B31AAC9A1F001F8914 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		7D3722B61AAC9D9F001F8914 /* SideslipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideslipView.h; sourceTree = "<group>"; };
@@ -609,6 +630,14 @@
 		7D3722C71AACA075001F8914 /* chat_friend_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_friend_default@2x.png"; sourceTree = "<group>"; };
 		7D3722C91AACA3A2001F8914 /* register_check_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register_check_on@3x.png"; sourceTree = "<group>"; };
 		7D3722CA1AACA3A2001F8914 /* register_check_un@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register_check_un@3x.png"; sourceTree = "<group>"; };
+		7D38A551228D335D00FE876E /* ADTGroupItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTGroupItem.h; sourceTree = "<group>"; };
+		7D38A552228D335D00FE876E /* ADTGroupItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTGroupItem.m; sourceTree = "<group>"; };
+		7D38A554228D337F00FE876E /* ADTStaffItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTStaffItem.h; sourceTree = "<group>"; };
+		7D38A555228D337F00FE876E /* ADTStaffItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTStaffItem.m; sourceTree = "<group>"; };
+		7D38A557228D5C3800FE876E /* AddStaffViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddStaffViewController.h; sourceTree = "<group>"; };
+		7D38A558228D5C3800FE876E /* AddStaffViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddStaffViewController.m; sourceTree = "<group>"; };
+		7D38A55A228D6C7F00FE876E /* StaffWorkItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaffWorkItemTableViewCell.h; sourceTree = "<group>"; };
+		7D38A55B228D6C7F00FE876E /* StaffWorkItemTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffWorkItemTableViewCell.m; sourceTree = "<group>"; };
 		7D3B4DA01E56D620005B9924 /* MeetingInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingInfoViewController.h; sourceTree = "<group>"; };
 		7D3B4DA11E56D620005B9924 /* MeetingInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingInfoViewController.m; sourceTree = "<group>"; };
 		7D43B1D41F0765CE00BE2571 /* FaultReprairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaultReprairViewController.h; sourceTree = "<group>"; };
@@ -676,6 +705,8 @@
 		7D6E04871F692E0E009EA38C /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		7D6EE68D1F7E3B8300CBB9C0 /* ADTFindItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADTFindItem.h; sourceTree = "<group>"; };
 		7D6EE68E1F7E3B8300CBB9C0 /* ADTFindItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADTFindItem.m; sourceTree = "<group>"; };
+		7D726D7B229384E8001D2651 /* AddNewCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddNewCommentViewController.h; sourceTree = "<group>"; };
+		7D726D7C229384E8001D2651 /* AddNewCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddNewCommentViewController.m; sourceTree = "<group>"; };
 		7D7411A61B31C32800FC01BE /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		7D7411A71B31C32800FC01BE /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		7D7411A81B31C32800FC01BE /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
@@ -766,6 +797,8 @@
 		7D7412201B31C3FD00FC01BE /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		7D7412211B31C3FD00FC01BE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		7D7412221B31C3FD00FC01BE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		7D75925E22808A420017AAC5 /* VoteHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoteHomeViewController.h; sourceTree = "<group>"; };
+		7D75925F22808A420017AAC5 /* VoteHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoteHomeViewController.m; sourceTree = "<group>"; };
 		7D84E4271F8FB12700E40BA0 /* SendServiceeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendServiceeViewController.h; sourceTree = "<group>"; };
 		7D84E4281F8FB12700E40BA0 /* SendServiceeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SendServiceeViewController.m; sourceTree = "<group>"; };
 		7D84E42A1F8FC08E00E40BA0 /* FindServiceInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindServiceInfoViewController.h; sourceTree = "<group>"; };
@@ -927,6 +960,12 @@
 		7DBBFFFD1AA5F7CD000F1DCD /* EGOImageLoadConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoadConnection.m; sourceTree = "<group>"; };
 		7DBBFFFE1AA5F7CD000F1DCD /* EGOImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoader.h; sourceTree = "<group>"; };
 		7DBBFFFF1AA5F7CD000F1DCD /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
+		7DBE4ECD229186A900209204 /* AddVoteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddVoteViewController.h; sourceTree = "<group>"; };
+		7DBE4ECE229186A900209204 /* AddVoteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddVoteViewController.m; sourceTree = "<group>"; };
+		7DBE4ED022919AF600209204 /* VoteTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoteTableViewCell.h; sourceTree = "<group>"; };
+		7DBE4ED122919AF600209204 /* VoteTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoteTableViewCell.m; sourceTree = "<group>"; };
+		7DBE4ED32292A62200209204 /* EvaStaffViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EvaStaffViewController.h; sourceTree = "<group>"; };
+		7DBE4ED42292A62200209204 /* EvaStaffViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EvaStaffViewController.m; sourceTree = "<group>"; };
 		7DC004CB1ABEEB8C006616B0 /* SendEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendEmailViewController.h; sourceTree = "<group>"; };
 		7DC004CC1ABEEB8C006616B0 /* SendEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendEmailViewController.m; sourceTree = "<group>"; };
 		7DC004CE1ABEFEAC006616B0 /* SelectContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectContactViewController.h; sourceTree = "<group>"; };
@@ -1753,6 +1792,39 @@
 			path = SDImage;
 			sourceTree = "<group>";
 		};
+		7D75925D22808A150017AAC5 /* tp */ = {
+			isa = PBXGroup;
+			children = (
+				7D75925E22808A420017AAC5 /* VoteHomeViewController.h */,
+				7D75925F22808A420017AAC5 /* VoteHomeViewController.m */,
+				7D365C762286B432007AAD96 /* VoteHomeTableViewCell.h */,
+				7D365C772286B432007AAD96 /* VoteHomeTableViewCell.m */,
+				7DBE4ED022919AF600209204 /* VoteTableViewCell.h */,
+				7DBE4ED122919AF600209204 /* VoteTableViewCell.m */,
+				7DBE4ECD229186A900209204 /* AddVoteViewController.h */,
+				7DBE4ECE229186A900209204 /* AddVoteViewController.m */,
+				7D365C732286B2D4007AAD96 /* ADTVoteItem.h */,
+				7D365C742286B2D4007AAD96 /* ADTVoteItem.m */,
+				7D38A554228D337F00FE876E /* ADTStaffItem.h */,
+				7D38A555228D337F00FE876E /* ADTStaffItem.m */,
+				7D38A551228D335D00FE876E /* ADTGroupItem.h */,
+				7D38A552228D335D00FE876E /* ADTGroupItem.m */,
+				7D365C792286C726007AAD96 /* LZGSGroupViewController.h */,
+				7D365C7A2286C726007AAD96 /* LZGSGroupViewController.m */,
+				7D365C7C2286C74A007AAD96 /* AddLZGSGroupViewController.h */,
+				7D365C7D2286C74A007AAD96 /* AddLZGSGroupViewController.m */,
+				7D38A557228D5C3800FE876E /* AddStaffViewController.h */,
+				7D38A558228D5C3800FE876E /* AddStaffViewController.m */,
+				7D726D7B229384E8001D2651 /* AddNewCommentViewController.h */,
+				7D726D7C229384E8001D2651 /* AddNewCommentViewController.m */,
+				7DBE4ED32292A62200209204 /* EvaStaffViewController.h */,
+				7DBE4ED42292A62200209204 /* EvaStaffViewController.m */,
+				7D38A55A228D6C7F00FE876E /* StaffWorkItemTableViewCell.h */,
+				7D38A55B228D6C7F00FE876E /* StaffWorkItemTableViewCell.m */,
+			);
+			path = tp;
+			sourceTree = SOURCE_ROOT;
+		};
 		7D84E4521F91AC3800E40BA0 /* TggStarEvaluationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1801,6 +1873,7 @@
 		7D99B9B21F66E93000723537 /* shaobao */ = {
 			isa = PBXGroup;
 			children = (
+				7D75925D22808A150017AAC5 /* tp */,
 				7D1A65041F8D1FC100DEC9B5 /* alipay */,
 				7D99B9B31F66E95100723537 /* ShaobaoRegisterViewController.h */,
 				7D99B9B41F66E95100723537 /* ShaobaoRegisterViewController.m */,
@@ -2472,6 +2545,7 @@
 				7DF83B271BE616AB00E9C16E /* NewScheduleViewController.m in Sources */,
 				7D0FEC391F8A5F2800C482D0 /* ADTChatMessage.m in Sources */,
 				7D7411E91B31C32800FC01BE /* DACircularProgressView.m in Sources */,
+				7D38A553228D335D00FE876E /* ADTGroupItem.m in Sources */,
 				7DBB00611AA5F8B1000F1DCD /* TabbarBaseViewController.m in Sources */,
 				7D0FEC1E1F8A4F1000C482D0 /* FindAskMessagesViewController.m in Sources */,
 				7D0FEC001F8871AE00C482D0 /* NSBundle+TZImagePicker.m in Sources */,
@@ -2508,11 +2582,14 @@
 				7D0FEC051F8871C300C482D0 /* TZLocationManager.m in Sources */,
 				7DBB00081AA5F7CD000F1DCD /* AFNetworkReachabilityManager.m in Sources */,
 				7DBB00441AA5F857000F1DCD /* ReachabilityObserver.m in Sources */,
+				7D38A556228D337F00FE876E /* ADTStaffItem.m in Sources */,
 				7D20449E1F736B630061D6AD /* ADTHelpInfo.m in Sources */,
 				7D74122B1B31C3FD00FC01BE /* SDWebImageManager.m in Sources */,
+				7D365C782286B432007AAD96 /* VoteHomeTableViewCell.m in Sources */,
 				7DCC05BB1AA899EF00C23E3B /* ContactViewController.m in Sources */,
 				7DC004D01ABEFEAC006616B0 /* SelectContactViewController.m in Sources */,
 				7DBBFFDD1AA5F7C0000F1DCD /* JSONKit.m in Sources */,
+				7D75926022808A420017AAC5 /* VoteHomeViewController.m in Sources */,
 				7DCF80AB1F7D50AC009C6ACE /* FindTableViewCell.m in Sources */,
 				7D84E46E1F921CE000E40BA0 /* TransferViewController.m in Sources */,
 				7D0FEC2E1F8A5EEA00C482D0 /* ChatTextTableViewCell.m in Sources */,
@@ -2555,6 +2632,7 @@
 				7D0FEC241F8A5B8500C482D0 /* SendMsgViewController.m in Sources */,
 				7D0FEC481F8A641500C482D0 /* UIcolor+Expanded.m in Sources */,
 				7DBB00671AA5F979000F1DCD /* SqliteDataManager.m in Sources */,
+				7D365C7B2286C726007AAD96 /* LZGSGroupViewController.m in Sources */,
 				7D74122C1B31C3FD00FC01BE /* SDWebImagePrefetcher.m in Sources */,
 				7D7411F61B31C32800FC01BE /* PSTGridLayoutRow.m in Sources */,
 				7D0FEC451F8A63D700C482D0 /* NSDate+Parser.m in Sources */,
@@ -2564,6 +2642,7 @@
 				7D84E44E1F91A88E00E40BA0 /* AcceptedOrdersViewController.m in Sources */,
 				7D64B4061F6D74CF00709A6C /* LlxViewController.m in Sources */,
 				7D0FEC151F893B0F00C482D0 /* WebViewViewController.m in Sources */,
+				7DBE4ECF229186A900209204 /* AddVoteViewController.m in Sources */,
 				7DBB006C1AA5F9E3000F1DCD /* LoginScrollerView.m in Sources */,
 				7DBB00221AA5F7D5000F1DCD /* MJRefreshFooterView.m in Sources */,
 				7D84E4621F91AC3800E40BA0 /* TggStarEvaluationView.m in Sources */,
@@ -2596,8 +2675,10 @@
 				7DBB00841AA5FB7D000F1DCD /* UIImageView+AFNetworking.m in Sources */,
 				7DA2784D1AAF3D33004E8BF2 /* PublicFileViewController.m in Sources */,
 				7D74122D1B31C3FD00FC01BE /* UIButton+WebCache.m in Sources */,
+				7D365C752286B2D4007AAD96 /* ADTVoteItem.m in Sources */,
 				7DBB00091AA5F7CD000F1DCD /* AFSecurityPolicy.m in Sources */,
 				7D2044A11F73B1210061D6AD /* SelectProviceViewController.m in Sources */,
+				7D726D7D229384E8001D2651 /* AddNewCommentViewController.m in Sources */,
 				7DFF547D1B0C94D300B67652 /* EmailTableViewCell.m in Sources */,
 				7D7411F31B31C32800FC01BE /* PSTCollectionViewUpdateItem.m in Sources */,
 				7D7411F41B31C32800FC01BE /* PSTGridLayoutInfo.m in Sources */,
@@ -2610,10 +2691,12 @@
 				7D7411E21B31C32800FC01BE /* MWGridCell.m in Sources */,
 				7DBB00621AA5F8B1000F1DCD /* XTNavigationController.m in Sources */,
 				7D0406711E4D574D00036FE6 /* MeetingManagerViewController.m in Sources */,
+				7DBE4ED222919AF600209204 /* VoteTableViewCell.m in Sources */,
 				7D1A651F1F8D1FC200DEC9B5 /* APViewController.m in Sources */,
 				7D7411F51B31C32800FC01BE /* PSTGridLayoutItem.m in Sources */,
 				7D1A651E1F8D1FC200DEC9B5 /* APAuthV2Info.m in Sources */,
 				7D84E4651F91CC8500E40BA0 /* InAndOutMoneyViewController.m in Sources */,
+				7D38A55C228D6C7F00FE876E /* StaffWorkItemTableViewCell.m in Sources */,
 				7DEC2E261AE74A460031E98F /* SBJson4StreamParserState.m in Sources */,
 				7D221BB01F9EE012002C7CA4 /* UserInfoViewController.m in Sources */,
 				7DCC05C11AA89A0A00C23E3B /* LeaveViewController.m in Sources */,
@@ -2624,7 +2707,10 @@
 				7DEC2E281AE74A460031E98F /* SBJson4StreamWriter.m in Sources */,
 				7DFF54821B0C9B0300B67652 /* TodoTableViewCell.m in Sources */,
 				7DBB00861AA5FB7D000F1DCD /* UIWebView+AFNetworking.m in Sources */,
+				7D365C7E2286C74A007AAD96 /* AddLZGSGroupViewController.m in Sources */,
 				7D04DE141F6A88A5004C0A10 /* MXPageControlView.m in Sources */,
+				7D38A559228D5C3800FE876E /* AddStaffViewController.m in Sources */,
+				7DBE4ED52292A62200209204 /* EvaStaffViewController.m in Sources */,
 				7D5546C31BC3EE9C008397F0 /* LKBadgeView.m in Sources */,
 				7D7411E11B31C32800FC01BE /* MWCaptionView.m in Sources */,
 				7D84E4681F920BD300E40BA0 /* TradeHistoryViewController.m in Sources */,

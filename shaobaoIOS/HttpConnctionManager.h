@@ -41,7 +41,7 @@
 #import "LoginUserUtil.h"
 #import "AFURLRequestSerialization.h"
 #import "ADTGovermentFileInfo.h"
-
+#import "ADTFindItem.h"
 
 
 @interface HttpConnctionManager : AFHTTPRequestOperationManager<NSURLConnectionDelegate,NSStreamDelegate>
@@ -947,4 +947,109 @@ successedBlock:(SuccessedBlock)success
      successedBlock:(SuccessedBlock)success
         failedBolck:(FailedBlock)failed;
 
+@end
+
+@interface HttpConnctionManager (v2)
+
+- (void)addOrg:(NSString *)parentId
+          name:(NSString *)name
+       address:(NSString *)address
+         email:(NSString *)email
+          tel1:(NSString *)tel1
+          tel2:(NSString *)tel2
+          tel3:(NSString *)tel3
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed;
+
+- (void)addPerson:(NSString *)jobNumber
+          name:(NSString *)name
+          duty:(NSString *)duty
+         grade:(NSString *)grade
+          image1:(NSString *)image1
+          image2:(NSString *)image2
+          image3:(NSString *)image3
+            orgId:(NSString *)orgId
+            gztd:(NSString *)gztd
+            ywnl:(NSString *)ywnl
+            qyjs:(NSString *)qyjs
+            pxpz:(NSString *)pxpz
+            ljzl:(NSString *)ljzl
+            shgx:(NSString *)shgx
+            zwpz:(NSString *)zwpz
+  successedBlock:(SuccessedBlock)success
+     failedBolck:(FailedBlock)failed;
+
+- (void)addVote:(NSString *)title
+          option:(NSString *)option
+       image1:(NSString *)image1
+         email:(NSString *)email
+          image2:(NSString *)image2
+          image3:(NSString *)image3
+successedBlock:(SuccessedBlock)success
+   failedBolck:(FailedBlock)failed;
+
+- (void)addVote:(NSString *)title
+         option:(NSString *)option
+         image1:(NSString *)image1
+         image2:(NSString *)image2
+         image3:(NSString *)image3
+ successedBlock:(SuccessedBlock)success
+    failedBolck:(FailedBlock)failed;
+
+
+- (void)addComment:(NSString *)relationId
+              type:(NSString *)type
+           content:(NSString *)content
+          imageUrl:(NSString *)imageUrl
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getCommentList:(NSString *)relationId
+                  type:(NSString *)type
+             commentId:(NSString *)commentId
+              pageSize:(NSString *)pageSize
+        successedBlock:(SuccessedBlock)success
+           failedBolck:(FailedBlock)failed;
+
+- (void)getOrgList:(NSString *)parentId
+            orgId:(NSString *)orgId
+          pageSize:(NSString *)pageSize
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getPersonDetail:(NSString *)userId
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getPersonList:(NSString *)orgId
+               userId:(NSString *)userId
+          pageSize:(NSString *)pageSize
+    successedBlock:(SuccessedBlock)success
+       failedBolck:(FailedBlock)failed;
+
+- (void)getVoteDetail:(NSString *)voteId
+         successedBlock:(SuccessedBlock)success
+            failedBolck:(FailedBlock)failed;
+
+- (void)getVoteList:(NSString *)voteId
+             pageSize:(NSString *)pageSize
+       successedBlock:(SuccessedBlock)success
+          failedBolck:(FailedBlock)failed;
+
+- (void)scorePerson:(NSString *)userId
+           option:(NSString *)option
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)scorePersonOption:(NSString *)voteId
+             voteOptionId:(NSString *)voteOptionId
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+- (void)globalSearch:(NSString *)key
+     successedBlock:(SuccessedBlock)success
+        failedBolck:(FailedBlock)failed;
+
+
+- (void)testMutipPraa:(ADTFindItem *)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
 @end

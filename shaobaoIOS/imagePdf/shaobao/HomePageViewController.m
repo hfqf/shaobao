@@ -20,6 +20,7 @@
 #import "MWPhotoBrowser.h"
 #import "MyGradeViewController.h"
 #import "UserInfoViewController.h"
+#import "LZGSGroupViewController.h"
 @interface HomePageViewController ()<UITableViewDelegate,UITableViewDataSource,MXCycleScrollViewDelegate,FindTableViewCellDelegate,MWPhotoBrowserDelegate>
 @property(nonatomic,strong)MXCycleScrollView *cycleScrollView;
 @property(nonatomic,strong)NSArray *m_arrAds;
@@ -123,7 +124,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : self.m_arrData.count+1;
+    return section == 0 ? 2 : self.m_arrData.count+1;
 }
 
 - (CGFloat)highOf:(ADTFindItem *)currentData
@@ -151,7 +152,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
-        return 100;
+        return 90;
     }else if (indexPath.section == 1){
         if(indexPath.row == 0){
             return 40;
@@ -182,12 +183,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0){
-        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        [cell setBackgroundColor:[UIColor whiteColor]];
-        NSArray *arr = @[
-                     
+        NSArray *arr1 = @[
                          @{
                              @"name":@"律师侦探",
                              @"icon":@"home_quick_1",
@@ -204,29 +200,66 @@
                              @"name":@"叫人帮忙",
                              @"icon":@"home_quick_0",
                              },
-                         @{
-                             @"name":@"个性需求",
-                             @"icon":@"home_quick_4",
-                             },
                          ];
-        for(NSDictionary *info in arr){
-            NSInteger index = [arr indexOfObject:info];
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            NSInteger width = MAIN_WIDTH/arr.count;
-            btn.tag = index;
-            [btn setFrame:CGRectMake(index*width, 0, width, 100)];
-            [btn setImage:[UIImage imageNamed:info[@"icon"]] forState:UIControlStateNormal];
-            [btn setImageEdgeInsets:UIEdgeInsetsMake(-10,0, 0, 0)];
-            [cell addSubview:btn];
-            [btn addTarget:self action:@selector(categoryBtn:) forControlEvents:UIControlEventTouchUpInside];
-            UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(index*width,65, width, 15)];
-            [lab setTextAlignment:NSTextAlignmentCenter];
-            [lab setTextColor:[UIColor blackColor]];
-            [lab setFont:[UIFont systemFontOfSize:14]];
-            [lab setText:info[@"name"]];
-            [cell addSubview:lab];
+        NSArray *arr2 = @[
+                          @{
+                              @"name":@"个性需求",
+                              @"icon":@"home_quick_4",
+                              },
+                          @{
+                              @"name":@"廉政公署",
+                              @"icon":@"home_quick_5",
+                              },
+                          ];
+        NSInteger width = MAIN_WIDTH/4;
+        if(indexPath.row == 0){
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            [cell setBackgroundColor:[UIColor whiteColor]];
+
+            for(NSDictionary *info in arr1){
+                NSInteger index = [arr1 indexOfObject:info];
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                btn.tag = index;
+                [btn setFrame:CGRectMake(index*width, 0, width, 100)];
+                [btn setImage:[UIImage imageNamed:info[@"icon"]] forState:UIControlStateNormal];
+                [btn setImageEdgeInsets:UIEdgeInsetsMake(-10,0, 20, 0)];
+                [cell addSubview:btn];
+                [btn addTarget:self action:@selector(categoryBtn:) forControlEvents:UIControlEventTouchUpInside];
+                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(index*width,65, width, 15)];
+                [lab setTextAlignment:NSTextAlignmentCenter];
+                [lab setTextColor:[UIColor blackColor]];
+                [lab setFont:[UIFont systemFontOfSize:14]];
+                [lab setText:info[@"name"]];
+                [cell addSubview:lab];
+            }
+            return cell;
+        }else{
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            [cell setBackgroundColor:[UIColor whiteColor]];
+            
+            for(NSDictionary *info in arr2){
+                NSInteger index = [arr2 indexOfObject:info];
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                btn.tag = index+indexPath.row*4;
+                [btn setFrame:CGRectMake(index*width, 0, width, 100)];
+                [btn setImage:[UIImage imageNamed:info[@"icon"]] forState:UIControlStateNormal];
+                [btn setImageEdgeInsets:UIEdgeInsetsMake(-10,0, 20, 0)];
+                [cell addSubview:btn];
+                [btn addTarget:self action:@selector(categoryBtn:) forControlEvents:UIControlEventTouchUpInside];
+                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(index*width,65, width, 15)];
+                [lab setTextAlignment:NSTextAlignmentCenter];
+                [lab setTextColor:[UIColor blackColor]];
+                [lab setFont:[UIFont systemFontOfSize:14]];
+                [lab setText:info[@"name"]];
+                [cell addSubview:lab];
+            }
+            return cell;
         }
-        return cell;
+        
     }else{
         if(indexPath.row == 0){
             UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
@@ -268,6 +301,14 @@
 
 - (void)categoryBtn:(UIButton *)btn
 {
+    if(btn.tag == 5){
+        ADTGroupItem *group = [[ADTGroupItem alloc]init];
+        group.m_parentId = @"0";
+        group.m_orgId = @"0";
+        LZGSGroupViewController *list = [[LZGSGroupViewController alloc]initWith:group];
+        [self.navigationController pushViewController:list animated:YES];
+        return;
+    }
     [[NSNotificationCenter defaultCenter]postNotificationName:@"find_category" object:@(btn.tag)];
 }
 

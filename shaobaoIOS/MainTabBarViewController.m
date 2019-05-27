@@ -13,6 +13,7 @@
 #import "FindViewController.h"
 #import "LlxViewController.h"
 #import "WoyiViewController.h"
+#import "VoteHomeViewController.h"
 
 @interface MainTabBarViewController ()<UIActionSheetDelegate>
 {
@@ -88,7 +89,7 @@
     [super didReceiveMemoryWarning];
 }
 
-#define NUM_TAB 4
+#define NUM_TAB 5
 #pragma mark -  BaseViewControllerDelegate
 
 - (void)initData
@@ -111,31 +112,31 @@
         NSString *selectedImg = nil;
         if(i==0)
         {
-            title = @"工单";
+            title = @"首页";
             unSelectedImg = @"tab_0_un";
             selectedImg = @"tab_0_on";
         }else if(i==1)
         {
-            title = @"提醒";
+            title = @"发现";
             unSelectedImg = @"tab_1_un";
             selectedImg = @"tab_1_on";
         }else if (i==2)
         {
-            title = @"客户";
+            title = @"蜡辣鲜";
             unSelectedImg = @"tab_2_un";
             selectedImg = @"tab_2_on";
         }
         else if (i==3)
         {
-            title = @"统计";
+            title = @"投票";
             unSelectedImg =  @"tab_3_un";
             selectedImg = @"tab_3_on";
         }
         else
         {
-            title = @"我的";
-            unSelectedImg = @"setup";
-            selectedImg = @"setup";
+            title = @"窝逸";
+            unSelectedImg = @"tab_4_un";
+            selectedImg = @"tab_4_un";
         }
         [arrTitle addObject:title];
         [arrUnSelectedImg addObject:unSelectedImg];
@@ -156,8 +157,9 @@
     HomePageViewController *vc1 = [[HomePageViewController alloc]init];
     FindViewController *vc2 = [[FindViewController alloc]init];
     LlxViewController *vc3 = [[LlxViewController alloc]init];
-    WoyiViewController *vc4 = [[WoyiViewController alloc]init];
-    self.viewControllers = @[vc1,vc2,vc3,vc4];
+    VoteHomeViewController *vc4 = [[VoteHomeViewController alloc]init];
+    WoyiViewController *vc5 = [[WoyiViewController alloc]init];
+    self.viewControllers = @[vc1,vc2,vc3,vc4,vc5];
 }
 
 //选择了第几个一级界面
