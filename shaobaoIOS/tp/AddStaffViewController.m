@@ -91,11 +91,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [title setText:self.m_staff.m_isNew ? @"新增员工" : @"员工详情"];
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn addTarget:self action:@selector(evalueBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, HEIGHT_STATUSBAR, 60, 44)];
-    [rightBtn setTitle:@"点评" forState:UIControlStateNormal];
-    [navigationBG addSubview:rightBtn];
+
     
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
@@ -104,6 +100,13 @@
     if(self.m_staff.m_isNew){
         
     }else{
+        
+        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn addTarget:self action:@selector(evalueBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, HEIGHT_STATUSBAR, 60, 44)];
+        [rightBtn setTitle:@"点评" forState:UIControlStateNormal];
+        [navigationBG addSubview:rightBtn];
+        
         if(self.m_staff.m_image1.length > 0){
             [_selectedPhotos addObject:self.m_staff.m_image1];
             [_selectedAssets addObject:self.m_staff.m_image1];
@@ -143,6 +146,10 @@
 
 - (void)requestData:(BOOL)isRefresh
 {
+    if(self.m_staff.m_isNew){
+        [self reloadDeals];
+        return;
+    }
     NSString *commentId = @"";
     if(isRefresh){
         
@@ -233,9 +240,10 @@
 {
     if(indexPath.section == 3){
         ADTComment *comemnt = [self.m_staff.m_arrComment objectAtIndex:indexPath.row];
-        return comemnt.m_arrPics.count > 0 ? 180 : 80;
+        CGSize size = [FontSizeUtil sizeOfString:comemnt.m_title withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-20];
+        return comemnt.m_arrPics.count > 0 ? 130+size.height : 40+size.height;
     }else{
-        return indexPath.section == 2 ? 140 : 40;
+        return indexPath.section == 2 ? 180 : 40;
     }
     return  0;
 }
@@ -338,9 +346,6 @@
         VoteHomeTableViewCell2 *cell = [[VoteHomeTableViewCell2 alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4"];
         cell.m_delegate = self;
         cell.currentData = [self.m_staff.m_arrComment objectAtIndex:indexPath.row];
-        UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0,[self highOf:indexPath]-0.5, MAIN_WIDTH, 0.5)];
-        [sep setBackgroundColor:GRAY_3];
-        [cell addSubview:sep];
         return cell;
     }else{
         
@@ -477,6 +482,7 @@
     }else if (textField.tag == 4){
         self.m_staff.m_orgName = textField.text;
     }
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -493,6 +499,7 @@
     }else if (textField.tag == 4){
         self.m_staff.m_orgName = textField.text;
     }
+    [textField resignFirstResponder];
     return YES;
 }
 #pragma mark - StaffWorkItemTableViewCellDelegate
@@ -546,7 +553,7 @@
     _collectionView.alwaysBounceVertical = YES;
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.contentInset = UIEdgeInsetsMake(10,10,10,10);
-    [_collectionView setFrame:CGRectMake(0,0, MAIN_WIDTH,120)];
+    [_collectionView setFrame:CGRectMake(0,0, MAIN_WIDTH,180)];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;

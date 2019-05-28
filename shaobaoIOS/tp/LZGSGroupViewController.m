@@ -97,8 +97,13 @@
 
 
 - (void)rightBtnClicked{
-    UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新增下属机构",@"新增机构员工", nil];
-    [act showInView:self.view];
+    if(![self.m_currentGroup.m_orgId isEqualToString:@"0"]){
+        UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新增下属机构",@"新增机构员工", nil];
+        [act showInView:self.view];
+    }else{
+        UIActionSheet *act = [[UIActionSheet alloc]initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新增下属机构", nil];
+        [act showInView:self.view];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -237,14 +242,20 @@
     }else{
         if(buttonIndex == 0){
             ADTGroupItem *group = self.m_currentGroup;
-            group.m_isNew = YES;
-            AddLZGSGroupViewController *add = [[AddLZGSGroupViewController alloc]initWith:group];
+            ADTGroupItem *_group = [[ADTGroupItem alloc]init];
+            _group.m_isNew = YES;
+            _group.m_parentId = group.m_id;
+            AddLZGSGroupViewController *add = [[AddLZGSGroupViewController alloc]initWith:_group];
             [self.navigationController pushViewController:add animated:YES];
         }else if (buttonIndex == 1){
-            ADTStaffItem *staff = [[ADTStaffItem alloc]init];
-            staff.m_isNew = YES;
-            AddStaffViewController *add = [[AddStaffViewController alloc]initWith:self.m_currentGroup withStaff:staff];
-            [self.navigationController pushViewController:add animated:YES];
+            if([self.m_currentGroup.m_orgId isEqualToString:@"0"]){
+                
+            }else{
+                ADTStaffItem *staff = [[ADTStaffItem alloc]init];
+                staff.m_isNew = YES;
+                AddStaffViewController *add = [[AddStaffViewController alloc]initWith:self.m_currentGroup withStaff:staff];
+                [self.navigationController pushViewController:add animated:YES];
+            }
         }else{
             
         }

@@ -82,6 +82,9 @@
     [m_time  setText:currentData.m_time];
     NSArray *arr = currentData.m_arrPics;
     for(int i=0;i<arr.count;i++){
+        if(i>2){
+            break;
+        }
         NSString *url = [arr objectAtIndex:i];
         if(url.length == 0){
             continue;
@@ -181,15 +184,21 @@
     [m_title setText:currentData.m_title];
     [m_time  setText:currentData.m_time];
     NSArray *arr = currentData.m_arrPics;
+    CGSize size = [FontSizeUtil sizeOfString:currentData.m_content withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-20];
+    [m_title setFrame:CGRectMake(10, m_title.frame.origin.y, size.width, size.height)];
+    NSInteger sep = 30;
+    NSInteger cell_num = 3;
+    NSInteger width = (MAIN_WIDTH-sep*(cell_num+1))/3;
+    
+
     for(int i=0;i<arr.count;i++){
+        if(i>2){
+            break;
+        }
         NSString *url = [arr objectAtIndex:i];
         if(url.length == 0){
             continue;
         }
-        NSInteger sep = 30;
-        NSInteger cell_num = 3;
-        NSInteger width = (MAIN_WIDTH-sep*(cell_num+1))/3;
-        
         NSInteger row = i/cell_num;
         NSInteger coulmn = i%cell_num;
         
@@ -201,7 +210,6 @@
         [img setPlaceholderImage:[UIImage imageNamed:@"logo"]];
         [img setImageURL:[NSURL URLWithString:url]];
     }
-    [m_sep setFrame:CGRectMake(0, currentData.m_arrPics.count == 0 ? 79.5:179.5, MAIN_WIDTH, 0.5)];
-    
+    [m_sep setFrame:CGRectMake(0,CGRectGetMaxY(m_title.frame)+(arr.count>0 ? width:0)+10, MAIN_WIDTH, 0.5)];
 }
 @end

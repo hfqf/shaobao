@@ -206,7 +206,8 @@
 {
     if(indexPath.section == 3){
         ADTComment *comemnt = [self.m_vote.m_arrComments objectAtIndex:indexPath.row];
-        return comemnt.m_arrPics.count > 0 ? 180 : 80;
+        CGSize size = [FontSizeUtil sizeOfString:comemnt.m_title withFont:[UIFont systemFontOfSize:13] withWidth:MAIN_WIDTH-20];
+        return comemnt.m_arrPics.count > 0 ? 130+size.height : 40+size.height;
     }else{
         return indexPath.section == 2 ? (self.m_vote.m_isNew ?180:( self.m_vote.m_arrPics.count == 0 ? 0: 180) ): 40;
     }
@@ -262,7 +263,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return self.m_vote.m_isNew ?40 : 0;
+    return self.m_vote.m_isNew ? (section ==1 ? 40 : 0 ): 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -328,6 +329,10 @@
             [inputTitle setText:self.m_vote.m_title];
         }
         
+        UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0,[self highOf:indexPath]-0.5, MAIN_WIDTH, 0.5)];
+        [sep setBackgroundColor:GRAY_3];
+        [cell addSubview:sep];
+        return cell;
     }else if(indexPath.section == 1){
         NSString *iden1 = @"cell3";
         VoteTableViewCell *cell = [[VoteTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden1];
@@ -351,16 +356,9 @@
         VoteHomeTableViewCell2 *cell = [[VoteHomeTableViewCell2 alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4"];
         cell.m_delegate = self;
         cell.currentData = [self.m_vote.m_arrComments objectAtIndex:indexPath.row];
-        UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0,[self highOf:indexPath]-0.5, MAIN_WIDTH, 0.5)];
-        [sep setBackgroundColor:GRAY_3];
-        [cell addSubview:sep];
         return cell;
     }
     
-    
-    UIView *sep = [[UIView alloc]initWithFrame:CGRectMake(0,[self highOf:indexPath]-0.5, MAIN_WIDTH, 0.5)];
-    [sep setBackgroundColor:GRAY_3];
-    [cell addSubview:sep];
     return cell;
 }
 
@@ -459,13 +457,13 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     self.m_input = textField;
- 
+    self.m_vote.m_title = textField.text;
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     self.m_input = textField;
-  
+   self.m_vote.m_title = textField.text;
     return YES;
 }
 #pragma mark - StaffWorkItemTableViewCellDelegate
@@ -634,7 +632,7 @@
 #pragma mark - TZImagePickerController
 
 - (void)pushTZImagePickerController {
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:6 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置

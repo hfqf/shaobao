@@ -36,11 +36,12 @@
         [rightBtn setTitle:@"确认" forState:UIControlStateNormal];
         [navigationBG addSubview:rightBtn];
     }else{
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, HEIGHT_STATUSBAR, 60, 44)];
-        [rightBtn setTitle:@"评论" forState:UIControlStateNormal];
-        [navigationBG addSubview:rightBtn];
+//
+//        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [rightBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//        [rightBtn setFrame:CGRectMake(MAIN_WIDTH-60, HEIGHT_STATUSBAR, 60, 44)];
+//        [rightBtn setTitle:@"评论" forState:UIControlStateNormal];
+//        [navigationBG addSubview:rightBtn];
     }
 
 }
@@ -99,7 +100,6 @@
     input.userInteractionEnabled = self.m_group.m_isNew;
     if(indexPath.row == 0){
         [cell.textLabel setText:@"机构名称"];
-        
         [input setText:self.m_group.m_name];
     }else if (indexPath.row == 1){
         [cell.textLabel setText:@"地址"];
@@ -125,7 +125,10 @@
 }
 
 
+
+
 - (void)addBtnClicked{
+    [self.m_input resignFirstResponder];
     if(self.m_group.m_name.length == 0){
         [PubllicMaskViewHelper showTipViewWith:@"机构名称不能为空" inSuperView:self.view withDuration:1];
         return;
@@ -136,7 +139,7 @@
         return;
     }
     
-    if(self.m_group.m_tel1.length == 0 || self.m_group.m_tel2.length == 0 || self.m_group.m_tel3.length == 0){
+    if(self.m_group.m_tel1.length == 0 && self.m_group.m_tel2.length == 0 && self.m_group.m_tel3.length == 0){
         [PubllicMaskViewHelper showTipViewWith:@"应急电话不能都为空" inSuperView:self.view withDuration:1];
         return;
     }
@@ -159,6 +162,11 @@
     }];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    self.m_input = textField;
+    return YES;
+}
+
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     self.m_input = textField;
     if(textField.tag == 0){
@@ -174,6 +182,7 @@
     }else if (textField.tag == 5){
         self.m_group.m_tel3 = textField.text;
     }
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -192,6 +201,7 @@
     }else if (textField.tag == 5){
         self.m_group.m_tel3 = textField.text;
     }
+    [textField resignFirstResponder];
     return YES;
 }
 @end

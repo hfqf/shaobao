@@ -31,9 +31,9 @@
         [self setImage:img1 forState:UIControlStateNormal];
         [self setImage:img2 forState:UIControlStateSelected];
 
-        [self setImageEdgeInsets:UIEdgeInsetsMake(5, 0, 0, 0)];
+        [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 10, 0)];
         //title
-        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,37, self.frame.size.width, 19)];
+        titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0,32, self.frame.size.width, 19)];
         [titleLab setBackgroundColor:[UIColor clearColor]];
         [titleLab setText:title];
         [titleLab setTextAlignment:NSTextAlignmentCenter];
